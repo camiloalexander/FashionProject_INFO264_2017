@@ -10,15 +10,14 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class clientes {
-    private int id_cliente;
-    private String nombre;
+public class trabajadores {
+    private int id_trabajador;
     private String run;
+    private String nombre;
     private String telefono;
-    private String ciudad;
-    private String correo;
+    private String pass;
+    private int privilegios;
     private int estado;
-    private int edad;
     private String fecha_ingreso;
     
     Fecha fecha = new Fecha();
@@ -27,91 +26,64 @@ public class clientes {
     private String querySQL = "";//cadena de conexion
     public Integer totalregistros;
     
-    public clientes() {
-    }
-
-    public clientes(int id_cliente, String nombre, String run, String telefono, String ciudad, String correo, int estado, int edad, String fecha_ingreso) {
-        this.id_cliente = id_cliente;
-        this.nombre = nombre;
+    public trabajadores() { }
+    public trabajadores(int id_trabajador, String run, String nombre, String telefono, String pass, int privilegios, int estado, String fecha_ingreso) {
+        this.id_trabajador = id_trabajador;
         this.run = run;
-        this.telefono = telefono;
-        this.ciudad = ciudad;
-        this.correo = correo;
-        this.estado = estado;
-        this.edad = edad;
-        this.fecha_ingreso = fecha_ingreso;
-    }
-
-    public String getFecha_ingreso() {
-        return fecha_ingreso;
-    }
-
-    public void setFecha_ingreso(String fecha_ingreso) {
-        this.fecha_ingreso = fecha_ingreso;
-    }
-
-    public int getId_cliente() {
-        return id_cliente;
-    }
-
-    public void setId_cliente(int id_cliente) {
-        this.id_cliente = id_cliente;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
         this.nombre = nombre;
+        this.telefono = telefono;
+        this.pass = pass;
+        this.privilegios = privilegios;
+        this.estado = estado;
+        this.fecha_ingreso = fecha_ingreso;
     }
-
+    public int getId_trabajador() {
+        return id_trabajador;
+    }
+    public void setId_trabajador(int id_trabajador) {
+        this.id_trabajador = id_trabajador;
+    }
     public String getRun() {
         return run;
     }
-
     public void setRun(String run) {
         this.run = run;
     }
-
+    public String getNombre() {
+        return nombre;
+    }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
     public String getTelefono() {
         return telefono;
     }
-
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-
-    public String getCiudad() {
-        return ciudad;
+    public String getPass() {
+        return pass;
     }
-
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
+    public void setPass(String pass) {
+        this.pass = pass;
     }
-
-    public String getCorreo() {
-        return correo;
+    public int getPrivilegios() {
+        return privilegios;
     }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setPrivilegios(int privilegios) {
+        this.privilegios = privilegios;
     }
-
     public int getEstado() {
         return estado;
     }
-
     public void setEstado(int estado) {
         this.estado = estado;
     }
-
-    public int getEdad() {
-        return edad;
+    public String getFecha_ingreso() {
+        return fecha_ingreso;
     }
-
-    public void setEdad(int edad) {
-        this.edad = edad;
+    public void setFecha_ingreso(String fecha_ingreso) {
+        this.fecha_ingreso = fecha_ingreso;
     }
     /*
     public DefaultTableModel mostrar(String buscar){
@@ -174,8 +146,6 @@ public class clientes {
         if(runformateado.indexOf("-")==-1){
             //hay que agregar un guion
             
-            
-            
         }
         return runformateado;
     }
@@ -195,7 +165,7 @@ public class clientes {
             }
         }
         String Ultimo = run.substring(Ult-1).toUpperCase();
-        Digito =11 - (Suma % 11);
+        Digito =11-(Suma%11);
         if (Digito==10 && Ultimo.equals("K")){
             lDevuelve=true;
         }else{ 
@@ -212,22 +182,19 @@ public class clientes {
     
     public DefaultTableModel mostrar(String buscar){
         DefaultTableModel modelo; //
-        //String [] columnas = {"ID", "RUN", "Nombre", "Telefono", "Ciudad", "Correo", "Estado", "Edad", "Fecha de ingreso"}; //titulos
-        String [] columnas = {"ID", "RUN", "Nombre", "Telefono", "Ciudad", "Correo", "Estado", "Edad", "Fecha de ingreso"}; //titulos
-        //String [] columnas = {"ID", "RUN", "Nombre", "Edad", "Ciudad", "Telefono", "Correo", "Fecha de ingreso"}; //titulos
+        String [] columnas = {"ID", "RUN", "Nombre", "Telefono", "Contraseña", "Privilegios", "Estado", "Fecha de ingreso"}; //titulos
         String [] registro = new String [9]; //se almacenan los registros
         totalregistros=0;
         modelo = new DefaultTableModel(null,columnas);
-        modelo.isCellEditable(totalregistros, 9);
-        querySQL="select * from cliente where "
-                + "(cliente.nombre like '%"+buscar+"%' )"
-                + "or (cliente.run like '%"+buscar+"%' )"
-                + "or (cliente.edad like '%"+buscar+"%' )"
-                + "or (cliente.ciudad like '%"+buscar+"%' )"
-                + "or (cliente.telefono like '%"+buscar+"%' )"
-                + "or (cliente.correo like '%"+buscar+"%' )"
-                + "or (cliente.fecha_ingreso like '%"+buscar+"%' )"
-                + "order by cliente.id_cliente";
+        modelo.isCellEditable(totalregistros, 8);
+        querySQL="select * from trabajador where "
+                + "(trabajador.run like '%"+buscar+"%' )"
+                + "or (trabajador.nombre like '%"+buscar+"%' )"
+                + "or (trabajador.telefono like '%"+buscar+"%' )"
+                + "or (trabajador.privilegios like '%"+buscar+"%' )"
+                + "or (trabajador.estado like '%"+buscar+"%' )"
+                + "or (trabajador.fecha_ingreso like '%"+buscar+"%' )"
+                + "order by trabajador.id_trabajador";
         try{
             Statement st = cn.createStatement(); //variable de conexion a la bd
             ResultSet rs = st.executeQuery(querySQL);
@@ -235,15 +202,14 @@ public class clientes {
                 //if(rs.getString("estado").equals("0")){  //si esta dado de baja no se muestra 
                   //  rs.next();
                 //}else{
-                    registro[0] = rs.getString("id_cliente");
+                    registro[0] = rs.getString("id_trabajador");
                     registro[1] = rs.getString("run");
                     registro[2] = rs.getString("nombre");
                     registro[3] = rs.getString("telefono");
-                    registro[4] = rs.getString("ciudad");
-                    registro[5] = rs.getString("correo");
+                    registro[4] = rs.getString("pass");
+                    registro[5] = rs.getString("privilegios");
                     registro[6] = rs.getString("estado");
-                    registro[7] = rs.getString("edad"); 
-                    registro[8] = rs.getString("fecha_ingreso");
+                    registro[7] = rs.getString("fecha_ingreso");
                     totalregistros=totalregistros+1;
                     modelo.addRow(registro);
                 //}
@@ -258,19 +224,18 @@ public class clientes {
         }
    }
     
-    public boolean ingresar(clientes cl){
-        querySQL = "insert into cliente(run,nombre,telefono,ciudad,correo,estado,edad,fecha_ingreso) values(?,?,?,?,?,?,?,?)";
+    public boolean ingresar(trabajadores tr){
+        querySQL = "insert into trabajador(run,nombre,telefono,pass,privilegios,estado,fecha_ingreso) values(?,?,?,?,?,?,?)";
         try {
             PreparedStatement pst = cn.prepareStatement(querySQL);
-            pst.setString(1, cl.getRun());   //ver mas tarde el tema del rut
-            pst.setString(2, cl.getNombre());
-            pst.setString(3, cl.getTelefono());
-            pst.setString(4, cl.getCiudad());
-            pst.setString(5, cl.getCorreo());
+            pst.setString(1, tr.getRun());   //ver mas tarde el tema del rut
+            pst.setString(2, tr.getNombre());
+            pst.setString(3, tr.getTelefono());
+            pst.setString(4, tr.getPass());
+            pst.setString(5, String.valueOf(tr.getPrivilegios()));
             pst.setString(6, "1");
-            pst.setInt(7, cl.getEdad());
-            pst.setString(8, fecha.obtenerFecha());
-            cl.setFecha_ingreso(fecha.obtenerFecha());
+            pst.setString(7, fecha.obtenerFecha());
+            tr.setFecha_ingreso(fecha.obtenerFecha());
             int n = pst.executeUpdate();
             pst.close();                    
             if(n!=0){
@@ -284,20 +249,19 @@ public class clientes {
         }
     }
     
-    public boolean modificar(clientes cl){
-        //querySQL = "update cliente set run=?,nombre=?,telefono=?,ciudad=?,correo=?,estado=?,edad=?,fecha_ingreso=? where id_cliente=?";
-        querySQL = "update cliente set cliente.run=?,cliente.nombre=?,cliente.telefono=?,cliente.ciudad=?,cliente.correo=?,cliente.edad=? where cliente.id_cliente=?";
+    public boolean modificar(trabajadores tr){
+        querySQL = "update trabajador set trabajador.run=?,trabajador.nombre=?,trabajador.telefono=?,trabajador.pass=?,trabajador.privilegios=? where trabajador.id_trabajador=?";
         try {
             PreparedStatement pst = cn.prepareStatement(querySQL);
-            pst.setString(1, cl.getRun());
-            pst.setString(2, cl.getNombre());
-            pst.setString(3, cl.getTelefono());
-            pst.setString(4, cl.getCiudad());
-            pst.setString(5, cl.getCorreo());
+            pst.setString(1, tr.getRun());
+            pst.setString(2, tr.getNombre());
+            pst.setString(3, tr.getTelefono());
+            pst.setString(4, tr.getPass());
+            pst.setString(5, String.valueOf(tr.getPrivilegios()));
             //pst.setInt(6, cl.getEstado());
-            pst.setInt(6, cl.getEdad());
+            //pst.setInt(6, tr.getEdad());
             //pst.setString(8, cl.getFecha_ingreso());
-            pst.setInt(7, cl.getId_cliente());
+            pst.setInt(6, tr.getId_trabajador());
             int n = pst.executeUpdate();                   
             pst.close(); 
             if(n!=0){
@@ -311,12 +275,12 @@ public class clientes {
         }
     }
     
-    public boolean eliminar(clientes cl){
+    public boolean eliminar(trabajadores tr){
         //querySQL = "delete from cliente where id_cliente = ?";
-        querySQL = "update cliente set cliente.estado = 0 where cliente.id_cliente = ? ";
+        querySQL = "update trabajador set trabajador.estado = 0 where trabajador.id_trabajador = ? ";
         try {
             PreparedStatement pst = cn.prepareStatement(querySQL);
-            pst.setInt(1, cl.getId_cliente());
+            pst.setInt(1, tr.getId_trabajador());
             int n = pst.executeUpdate();                   
             pst.close(); 
             if(n!=0){
@@ -329,9 +293,9 @@ public class clientes {
             return false;
         }
     }
-    public String nombreCliente(String id_cliente){
+    public String nombreTrabajador(String id_trabajador){
         String nombre="";
-        querySQL = "select cliente.nombre from cliente where cliente.id_cliente = "+id_cliente+"";
+        querySQL = "select trabajador.nombre from trabajador where trabajador.id_trabajador = "+id_trabajador+"";
         try {
             Statement st = cn.createStatement(); //variable de conexion a la bd
             ResultSet rs = st.executeQuery(querySQL);
@@ -347,11 +311,11 @@ public class clientes {
             return nombre;
         }
     }
-    public boolean verificarClienteRun(String run){
+    public boolean verificarTrabajadorRun(String run){
         boolean esta = false;
         boolean sigue = true;
         String r = "";
-        querySQL = "select * from cliente where cliente.run="+run+"";
+        querySQL = "select * from trabajador where trabajador.run="+run+"";
         try {
             Statement st = cn.createStatement(); //variable de conexion a la bd
             ResultSet rs = st.executeQuery(querySQL);
@@ -366,7 +330,7 @@ public class clientes {
                     }    
                 }
             }else{
-                System.out.println("sin coincidencias de clientes con ese rut");
+                System.out.println("sin coincidencia de trabajador con ese rut");
                 esta = false;
             }
             rs.close();                    
@@ -377,10 +341,10 @@ public class clientes {
             return esta;
         }
     }
-    public int estadoCliente(String run){
+    public int estadoTrabajador(String run){
         boolean sigue = true;
         int estado=2;
-        querySQL = "select * from cliente where cliente.run="+run+"";
+        querySQL = "select * from trabajador where trabajador.run="+run+"";
         try {
             Statement st = cn.createStatement(); //variable de conexion a la bd
             ResultSet rs = st.executeQuery(querySQL);
@@ -398,11 +362,11 @@ public class clientes {
             return estado;
         }
     }
-    public boolean modificarEstadodeEliminado(clientes cl){
-        querySQL = "update cliente set cliente.estado=1 where cliente.id_cliente=?";
+    public boolean modificarEstadodeEliminado(trabajadores tr){
+        querySQL = "update trabajador set trabajador.estado=1 where trabajador.id_trabajador=?";
         try {
             PreparedStatement pst = cn.prepareStatement(querySQL);
-            pst.setInt(1, cl.getId_cliente());
+            pst.setInt(1, tr.getId_trabajador());
             int n = pst.executeUpdate();                   
             pst.close(); 
             if(n!=0){
@@ -415,10 +379,10 @@ public class clientes {
             return false;
         }
     }
-    public int obtenerIDClienteRun(String run){
+    public int obtenerIDTrabajadorRun(String run){
         int id=0;
         boolean sigue = true;
-        querySQL = "select * from cliente where cliente.run="+run+"";
+        querySQL = "select * from trabajador where trabajador.run="+run+"";
         try {
             Statement st = cn.createStatement(); //variable de conexion a la bd
             ResultSet rs = st.executeQuery(querySQL);
@@ -426,12 +390,12 @@ public class clientes {
                 rs.beforeFirst();//regresa el puntero al primer registro
                 while(rs.next() && sigue){ //rs.next da falso algunas veces por eso el if de arriba
                     if((rs.getString("run")).equals(run) && rs.getInt("estado")==0){    
-                        id = rs.getInt("id_cliente");
+                        id = rs.getInt("id_trabajador");
                         sigue = false;
                     }    
                 }
             }else{
-                System.out.println("sin coincidencias de clientes con ese rut");
+                System.out.println("sin coincidencias de trabajador con ese rut");
             }
             rs.close();                    
             st.close(); 

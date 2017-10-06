@@ -10,11 +10,11 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class funcionesCliente {
-    Fecha fecha = new Fecha();
+    /*Fecha fecha = new Fecha();
     private conexion mysql = new conexion(); //instancia a la cadena de conexion
     private Connection cn = mysql.conectar();
     private String querySQL = "";//cadena de conexion
-    public Integer totalregistros;
+    public Integer totalregistros;*/
     /*
     public DefaultTableModel mostrar(String buscar){
         //clientes cl = new clientes();
@@ -67,7 +67,7 @@ public class funcionesCliente {
             return null;
         }
    }*/
-    
+    /*
     public DefaultTableModel mostrar(String buscar){
         DefaultTableModel modelo; //
         //String [] columnas = {"ID", "RUN", "Nombre", "Telefono", "Ciudad", "Correo", "Estado", "Edad", "Fecha de ingreso"}; //titulos
@@ -298,5 +298,5 @@ public class funcionesCliente {
             JOptionPane.showConfirmDialog(null,e);
             return id;
         }
-    }
+    }*/
 }

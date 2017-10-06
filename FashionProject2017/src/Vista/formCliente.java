@@ -3,6 +3,8 @@ package Vista;
 
 import Datos.clientes;
 import Controlador.funcionesCliente;
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -10,15 +12,20 @@ import javax.swing.table.DefaultTableModel;
 
 public class formCliente extends javax.swing.JFrame {
     menu m = new menu();
+    menuEnVentanas mv = new menuEnVentanas();
     int fila;
     String runinicial;
+    private String accion="guardar"; //lo que se muestra en un comienzo en el boton de multiples opciones
+     
     public formCliente() {
         initComponents();
         mostrar("");
         inhabilitar();
+        panelmenu.removeAll();
+        panelmenu.add(mv,BorderLayout.CENTER);
+        panelmenu.revalidate();
+        panelmenu.repaint();
     }
-
-    private String accion="guardar"; //lo que se muestra en un comienzo en el boton de multiples opciones
     void limpiarregistroCl(){
         txtcorreo.setText("");
         txtrun.setText("");
@@ -66,28 +73,41 @@ public class formCliente extends javax.swing.JFrame {
     void mostrar(String buscar){
         try {
             DefaultTableModel modelo;
-            funcionesCliente func = new funcionesCliente();
-            modelo = func.mostrar(buscar); //instancia de las funciones, buscar es de buscar cliente
+            //funcionesCliente func = new funcionesCliente();
+            clientes cl =new clientes();
+            modelo = cl.mostrar(buscar); //instancia de las funciones, buscar es de buscar cliente
             tabla.setModel(modelo);
             ocultar_columnas();
-            lblregistrostotal.setText("Total de registros: "+Integer.toString(func.totalregistros));
+            lblregistrostotal.setText("Total de registros: "+Integer.toString(cl.totalregistros));
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(rootPane, e);
         }
     }
     void guardar_modificar(){
-        funcionesCliente func = new funcionesCliente();
+        clientes cl =new clientes();
+        
+        String runformateado = cl.arreglaRUN(txtrun.getText());
+        txtrun.setText(runformateado);
+        System.out.println(cl.ValidaRUN(runformateado));
+        
+        if(cl.ValidaRUN(runformateado)==false){
+                JOptionPane.showMessageDialog(rootPane, "RUN '"+txtrun.getText()+"' es inválido, por favor verificar.", "RUN inválido!", JOptionPane.WARNING_MESSAGE);
+                txtrun.requestFocus();
+                txtrun.selectAll();
+                //txtrun.setBackground(Color.red);
+                return;
+        }
         if(accion.equals("guardar")){
-            if((func.verificarClienteRun(txtrun.getText()))){
+            if((cl.verificarClienteRun(txtrun.getText()))){
                 JOptionPane.showMessageDialog(rootPane, "RUN '"+txtrun.getText()+"' ya existente en los registros.", "RUN ya existente!", JOptionPane.OK_OPTION);
-                if(func.estadoCliente(txtrun.getText()) == 0){ //si usuario que guardamos esta eliminado
+                if(cl.estadoCliente(txtrun.getText()) == 0){ //si usuario que guardamos esta eliminado
                     int resp = JOptionPane.showConfirmDialog(null, "¿Desea reincorporar el cliente?", "Dar de alta a cliente!", JOptionPane.YES_NO_OPTION);                    
                     if(resp == 0){
                         System.out.println("Si hay que cambiarle el estado");
                         clientes c = new clientes();
-                        int id = func.obtenerIDClienteRun(txtrun.getText());
+                        int id = cl.obtenerIDClienteRun(txtrun.getText());
                         c.setId_cliente(id);
-                        func.modificarEstadodeEliminado(c);  //////modifica el estado, de eliminado(0) a no eliminado(1)
+                        cl.modificarEstadodeEliminado(c);  //////modifica el estado, de eliminado(0) a no eliminado(1)
                         modificarCliente(fila); //desplegamos la informacion del cliente
                         mostrar(""); //actualizamos la tabla
                     }
@@ -98,14 +118,14 @@ public class formCliente extends javax.swing.JFrame {
             }
         }
         if(accion.equals("editar") && !(runinicial.equals(txtrun.getText()))){ //en el && veo si es que no se edito el rut
-            if((func.verificarClienteRun(txtrun.getText()))){ 
+            if((cl.verificarClienteRun(txtrun.getText()))){ 
                 JOptionPane.showMessageDialog(rootPane, "RUN '"+txtrun.getText()+"' ya existente en los registros.", "RUN ya existente!", JOptionPane.WARNING_MESSAGE);
                 txtrun.requestFocus();
                 txtrun.selectAll();
                 return;
             }
         }
-        if(txtrun.getText().length()==0){  //confirmo que tenga rut y nombre en los campos para guardar
+        if(txtrun.getText().length()==0 /*|| (txtrun.getText().trim()).equals("")*/){  //confirmo que tenga rut y nombre en los campos para guardar
             JOptionPane.showConfirmDialog(rootPane, "Debe ingresar RUN.","",JOptionPane.WARNING_MESSAGE);
             txtrun.selectAll();
             txtrun.requestFocus();
@@ -134,9 +154,6 @@ public class formCliente extends javax.swing.JFrame {
             }
 
         }
-
-        clientes cl = new clientes();
-        //funcionesCliente func = new funcionesCliente();
         
         cl.setRun(txtrun.getText());    //paso los datos del formulario al objeto cliente
         cl.setNombre(txtnombre.getText());
@@ -146,7 +163,7 @@ public class formCliente extends javax.swing.JFrame {
         cl.setEdad(Integer.parseInt(txtedad.getText()));
         
         if (accion.equals("guardar")) {
-            if (func.ingresar(cl)) {
+            if (cl.ingresar(cl)) {
                 JOptionPane.showMessageDialog(rootPane, "Cliente '"+cl.getNombre()+"' registrado satisfactoriamente.");
                 mostrar("");
                 inhabilitar();
@@ -154,7 +171,7 @@ public class formCliente extends javax.swing.JFrame {
         }
         else if(accion.equals("editar")){
             cl.setId_cliente(Integer.parseInt(txtidcliente.getText()));
-            if (func.modificar(cl)) {
+            if (cl.modificar(cl)) {
                 JOptionPane.showMessageDialog(rootPane, "Cliente '"+cl.getNombre()+"' modificado satisfactoriamente.");
                 mostrar("");
                 inhabilitar();
@@ -173,14 +190,14 @@ public class formCliente extends javax.swing.JFrame {
     }
     void eliminarCliente(){
         clientes cl = new clientes();
-        funcionesCliente func = new funcionesCliente();
+        //funcionesCliente func = new funcionesCliente();
         if (!txtidcliente.getText().equals("")) {
             //cl.setId_cliente(Integer.parseInt(txtidcliente.getText()));
             int confirmacion = JOptionPane.showConfirmDialog(rootPane, "¿Estas seguro "
-                    + "de dar de baja a cliente: Nombre = '"+func.nombreCliente(txtidcliente.getText())+"' ?","Confirmar",2);
+                    + "de dar de baja a cliente: Nombre = '"+cl.nombreCliente(txtidcliente.getText())+"' ?","Confirmar",2);
             if (confirmacion==0) {
                 cl.setId_cliente(Integer.parseInt(txtidcliente.getText()));
-                func.eliminar(cl);
+                cl.eliminar(cl);
                 mostrar("");
                 inhabilitar();
                 limpiarregistroCl();
@@ -257,6 +274,7 @@ public class formCliente extends javax.swing.JFrame {
         btnsalir = new javax.swing.JButton();
         btnnuevo = new javax.swing.JButton();
         btneliminar = new javax.swing.JButton();
+        panelmenu = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
@@ -267,7 +285,7 @@ public class formCliente extends javax.swing.JFrame {
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(234, 253, 234));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Registro de cliente"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Registro de Cliente"));
 
         txtcorreo.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         txtcorreo.addActionListener(new java.awt.event.ActionListener() {
@@ -493,7 +511,7 @@ public class formCliente extends javax.swing.JFrame {
         jLabel1.setText("Gestión de Clientes");
 
         jPanel2.setBackground(new java.awt.Color(221, 248, 248));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Listado de clientes"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Listado de Clientes"));
 
         lblregistrostotal.setText("' '");
 
@@ -625,6 +643,17 @@ public class formCliente extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout panelmenuLayout = new javax.swing.GroupLayout(panelmenu);
+        panelmenu.setLayout(panelmenuLayout);
+        panelmenuLayout.setHorizontalGroup(
+            panelmenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 204, Short.MAX_VALUE)
+        );
+        panelmenuLayout.setVerticalGroup(
+            panelmenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 384, Short.MAX_VALUE)
+        );
+
         jMenu2.setText("Otros");
         jMenu2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -663,10 +692,13 @@ public class formCliente extends javax.swing.JFrame {
                         .addGap(823, 823, 823)
                         .addComponent(btnsalir))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
+                        .addGap(5, 5, 5)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btneliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnnuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnnuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addComponent(panelmenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -685,6 +717,8 @@ public class formCliente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnnuevo)
+                        .addGap(28, 28, 28)
+                        .addComponent(panelmenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btneliminar))
                     .addGroup(layout.createSequentialGroup()
@@ -774,23 +808,25 @@ public class formCliente extends javax.swing.JFrame {
 
     private void txtedadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtedadKeyTyped
         char c = evt.getKeyChar();
-        if(c<'0' || c>'9') evt.consume();    //valido solo numeros
+        if(c<'0' || c>'9') evt.consume();    
         if(txtedad.getText().length()>=3) evt.consume();  // valido que no sea mayor que 3 digitos
     }//GEN-LAST:event_txtedadKeyTyped
 
     private void txtcorreoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcorreoKeyTyped
         char c = evt.getKeyChar();
-        if(c==KeyEvent.VK_SPACE) evt.consume();    //valido solo numeros
+        if(c==KeyEvent.VK_SPACE) evt.consume();   
     }//GEN-LAST:event_txtcorreoKeyTyped
 
     private void txttelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttelefonoKeyTyped
         char c = evt.getKeyChar();
-        if(c==KeyEvent.VK_SPACE) evt.consume();    //valido solo numeros
+        if(c==KeyEvent.VK_SPACE) evt.consume();
     }//GEN-LAST:event_txttelefonoKeyTyped
 
     private void txtrunKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtrunKeyTyped
         char c = evt.getKeyChar();
-        if(c==KeyEvent.VK_SPACE) evt.consume();    //valido solo numeros
+        if(c==KeyEvent.VK_SPACE || !(Character.isDigit(c) || c=='k' ||  c=='K')){
+            evt.consume();
+        }
     }//GEN-LAST:event_txtrunKeyTyped
 
     private void limpiarbuscadorclActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarbuscadorclActionPerformed
@@ -831,6 +867,7 @@ public class formCliente extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblregistrostotal;
     private javax.swing.JButton limpiarbuscadorcl;
+    public static javax.swing.JPanel panelmenu;
     private javax.swing.JTable tabla;
     private javax.swing.JTextField txtbuscar;
     private javax.swing.JTextField txtciudad;

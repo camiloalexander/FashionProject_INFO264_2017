@@ -139,7 +139,10 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_cerrarsesionActionPerformed
 
     private void btngestionartrabjadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngestionartrabjadoresActionPerformed
-        JOptionPane.showMessageDialog(null, "La presente acción se implemenatará en próximos incrementos.\n\nDebería redirigirte a la interfaz de los trabajadores.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                formTrabajador ftr = new formTrabajador();
+                ftr.setVisible(true);
+                this.setVisible(false);   
+        //JOptionPane.showMessageDialog(null, "La presente acción se implemenatará en próximos incrementos.\n\nDebería redirigirte a la interfaz de los trabajadores.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btngestionartrabjadoresActionPerformed
 
     public static void main(String args[]) {
