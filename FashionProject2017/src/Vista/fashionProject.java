@@ -3,17 +3,9 @@ package Vista;
 import Controlador.Fecha;
 import javax.swing.JOptionPane;
 
-public class menu extends javax.swing.JFrame {
-    //static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-    /*ZoneId zona = ZoneId.systemDefault();
-    LocalDate ahora = LocalDate.now();
-    ZonedDateTime inicioHoy = ahora.atStartOfDay(zona);
-    Instant instante = inicioHoy.toInstant();
-    Date f = Date.from(instante);
-    Date fecha = Date.from(LocalDate.now().atStartOfDay(zona).toInstant());
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-LLLL-yyyy");
-    String fechaformato = ahora.format(formatter);*/
-    public menu() {
+public class fashionProject extends javax.swing.JFrame {
+
+    public fashionProject() {
         initComponents();
     }
         
@@ -146,7 +138,6 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btngestionartrabjadoresActionPerformed
 
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -159,17 +150,16 @@ public class menu extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(fashionProject.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(fashionProject.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(fashionProject.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(fashionProject.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        menu m = new menu();
-        /* Create and display the form */
+        fashionProject m = new fashionProject();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Fecha f = new Fecha();

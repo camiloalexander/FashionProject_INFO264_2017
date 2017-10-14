@@ -1,16 +1,13 @@
 
 package Vista;
 
-//import Datos.clientes;
 import Datos.trabajadores;
-//import static Vista.formCliente.panelmenu;
-import java.awt.BorderLayout;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class formTrabajador extends javax.swing.JFrame {
-    menu m = new menu();
+    fashionProject m = new fashionProject();
     menuEnVentanas mv = new menuEnVentanas();
     int fila;
     String runinicial;
@@ -19,7 +16,7 @@ public class formTrabajador extends javax.swing.JFrame {
     
     public formTrabajador() {
         initComponents();
-        mostrar("");
+        mostrarListaTrabajadores("");
         inhabilitar();
         //panelmenu.removeAll();
         //panelmenu.add(mv,BorderLayout.CENTER);
@@ -68,7 +65,7 @@ public class formTrabajador extends javax.swing.JFrame {
         btncancelartr.setEnabled(true); 
     }
     
-    void mostrar(String buscar){
+    void mostrarListaTrabajadores(String buscar){
         try {
             DefaultTableModel modelo;
             //funcionesCliente func = new funcionesCliente();
@@ -81,7 +78,7 @@ public class formTrabajador extends javax.swing.JFrame {
             JOptionPane.showConfirmDialog(rootPane, e);
         }
     }
-    void guardar_modificar(){
+    void guardar_o_modificar_trabajador(){
         trabajadores tr =new trabajadores();
         
         String runformateado = tr.arreglaRUN(txtrun.getText());
@@ -107,7 +104,7 @@ public class formTrabajador extends javax.swing.JFrame {
                         t.setId_trabajador(id);
                         tr.modificarEstadodeEliminado(t);  //////modifica el estado, de eliminado(0) a no eliminado(1)
                         modificarTrabajador(fila); //desplegamos la informacion del trabajador
-                        mostrar(""); //actualizamos la tabla
+                        mostrarListaTrabajadores(""); //actualizamos la tabla
                     }
                 }
                 txtrun.requestFocus();
@@ -166,7 +163,7 @@ public class formTrabajador extends javax.swing.JFrame {
         if (accion.equals("guardar")) {
             if (tr.ingresar(tr)) {
                 JOptionPane.showMessageDialog(rootPane, "Trabajador '"+tr.getNombre()+"' registrado satisfactoriamente.");
-                mostrar("");
+                mostrarListaTrabajadores("");
                 inhabilitar();
             }
         }
@@ -174,7 +171,7 @@ public class formTrabajador extends javax.swing.JFrame {
             tr.setId_trabajador(Integer.parseInt(txtidtrabajador.getText()));
             if (tr.modificar(tr)) {
                 JOptionPane.showMessageDialog(rootPane, "Trabajador '"+tr.getNombre()+"' modificado satisfactoriamente.");
-                mostrar("");
+                mostrarListaTrabajadores("");
                 inhabilitar();
             }
         }
@@ -199,7 +196,7 @@ public class formTrabajador extends javax.swing.JFrame {
             if (confirmacion==0) {
                 tr.setId_trabajador(Integer.parseInt(txtidtrabajador.getText()));
                 tr.eliminar(tr);
-                mostrar("");
+                mostrarListaTrabajadores("");
                 inhabilitar();
                 limpiarregistroTr();
             }
@@ -524,7 +521,7 @@ public class formTrabajador extends javax.swing.JFrame {
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtpass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel16)
                             .addComponent(opadmin))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -700,7 +697,7 @@ public class formTrabajador extends javax.swing.JFrame {
     }//GEN-LAST:event_txtidtrabajadorActionPerformed
 
     private void btnguardartrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardartrActionPerformed
-        guardar_modificar();
+        guardar_o_modificar_trabajador();
     }//GEN-LAST:event_btnguardartrActionPerformed
 
     private void btncancelartrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncancelartrActionPerformed
@@ -719,7 +716,7 @@ public class formTrabajador extends javax.swing.JFrame {
     }//GEN-LAST:event_txtbuscarActionPerformed
 
     private void txtbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtbuscarKeyReleased
-        mostrar(txtbuscar.getText());
+        mostrarListaTrabajadores(txtbuscar.getText());
     }//GEN-LAST:event_txtbuscarKeyReleased
 
     private void txtpassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpassActionPerformed

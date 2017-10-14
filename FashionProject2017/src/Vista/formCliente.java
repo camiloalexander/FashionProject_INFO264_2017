@@ -2,7 +2,6 @@
 package Vista;
 
 import Datos.clientes;
-import Controlador.funcionesCliente;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
@@ -11,20 +10,16 @@ import javax.swing.table.DefaultTableModel;
 
 
 public class formCliente extends javax.swing.JFrame {
-    menu m = new menu();
+    fashionProject m = new fashionProject();
     menuEnVentanas mv = new menuEnVentanas();
     int fila;
     String runinicial;
     private String accion="guardar"; //lo que se muestra en un comienzo en el boton de multiples opciones
-     
-    public formCliente() {
+
+    public formCliente(){
         initComponents();
-        mostrar("");
+        mostrarListaClientes("");
         inhabilitar();
-        panelmenu.removeAll();
-        panelmenu.add(mv,BorderLayout.CENTER);
-        panelmenu.revalidate();
-        panelmenu.repaint();
     }
     void limpiarregistroCl(){
         txtcorreo.setText("");
@@ -40,7 +35,6 @@ public class formCliente extends javax.swing.JFrame {
         tabla.getColumnModel().getColumn(0).setMinWidth(0);
         tabla.getColumnModel().getColumn(0).setPreferredWidth(0);
     }
-    
     void inhabilitar(){
         txtcorreo.setEnabled(false);
         txtrun.setEnabled(false);
@@ -70,7 +64,7 @@ public class formCliente extends javax.swing.JFrame {
         btncancelar.setEnabled(true); 
     }
     
-    void mostrar(String buscar){
+    void mostrarListaClientes(String buscar){
         try {
             DefaultTableModel modelo;
             //funcionesCliente func = new funcionesCliente();
@@ -79,11 +73,22 @@ public class formCliente extends javax.swing.JFrame {
             tabla.setModel(modelo);
             ocultar_columnas();
             lblregistrostotal.setText("Total de registros: "+Integer.toString(cl.totalregistros));
+            
+            /////////////para poner un nuevo jpanel en la ventana
+            panelmenu.removeAll();
+            panelmenu.add(mv,BorderLayout.CENTER);
+            panelmenu.show();
+            panelmenu.setBackground(Color.white);
+            panelmenu.updateUI();
+            panelmenu.revalidate();
+            panelmenu.repaint();
+            System.out.println("paso por el panel");
+            
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(rootPane, e);
         }
     }
-    void guardar_modificar(){
+    void guardar_o_modificar_cliente(){
         clientes cl =new clientes();
         
         String runformateado = cl.arreglaRUN(txtrun.getText());
@@ -109,7 +114,7 @@ public class formCliente extends javax.swing.JFrame {
                         c.setId_cliente(id);
                         cl.modificarEstadodeEliminado(c);  //////modifica el estado, de eliminado(0) a no eliminado(1)
                         modificarCliente(fila); //desplegamos la informacion del cliente
-                        mostrar(""); //actualizamos la tabla
+                        mostrarListaClientes(""); //actualizamos la tabla
                     }
                 }
                 txtrun.requestFocus();
@@ -165,7 +170,7 @@ public class formCliente extends javax.swing.JFrame {
         if (accion.equals("guardar")) {
             if (cl.ingresar(cl)) {
                 JOptionPane.showMessageDialog(rootPane, "Cliente '"+cl.getNombre()+"' registrado satisfactoriamente.");
-                mostrar("");
+                mostrarListaClientes("");
                 inhabilitar();
             }
         }
@@ -173,7 +178,7 @@ public class formCliente extends javax.swing.JFrame {
             cl.setId_cliente(Integer.parseInt(txtidcliente.getText()));
             if (cl.modificar(cl)) {
                 JOptionPane.showMessageDialog(rootPane, "Cliente '"+cl.getNombre()+"' modificado satisfactoriamente.");
-                mostrar("");
+                mostrarListaClientes("");
                 inhabilitar();
             }
         }
@@ -186,7 +191,6 @@ public class formCliente extends javax.swing.JFrame {
         btnguardar.setToolTipText("Guardar Nuevo Cliente");
         btncancelar.setToolTipText("Cancelar la Modificación Actual");
         accion="guardar"; //si es guardar o editar
-        
     }
     void eliminarCliente(){
         clientes cl = new clientes();
@@ -198,7 +202,7 @@ public class formCliente extends javax.swing.JFrame {
             if (confirmacion==0) {
                 cl.setId_cliente(Integer.parseInt(txtidcliente.getText()));
                 cl.eliminar(cl);
-                mostrar("");
+                mostrarListaClientes("");
                 inhabilitar();
                 limpiarregistroCl();
             }
@@ -269,8 +273,6 @@ public class formCliente extends javax.swing.JFrame {
         tabla = new javax.swing.JTable();
         jLabel9 = new javax.swing.JLabel();
         txtbuscar = new javax.swing.JTextField();
-        btnbuscar = new javax.swing.JButton();
-        limpiarbuscadorcl = new javax.swing.JButton();
         btnsalir = new javax.swing.JButton();
         btnnuevo = new javax.swing.JButton();
         btneliminar = new javax.swing.JButton();
@@ -557,24 +559,6 @@ public class formCliente extends javax.swing.JFrame {
             }
         });
 
-        btnbuscar.setIcon(new javax.swing.ImageIcon("/Users/alexndr/NetBeansProjects/FashionProject2017/files/buscar.png")); // NOI18N
-        btnbuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnbuscar.setEnabled(false);
-        btnbuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnbuscarActionPerformed(evt);
-            }
-        });
-
-        limpiarbuscadorcl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/escoba.png"))); // NOI18N
-        limpiarbuscadorcl.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        limpiarbuscadorcl.setEnabled(false);
-        limpiarbuscadorcl.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                limpiarbuscadorclActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -592,25 +576,17 @@ public class formCliente extends javax.swing.JFrame {
                         .addComponent(jLabel9)
                         .addGap(60, 60, 60)
                         .addComponent(txtbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(limpiarbuscadorcl, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnbuscar)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnbuscar)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(limpiarbuscadorcl, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel9)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(22, 22, 22)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addGap(10, 10, 10)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblregistrostotal))
@@ -651,7 +627,7 @@ public class formCliente extends javax.swing.JFrame {
         );
         panelmenuLayout.setVerticalGroup(
             panelmenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 384, Short.MAX_VALUE)
+            .addGap(0, 426, Short.MAX_VALUE)
         );
 
         jMenu2.setText("Otros");
@@ -692,12 +668,14 @@ public class formCliente extends javax.swing.JFrame {
                         .addGap(823, 823, 823)
                         .addComponent(btnsalir))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(5, 5, 5)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btneliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnnuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(8, 8, 8)
+                                .addGap(5, 5, 5)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btneliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnnuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(13, 13, 13)
                                 .addComponent(panelmenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -717,9 +695,9 @@ public class formCliente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnnuevo)
-                        .addGap(28, 28, 28)
+                        .addGap(18, 18, 18)
                         .addComponent(panelmenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(btneliminar))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -756,7 +734,7 @@ public class formCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_txtedadActionPerformed
 
     private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
-        guardar_modificar();
+        guardar_o_modificar_cliente();
     }//GEN-LAST:event_btnguardarActionPerformed
 
     private void btnnuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnnuevoActionPerformed
@@ -777,10 +755,6 @@ public class formCliente extends javax.swing.JFrame {
         eliminarCliente();
     }//GEN-LAST:event_btneliminarActionPerformed
 
-    private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
-        mostrar(txtbuscar.getText());
-    }//GEN-LAST:event_btnbuscarActionPerformed
-
     private void txtbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtbuscarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtbuscarActionPerformed
@@ -793,7 +767,7 @@ public class formCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_tablaMouseClicked
 
     private void txtbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtbuscarKeyReleased
-        mostrar(txtbuscar.getText());
+        mostrarListaClientes(txtbuscar.getText());
     }//GEN-LAST:event_txtbuscarKeyReleased
 
     private void btncancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncancelarActionPerformed
@@ -808,7 +782,7 @@ public class formCliente extends javax.swing.JFrame {
 
     private void txtedadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtedadKeyTyped
         char c = evt.getKeyChar();
-        if(c<'0' || c>'9') evt.consume();    
+        if(Character.isLetter(c)) evt.consume();    
         if(txtedad.getText().length()>=3) evt.consume();  // valido que no sea mayor que 3 digitos
     }//GEN-LAST:event_txtedadKeyTyped
 
@@ -829,16 +803,9 @@ public class formCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtrunKeyTyped
 
-    private void limpiarbuscadorclActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarbuscadorclActionPerformed
-        txtbuscar.setText("");
-        mostrar("");
-        if(txtbuscar.getText().trim().length()==0) JOptionPane.showMessageDialog(rootPane, "No ha ingresado texto en el buscador de clientes.","",JOptionPane.INFORMATION_MESSAGE);
-    }//GEN-LAST:event_limpiarbuscadorclActionPerformed
-
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnbuscar;
     private javax.swing.JButton btncancelar;
     private javax.swing.JButton btneliminar;
     private javax.swing.JButton btnguardar;
@@ -866,7 +833,6 @@ public class formCliente extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblregistrostotal;
-    private javax.swing.JButton limpiarbuscadorcl;
     public static javax.swing.JPanel panelmenu;
     private javax.swing.JTable tabla;
     private javax.swing.JTextField txtbuscar;

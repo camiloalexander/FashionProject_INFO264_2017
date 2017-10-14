@@ -113,58 +113,7 @@ public class clientes {
     public void setEdad(int edad) {
         this.edad = edad;
     }
-    /*
-    public DefaultTableModel mostrar(String buscar){
-        //clientes cl = new clientes();
-        DefaultTableModel modelo; //
-        //String [] columnas = {"ID", "RUN", "Nombre", "Telefono", "Ciudad", "Correo", "Estado", "Edad", "Fecha de ingreso"}; //titulos
-        String [] columnas = {"ID", "RUN", "Nombre", "Telefono", "Ciudad", "Correo", "Estado", "Edad", "Fecha de ingreso"}; //titulos
-        //String [] columnas = {"ID", "RUN", "Nombre", "Edad", "Ciudad", "Telefono", "Correo", "Fecha de ingreso"}; //titulos
-        String [] registro = new String [9]; //se almacenan los registros
-        totalregistros=0;
-        modelo = new DefaultTableModel(null,columnas);
-        modelo.isCellEditable(totalregistros, 9);
-        querySQL="select * from cliente where "
-                + "(nombre like '%?%' )"
-                + "or (run like '%?%' )"
-                + "or (edad like '%?%' )"
-                + "or (ciudad like '%?%' )"
-                + "or (telefono like '%?%' )"
-                + "or (correo like '%?%' )"
-                + "or (fecha_ingreso like '%?%' )"
-                + "order by id_cliente";
-        try{
-            Statement st = cn.createStatement(); //variable de conexion a la bd
-            ResultSet rs = st.executeQuery(querySQL);
-            PreparedStatement pst = cn.prepareStatement(querySQL);
 
-            for(int i=1; i<=7;i++){
-                pst.setString(i, buscar);
-            }
-            while(rs.next()){
-                //if(rs.getString("estado").equals("0")){  //si esta dado de baja no se muestra 
-                  //  rs.next();
-                //}else{
-                    registro[0] = rs.getString("id_cliente");
-                    registro[1] = rs.getString("run");
-                    registro[2] = rs.getString("nombre");
-                    registro[3] = rs.getString("telefono");
-                    registro[4] = rs.getString("ciudad");
-                    registro[5] = rs.getString("correo");
-                    registro[6] = rs.getString("estado");
-                    registro[7] = rs.getString("edad"); 
-                    registro[8] = rs.getString("fecha_ingreso");
-                    totalregistros=totalregistros+1;
-                    modelo.addRow(registro);
-                //}
-            }
-            return modelo;
-            
-        }catch(Exception e){
-            JOptionPane.showConfirmDialog(null, e);
-            return null;
-        }
-    }*/
     public String arreglaRUN(String run){
         run = run.trim();
         // Despejar Puntos
@@ -172,10 +121,9 @@ public class clientes {
         // Despejar Guión
         //runformateado = runformateado.replace("-","");
         if(runformateado.indexOf("-")==-1){
-            //hay que agregar un guion
+            //hay que agregar un guion cuando no el que ingresa los datos no lo han puesto
             
-            
-            
+             
         }
         return runformateado;
     }
