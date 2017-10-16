@@ -287,7 +287,7 @@ public class formTrabajador extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         jLabel1.setText("Gestión de Trabajadores");
 
-        btnnuevotr.setIcon(new javax.swing.ImageIcon("/Users/alexndr/NetBeansProjects/FashionProject2017/files/add.png")); // NOI18N
+        btnnuevotr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/add.png"))); // NOI18N
         btnnuevotr.setText("Nuevo Trabajador");
         btnnuevotr.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnnuevotr.addActionListener(new java.awt.event.ActionListener() {
@@ -296,7 +296,7 @@ public class formTrabajador extends javax.swing.JFrame {
             }
         });
 
-        btneliminartr.setIcon(new javax.swing.ImageIcon("/Users/alexndr/NetBeansProjects/FashionProject2017/files/eliminar.png")); // NOI18N
+        btneliminartr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/eliminar.png"))); // NOI18N
         btneliminartr.setText("Eliminar Trabajador");
         btneliminartr.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btneliminartr.addActionListener(new java.awt.event.ActionListener() {
@@ -305,7 +305,7 @@ public class formTrabajador extends javax.swing.JFrame {
             }
         });
 
-        btnsalirtr.setIcon(new javax.swing.ImageIcon("/Users/alexndr/NetBeansProjects/FashionProject2017/files/atras.png")); // NOI18N
+        btnsalirtr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/atras.png"))); // NOI18N
         btnsalirtr.setText("Volver al Menú");
         btnsalirtr.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnsalirtr.addActionListener(new java.awt.event.ActionListener() {
@@ -380,7 +380,7 @@ public class formTrabajador extends javax.swing.JFrame {
 
         jLabel14.setText("*");
 
-        btnguardartr.setIcon(new javax.swing.ImageIcon("/Users/alexndr/NetBeansProjects/FashionProject2017/files/modificar.png")); // NOI18N
+        btnguardartr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/modificar.png"))); // NOI18N
         btnguardartr.setText("Guardar");
         btnguardartr.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnguardartr.addActionListener(new java.awt.event.ActionListener() {
@@ -389,7 +389,7 @@ public class formTrabajador extends javax.swing.JFrame {
             }
         });
 
-        btncancelartr.setIcon(new javax.swing.ImageIcon("/Users/alexndr/NetBeansProjects/FashionProject2017/files/cancel_77947.png")); // NOI18N
+        btncancelartr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/cancel_77947.png"))); // NOI18N
         btncancelartr.setText("Cancelar");
         btncancelartr.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btncancelartr.addActionListener(new java.awt.event.ActionListener() {
