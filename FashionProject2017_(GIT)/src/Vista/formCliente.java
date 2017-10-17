@@ -31,6 +31,7 @@ public class formCliente extends javax.swing.JFrame {
         txtciudad.setText("");
         txtedad.setText("");
         txtidcliente.setText("");
+        
     }
     void ocultar_columnas(){
         tabla.getColumnModel().getColumn(0).setMaxWidth(0);
