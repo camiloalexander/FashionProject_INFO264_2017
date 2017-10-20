@@ -34,3 +34,6 @@ hs_err_pid*
 *.swp
 *.out
 /FashionProject2017_(GIT)/build/
+
+# Allow
+!mysql-connector-java-5.1.13-bin.jar
