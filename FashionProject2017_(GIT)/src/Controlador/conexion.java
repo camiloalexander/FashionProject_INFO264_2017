@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 public class conexion {
+    
     private static String db="bd_peluqueria";
     private static String user="fashion";
     private static String pass="fashion";
