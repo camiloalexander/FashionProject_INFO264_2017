@@ -2,6 +2,19 @@
 package Vista;
 
 import Datos.trabajadores;
+
+import java.awt.event.ActionEvent; 
+import java.awt.event.MouseEvent; 
+import javax.swing.ButtonGroup; 
+import javax.swing.JButton; 
+import javax.swing.JFrame; 
+import javax.swing.JLabel; 
+import javax.swing.JPanel; 
+import javax.swing.JRadioButton; 
+import javax.swing.JScrollPane; 
+import javax.swing.JSeparator; 
+import javax.swing.JTable; 
+import javax.swing.JTextField;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -552,7 +565,6 @@ public class formTrabajador extends javax.swing.JFrame {
         ));
         tabla.setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));
         tabla.setFocusable(false);
-        tabla.setShowGrid(true);
         tabla.getTableHeader().setReorderingAllowed(false);
         tabla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

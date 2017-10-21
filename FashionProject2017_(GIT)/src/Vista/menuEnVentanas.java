@@ -5,6 +5,9 @@
  */
 package Vista;
 
+import javax.swing.JButton; 
+import javax.swing.JPanel;
+
 /**
  *
  * @author alexndr
