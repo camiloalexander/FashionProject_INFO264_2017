@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class tratamientos {
     private int id_tratamiento;
-    private String nombre;
+    private String tipo;
     private int precio;
     private int estado;
     
@@ -24,9 +24,9 @@ public class tratamientos {
     public tratamientos() {
     }
 
-    public tratamientos(int id_tratamiento, String nombre, int precio,int estado) {
+    public tratamientos(int id_tratamiento, String tipo, int precio,int estado) {
         this.id_tratamiento = id_tratamiento;
-        this.nombre = nombre;
+        this.tipo = tipo;
         this.precio = precio;
         this.estado = estado;
     }
@@ -39,12 +39,12 @@ public class tratamientos {
         this.id_tratamiento = id_tratamiento;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public int getPrecio() {
@@ -65,13 +65,13 @@ public class tratamientos {
        
     public DefaultTableModel mostrar(String buscar){
         DefaultTableModel modelo; 
-        String [] columnas = {"ID", "Nombre", "Precio", "Estado"}; 
+        String [] columnas = {"ID", "Tipo", "Precio", "Estado"}; 
         String [] registro = new String [4]; 
         totalregistros=0;
         modelo = new DefaultTableModel(null,columnas);
-        modelo.isCellEditable(totalregistros, 9);
+        modelo.isCellEditable(totalregistros, 4);
         querySQL="select * from tratamiento where "
-                + "(tratamineto.nombre like '%"+buscar+"%' )"
+                + "(tratamiento.tipo like '%"+buscar+"%' )"
                 + "or (tratamiento.precio like '%"+buscar+"%' )"
                 + "order by tratamiento.id_tratamiento";
         try{
@@ -81,8 +81,8 @@ public class tratamientos {
                 //if(rs.getString("estado").equals("0")){  //si esta dado de baja no se muestra 
                   //  rs.next();
                 //}else{
-                    registro[0] = rs.getString("id_cliente");
-                    registro[1] = rs.getString("nombre");
+                    registro[0] = rs.getString("id_tratamiento");
+                    registro[1] = rs.getString("tipo");
                     registro[2] = rs.getString("precio");
                     registro[3] = rs.getString("estado");
                     totalregistros=totalregistros+1;
@@ -100,11 +100,12 @@ public class tratamientos {
    }
     
     public boolean ingresar(tratamientos tra){
-        querySQL = "insert into tratamiento(nombre,precio,estado) values(?,?,?)";
+        querySQL = "insert into tratamiento(tipo,precio,estado) values(?,?,?)";
         try {
             PreparedStatement pst = cn.prepareStatement(querySQL);
-            pst.setString(1, tra.getNombre());   
+            pst.setString(1, tra.getTipo());   
             pst.setInt(2, tra.getPrecio());
+            pst.setInt(3, 1);
             int n = pst.executeUpdate();
             pst.close();                    
             if(n!=0){
@@ -118,12 +119,13 @@ public class tratamientos {
         }
     }
     
+    
     public boolean modificar(tratamientos tra){
-        //querySQL = "update cliente set run=?,nombre=?,telefono=?,ciudad=?,correo=?,estado=?,edad=?,fecha_ingreso=? where id_cliente=?";
-        querySQL = "update tratamiento set tratamiento.nombre=?,tratamiento.precio=? where tratamiento.id_tratamiento=?";
+        //querySQL = "update cliente set run=?,tipo=?,telefono=?,ciudad=?,correo=?,estado=?,edad=?,fecha_ingreso=? where id_cliente=?";
+        querySQL = "update tratamiento set tratamiento.tipo=?,tratamiento.precio=? where tratamiento.id_tratamiento=?";
         try {
             PreparedStatement pst = cn.prepareStatement(querySQL);
-            pst.setString(1, tra.getNombre());
+            pst.setString(1, tra.getTipo());
             pst.setInt(2, tra.getPrecio());
             pst.setInt(7, tra.getId_tratamiento());
             int n = pst.executeUpdate();                   
@@ -156,44 +158,44 @@ public class tratamientos {
             return false;
         }
     }
-    public String nombreTratamiento(String id_tratamiento){
-        String nombre="";
-        querySQL = "select tratamiento.nombre from tratamiento where tratamiento.id_tratamiento = "+id_tratamiento+"";
+    public String tipoTratamiento(String id_tratamiento){
+        String tipo="";
+        querySQL = "select tratamiento.tipo from tratamiento where tratamiento.id_tratamiento = "+id_tratamiento+"";
         try {
             Statement st = cn.createStatement(); //variable de conexion a la bd
             ResultSet rs = st.executeQuery(querySQL);
             while(rs.next()){
-                nombre = rs.getString("nombre");
+                tipo = rs.getString("tipo");
                 break;
             }
             rs.close();                    
             st.close(); 
-            return nombre;
+            return tipo;
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(null,e);
-            return nombre;
+            return tipo;
         }
     }
-     public boolean verificarTratamientoNombre(String nombre){
+     public boolean verificarTratamientoNombre(String tipo){
         boolean esta = false;
         boolean sigue = true;
         String r = "";
-        querySQL = "select * from cliente where cliente.run="+nombre+"";
+        querySQL = "select * from cliente where cliente.run="+tipo+"";
         try {
             Statement st = cn.createStatement(); //variable de conexion a la bd
             ResultSet rs = st.executeQuery(querySQL);
             if(rs.first()){//recorre el resultset al siguiente registro si es que existen
                 rs.beforeFirst();//regresa el puntero al primer registro
                 while(rs.next() && sigue){ //rs.next da falso algunas veces por eso el if de arriba
-                    System.out.println("hay coincidencias de nombre");
-                    r=rs.getString("nombre");
-                    if(r.equals(nombre)){    
+                    System.out.println("hay coincidencias de tipo");
+                    r=rs.getString("tipo");
+                    if(r.equals(tipo)){    
                         esta = true;
                         sigue = false;
                     }    
                 }
             }else{
-                System.out.println("sin coincidencias de tratamiento con ese nombre");
+                System.out.println("sin coincidencias de tratamiento con ese tipo");
                 esta = false;
             }
             rs.close();                    
@@ -204,10 +206,10 @@ public class tratamientos {
             return esta;
         }
     }
-    public int estadoTratamiento(String nombre){
+    public int estadoTratamiento(String tipo){
         boolean sigue = true;
         int estado=2;
-        querySQL = "select * from tratamiento where tratamiento.nombre="+nombre+"";
+        querySQL = "select * from tratamiento where tratamiento.tipo="+tipo+"";
         try {
             Statement st = cn.createStatement(); //variable de conexion a la bd
             ResultSet rs = st.executeQuery(querySQL);
@@ -242,23 +244,23 @@ public class tratamientos {
             return false;
         }
     }
-    public int obtenerIDTratamientoNombre(String nombre){
+    public int obtenerIDTratamientoNombre(String tipo){
         int id=0;
         boolean sigue = true;
-        querySQL = "select * from tratamiento where tratamiento.nombre="+nombre+"";
+        querySQL = "select * from tratamiento where tratamiento.tipo="+tipo+"";
         try {
             Statement st = cn.createStatement(); //variable de conexion a la bd
             ResultSet rs = st.executeQuery(querySQL);
             if(rs.first()){//recorre el resultset al siguiente registro si es que existen
                 rs.beforeFirst();//regresa el puntero al primer registro
                 while(rs.next() && sigue){ //rs.next da falso algunas veces por eso el if de arriba
-                    if((rs.getString("nombre")).equals(nombre) && rs.getInt("estado")==0){    
+                    if((rs.getString("tipo")).equals(tipo) && rs.getInt("estado")==0){    
                         id = rs.getInt("id_tratamiento");
                         sigue = false;
                     }    
                 }
             }else{
-                System.out.println("sin coincidencias de tratamiento con ese nombre");
+                System.out.println("sin coincidencias de tratamiento con ese tipo");
             }
             rs.close();                    
             st.close(); 

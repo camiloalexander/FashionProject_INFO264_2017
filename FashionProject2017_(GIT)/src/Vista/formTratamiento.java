@@ -115,12 +115,12 @@ public class formTratamiento extends javax.swing.JFrame {
             return;
         }
 
-        tra.setNombre(txtnombre.getText());
+        tra.setTipo(txtnombre.getText());
         tra.setPrecio(Integer.parseInt(txtprecio.getText()));
         
         if (accion.equals("guardar")) {
             if (tra.ingresar(tra)) {
-                JOptionPane.showMessageDialog(rootPane, "Tratamiento '"+tra.getNombre()+"' registrado satisfactoriamente.");
+                JOptionPane.showMessageDialog(rootPane, "Tratamiento '"+tra.getTipo()+"' registrado satisfactoriamente.");
                 mostrarListaTratamientos("");
                 inhabilitar();
             }
@@ -128,7 +128,7 @@ public class formTratamiento extends javax.swing.JFrame {
         else if(accion.equals("editar")){
             tra.setId_tratamiento(Integer.parseInt(txtidtratamiento.getText()));
             if (tra.modificar(tra)) {
-                JOptionPane.showMessageDialog(rootPane, "Tratamiento '"+tra.getNombre()+"' modificado satisfactoriamente.");
+                JOptionPane.showMessageDialog(rootPane, "Tratamiento '"+tra.getTipo()+"' modificado satisfactoriamente.");
                 mostrarListaTratamientos("");
                 inhabilitar();
             }
@@ -147,7 +147,7 @@ public class formTratamiento extends javax.swing.JFrame {
         if (!txtidtratamiento.getText().equals("")) {
             Component rootPane = null;
             int confirmacion = JOptionPane.showConfirmDialog(rootPane, "¿Estas seguro "
-                    + "de dar de baja a tratamiento: Nombre = '"+tra.nombreTratamiento(txtidtratamiento.getText())+"' ?","Confirmar",2);
+                    + "de dar de baja a tratamiento: Nombre = '"+tra.tipoTratamiento(txtidtratamiento.getText())+"' ?","Confirmar",2);
             if (confirmacion==0) {
                 tra.setId_tratamiento(Integer.parseInt(txtidtratamiento.getText()));
                 tra.eliminar(tra);
@@ -171,7 +171,7 @@ public class formTratamiento extends javax.swing.JFrame {
         txtprecio.setText(tabla.getValueAt(fila, 2).toString());
         
         tra.setId_tratamiento(Integer.parseInt(txtidtratamiento.getText()));
-        tra.setNombre(txtnombre.getText());
+        tra.setTipo(txtnombre.getText());
         tra.setPrecio(Integer.parseInt(txtprecio.getText()));
         tra.setEstado(Integer.parseInt(tabla.getValueAt(fila, 3).toString()));
     }
@@ -209,13 +209,9 @@ public class formTratamiento extends javax.swing.JFrame {
         lblregistrototal = new javax.swing.JLabel();
         panelmenu = new javax.swing.JPanel();
 
-<<<<<<< Updated upstream
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-=======
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
->>>>>>> Stashed changes
         jLabel1.setText("Gestión de Tratamientos");
 
         bntsalir.setText("Volver al Mneu");
@@ -235,6 +231,7 @@ public class formTratamiento extends javax.swing.JFrame {
         btneliminar.setText("Eliminar Tratamiento");
 
         jPanel1.setBackground(new java.awt.Color(230, 253, 234));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Registro de Tratamiento"));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Nombre");
@@ -249,6 +246,11 @@ public class formTratamiento extends javax.swing.JFrame {
         jLabel6.setText("*");
 
         btnguardar.setText("Guardar");
+        btnguardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnguardarActionPerformed(evt);
+            }
+        });
 
         btncancelar.setText("Cancelar");
 
@@ -318,7 +320,7 @@ public class formTratamiento extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtprecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel6)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addComponent(btnguardar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btncancelar)
@@ -326,6 +328,7 @@ public class formTratamiento extends javax.swing.JFrame {
         );
 
         jPanel2.setBackground(new java.awt.Color(221, 248, 248));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Listado de Tratamientos"));
 
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -355,7 +358,7 @@ public class formTratamiento extends javax.swing.JFrame {
                 .addComponent(jLabel8)
                 .addGap(18, 18, 18)
                 .addComponent(txtbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(217, Short.MAX_VALUE))
+                .addContainerGap(205, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(lblregistrototal))
@@ -363,7 +366,7 @@ public class formTratamiento extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(62, 62, 62)
+                .addGap(61, 61, 61)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(txtbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -385,21 +388,8 @@ public class formTratamiento extends javax.swing.JFrame {
             .addGap(0, 526, Short.MAX_VALUE)
         );
 
-<<<<<<< Updated upstream
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
-=======
-        btneliminar.setText("Eliminar Tratamiento");
-        btneliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btneliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btneliminarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
->>>>>>> Stashed changes
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -439,26 +429,18 @@ public class formTratamiento extends javax.swing.JFrame {
                         .addComponent(btnnuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(panelmenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-<<<<<<< Updated upstream
                         .addGap(18, 18, 18)
-                        .addComponent(btneliminar)
-                        .addGap(0, 52, Short.MAX_VALUE))
+                        .addComponent(btneliminar))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
         jPanel1.getAccessibleContext().setAccessibleName("Registro de Tratramiento");
 
         pack();
-=======
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btneliminar)))
-                .addContainerGap())
-        );
->>>>>>> Stashed changes
     }// </editor-fold>//GEN-END:initComponents
 
     private void bntsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntsalirActionPerformed
@@ -466,8 +448,12 @@ public class formTratamiento extends javax.swing.JFrame {
     }//GEN-LAST:event_bntsalirActionPerformed
 
     private void btnnuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnnuevoActionPerformed
-        // TODO add your handling code here:
+        nuevoTratamiento();
     }//GEN-LAST:event_btnnuevoActionPerformed
+
+    private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
+        guardar_o_modificar_tratamiento();
+    }//GEN-LAST:event_btnguardarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
