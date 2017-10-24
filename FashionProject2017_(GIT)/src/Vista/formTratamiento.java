@@ -209,9 +209,13 @@ public class formTratamiento extends javax.swing.JFrame {
         lblregistrototal = new javax.swing.JLabel();
         panelmenu = new javax.swing.JPanel();
 
+<<<<<<< Updated upstream
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+=======
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
+>>>>>>> Stashed changes
         jLabel1.setText("Gestión de Tratamientos");
 
         bntsalir.setText("Volver al Mneu");
@@ -381,8 +385,21 @@ public class formTratamiento extends javax.swing.JFrame {
             .addGap(0, 526, Short.MAX_VALUE)
         );
 
+<<<<<<< Updated upstream
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
+=======
+        btneliminar.setText("Eliminar Tratamiento");
+        btneliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btneliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btneliminarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+>>>>>>> Stashed changes
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -422,6 +439,7 @@ public class formTratamiento extends javax.swing.JFrame {
                         .addComponent(btnnuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(panelmenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+<<<<<<< Updated upstream
                         .addGap(18, 18, 18)
                         .addComponent(btneliminar)
                         .addGap(0, 52, Short.MAX_VALUE))
@@ -435,6 +453,12 @@ public class formTratamiento extends javax.swing.JFrame {
         jPanel1.getAccessibleContext().setAccessibleName("Registro de Tratramiento");
 
         pack();
+=======
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btneliminar)))
+                .addContainerGap())
+        );
+>>>>>>> Stashed changes
     }// </editor-fold>//GEN-END:initComponents
 
     private void bntsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntsalirActionPerformed

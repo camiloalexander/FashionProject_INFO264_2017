@@ -565,6 +565,7 @@ public class formTrabajador extends javax.swing.JFrame {
         ));
         tabla.setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));
         tabla.setFocusable(false);
+        tabla.setShowGrid(true);
         tabla.getTableHeader().setReorderingAllowed(false);
         tabla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
