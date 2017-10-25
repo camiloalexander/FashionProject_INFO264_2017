@@ -92,6 +92,33 @@ public class formTrabajador extends javax.swing.JFrame {
         }
     }
     void guardar_o_modificar_trabajador(){
+        if(txtrun.getText().length()==0 /*|| (txtrun.getText().trim()).equals("")*/){  //confirmo que tenga rut y nombre en los campos para guardar
+            JOptionPane.showConfirmDialog(rootPane, "Debe ingresar RUN.","",JOptionPane.WARNING_MESSAGE);
+            txtrun.selectAll();
+            txtrun.requestFocus();
+            return;
+        }
+        if((txtnombre.getText().trim()).length()==0 || (txtnombre.getText().trim()).equals("")){
+            JOptionPane.showConfirmDialog(rootPane, "Debe ingresar Nombre.","",JOptionPane.WARNING_MESSAGE);
+            txtnombre.requestFocus();
+            return;
+        }
+        if(txttelefono.getText().equals("")){
+                JOptionPane.showConfirmDialog(rootPane, "Debe ingresar Teléfono.","",JOptionPane.WARNING_MESSAGE);
+                txttelefono.requestFocus();
+                return;
+        }
+        if(txtpass.getText().length()==0){
+            JOptionPane.showConfirmDialog(rootPane, "Debe ingresar Contraseña.","",JOptionPane.WARNING_MESSAGE);
+            txtpass.requestFocus();
+            return;
+        }
+        if(!(opadmin.isSelected() || opnormal.isSelected())){
+                JOptionPane.showConfirmDialog(rootPane, "Debe ingresar Privilegios.","",JOptionPane.WARNING_MESSAGE);
+                opadmin.requestFocus();
+                opnormal.requestFocus();
+                return;
+        }
         trabajadores tr =new trabajadores();
         
         String runformateado = tr.arreglaRUN(txtrun.getText());
@@ -132,33 +159,6 @@ public class formTrabajador extends javax.swing.JFrame {
                 txtrun.selectAll();
                 return;
             }
-        }
-        if(txtrun.getText().length()==0 /*|| (txtrun.getText().trim()).equals("")*/){  //confirmo que tenga rut y nombre en los campos para guardar
-            JOptionPane.showConfirmDialog(rootPane, "Debe ingresar RUN.","",JOptionPane.WARNING_MESSAGE);
-            txtrun.selectAll();
-            txtrun.requestFocus();
-            return;
-        }
-        if((txtnombre.getText().trim()).length()==0 || (txtnombre.getText().trim()).equals("")){
-            JOptionPane.showConfirmDialog(rootPane, "Debe ingresar Nombre.","",JOptionPane.WARNING_MESSAGE);
-            txtnombre.requestFocus();
-            return;
-        }
-        if(txttelefono.getText().equals("")){
-                JOptionPane.showConfirmDialog(rootPane, "Debe ingresar Teléfono.","",JOptionPane.WARNING_MESSAGE);
-                txttelefono.requestFocus();
-                return;
-        }
-        if(txtpass.getText().length()==0){
-            JOptionPane.showConfirmDialog(rootPane, "Debe ingresar Contraseña.","",JOptionPane.WARNING_MESSAGE);
-            txtpass.requestFocus();
-            return;
-        }
-        if(!(opadmin.isSelected() || opnormal.isSelected())){
-                JOptionPane.showConfirmDialog(rootPane, "Debe ingresar Privilegios.","",JOptionPane.WARNING_MESSAGE);
-                opadmin.requestFocus();
-                opnormal.requestFocus();
-                return;
         }
         if(opadmin.isSelected()){
             privilegiosTr = 777;
@@ -296,6 +296,7 @@ public class formTrabajador extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestión Trabajadores FashionProject");
         setPreferredSize(new java.awt.Dimension(1194, 692));
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         jLabel1.setText("Gestión de Trabajadores");
@@ -483,7 +484,7 @@ public class formTrabajador extends javax.swing.JFrame {
                                 .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 232, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 216, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnguardartr, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btncancelartr, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -656,12 +657,14 @@ public class formTrabajador extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnnuevotr))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(275, 275, 275)
                         .addComponent(btneliminartr))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
 
         pack();

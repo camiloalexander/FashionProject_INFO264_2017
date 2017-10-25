@@ -10,7 +10,10 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+
+
 public class trabajadores {
+    
     private int id_trabajador;
     private String run;
     private String nombre;

@@ -127,7 +127,7 @@ public class tratamientos {
             PreparedStatement pst = cn.prepareStatement(querySQL);
             pst.setString(1, tra.getTipo());
             pst.setInt(2, tra.getPrecio());
-            pst.setInt(7, tra.getId_tratamiento());
+            pst.setInt(3, tra.getId_tratamiento());
             int n = pst.executeUpdate();                   
             pst.close(); 
             if(n!=0){
@@ -180,11 +180,17 @@ public class tratamientos {
         boolean esta = false;
         boolean sigue = true;
         String r = "";
-        querySQL = "select * from cliente where cliente.run="+tipo+"";
+        System.out.println("01");
+        querySQL = "select * from tratamiento where tratamiento.tipo="+tipo+"";
+        System.out.println("02");
         try {
+            System.out.println("03");
             Statement st = cn.createStatement(); //variable de conexion a la bd
-            ResultSet rs = st.executeQuery(querySQL);
+            System.out.println("04");
+            ResultSet rs = st.executeQuery(querySQL); ////////
+            System.out.println("11");
             if(rs.first()){//recorre el resultset al siguiente registro si es que existen
+                System.out.println("22");
                 rs.beforeFirst();//regresa el puntero al primer registro
                 while(rs.next() && sigue){ //rs.next da falso algunas veces por eso el if de arriba
                     System.out.println("hay coincidencias de tipo");
@@ -227,6 +233,7 @@ public class tratamientos {
             return estado;
         }
     }
+    
     public boolean modificarEstadodeEliminado(tratamientos tra){
         querySQL = "update tratamiento set tratamiento.estado=1 where tratamiento.id_tratamiento=?";
         try {
