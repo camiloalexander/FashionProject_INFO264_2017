@@ -104,6 +104,36 @@ public class formCliente extends javax.swing.JFrame {
         }
     }
     void guardar_o_modificar_cliente(){
+        if(txtrun.getText().length()==0 /*|| (txtrun.getText().trim()).equals("")*/){  //confirmo que tenga rut y nombre en los campos para guardar
+            JOptionPane.showConfirmDialog(rootPane, "Debe ingresar RUN.","",JOptionPane.WARNING_MESSAGE);
+            txtrun.selectAll();
+            txtrun.requestFocus();
+            return;
+        }
+        if((txtnombre.getText().trim()).length()==0 || (txtnombre.getText().trim()).equals("")){
+            JOptionPane.showConfirmDialog(rootPane, "Debe ingresar Nombre.","",JOptionPane.WARNING_MESSAGE);
+            txtnombre.requestFocus();
+            return;
+        }
+        if(txtedad.getText().length()==0){
+            JOptionPane.showConfirmDialog(rootPane, "Debe ingresar Edad.","",JOptionPane.WARNING_MESSAGE);
+            txtedad.requestFocus();
+            return;
+        }
+        if(txtciudad.getText().length()==0){
+            JOptionPane.showConfirmDialog(rootPane, "Debe ingresar Ciudad.","",JOptionPane.WARNING_MESSAGE);
+            txtciudad.requestFocus();
+            return;
+        }
+        if(!(txtcorreo.getText().equals(""))){
+            if((txtcorreo.getText().indexOf("@")==-1)){
+                JOptionPane.showConfirmDialog(rootPane, "Debe ingresar un Correo válido.","",JOptionPane.WARNING_MESSAGE);
+                txtcorreo.requestFocus();
+                return;
+            }
+
+        }
+        
         clientes cl =new clientes();
         
         String runformateado = cl.arreglaRUN(txtrun.getText());
@@ -145,36 +175,7 @@ public class formCliente extends javax.swing.JFrame {
                 return;
             }
         }
-        if(txtrun.getText().length()==0 /*|| (txtrun.getText().trim()).equals("")*/){  //confirmo que tenga rut y nombre en los campos para guardar
-            JOptionPane.showConfirmDialog(rootPane, "Debe ingresar RUN.","",JOptionPane.WARNING_MESSAGE);
-            txtrun.selectAll();
-            txtrun.requestFocus();
-            return;
-        }
-        if((txtnombre.getText().trim()).length()==0 || (txtnombre.getText().trim()).equals("")){
-            JOptionPane.showConfirmDialog(rootPane, "Debe ingresar Nombre.","",JOptionPane.WARNING_MESSAGE);
-            txtnombre.requestFocus();
-            return;
-        }
-        if(txtedad.getText().length()==0){
-            JOptionPane.showConfirmDialog(rootPane, "Debe ingresar Edad.","",JOptionPane.WARNING_MESSAGE);
-            txtedad.requestFocus();
-            return;
-        }
-        if(txtciudad.getText().length()==0){
-            JOptionPane.showConfirmDialog(rootPane, "Debe ingresar Ciudad.","",JOptionPane.WARNING_MESSAGE);
-            txtciudad.requestFocus();
-            return;
-        }
-        if(!(txtcorreo.getText().equals(""))){
-            if((txtcorreo.getText().indexOf("@")==-1)){
-                JOptionPane.showConfirmDialog(rootPane, "Debe ingresar un Correo válido.","",JOptionPane.WARNING_MESSAGE);
-                txtcorreo.requestFocus();
-                return;
-            }
-
-        }
-        
+       
         cl.setRun(txtrun.getText());    //paso los datos del formulario al objeto cliente
         cl.setNombre(txtnombre.getText());
         cl.setTelefono(txttelefono.getText());
@@ -797,7 +798,7 @@ public class formCliente extends javax.swing.JFrame {
 
     private void txtedadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtedadKeyTyped
         char c = evt.getKeyChar();
-        if(Character.isLetter(c)) evt.consume();    
+        if(!(Character.isDigit(c))) evt.consume();    
         if(txtedad.getText().length()>=3) evt.consume();  // valido que no sea mayor que 3 digitos
     }//GEN-LAST:event_txtedadKeyTyped
 

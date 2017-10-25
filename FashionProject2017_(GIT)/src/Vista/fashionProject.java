@@ -30,6 +30,10 @@ public class fashionProject extends javax.swing.JFrame {
         txtfecha = new javax.swing.JLabel();
         cerrarsesion = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        btngestionartratamientos = new javax.swing.JButton();
+        btnregistrarventa = new javax.swing.JButton();
+        btnadmingastos = new javax.swing.JButton();
+        btngenerarinformes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menú FashionProject");
@@ -48,7 +52,7 @@ public class fashionProject extends javax.swing.JFrame {
 
         btngestionartrabjadores.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         btngestionartrabjadores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/trabajadores.png"))); // NOI18N
-        btngestionartrabjadores.setText("    Gestionar Trabajadores");
+        btngestionartrabjadores.setText("   Gestionar Trabajadores");
         btngestionartrabjadores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btngestionartrabjadores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,25 +81,72 @@ public class fashionProject extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/home.png"))); // NOI18N
         jLabel1.setText(" Menú Principal");
 
+        btngestionartratamientos.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        btngestionartratamientos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/tratamientos.png"))); // NOI18N
+        btngestionartratamientos.setText("     Gestionar Tratamientos");
+        btngestionartratamientos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btngestionartratamientos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btngestionartratamientosActionPerformed(evt);
+            }
+        });
+
+        btnregistrarventa.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
+        btnregistrarventa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/venta.png"))); // NOI18N
+        btnregistrarventa.setText("   Venta");
+        btnregistrarventa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnregistrarventa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnregistrarventaActionPerformed(evt);
+            }
+        });
+
+        btnadmingastos.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
+        btnadmingastos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/gastos.png"))); // NOI18N
+        btnadmingastos.setText("   Gastos");
+        btnadmingastos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnadmingastos.setEnabled(false);
+        btnadmingastos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnadmingastosActionPerformed(evt);
+            }
+        });
+
+        btngenerarinformes.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
+        btngenerarinformes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/documento.png"))); // NOI18N
+        btngenerarinformes.setText("   Informes");
+        btngenerarinformes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btngenerarinformes.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(cerrarsesion)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btngestionartrabjadores, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btngestionarclientes, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(199, 199, 199))
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtusuario)
-                    .addComponent(txtfecha))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(cerrarsesion)
+                        .addGap(215, 215, 215)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtusuario)
+                            .addComponent(txtfecha)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(91, 91, 91)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btngestionartratamientos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(btngestionartrabjadores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btngestionarclientes, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnregistrarventa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnadmingastos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btngenerarinformes, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE))))
+                .addContainerGap(118, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -105,13 +156,21 @@ public class fashionProject extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(cerrarsesion))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
+                        .addGap(20, 20, 20)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(50, 50, 50)
-                .addComponent(btngestionarclientes, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnregistrarventa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btngestionarclientes, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btngestionartrabjadores, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 197, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btngestionartrabjadores, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnadmingastos, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btngenerarinformes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btngestionartratamientos, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE))
+                .addGap(86, 86, 86)
                 .addComponent(txtusuario, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtfecha)
@@ -142,6 +201,22 @@ public class fashionProject extends javax.swing.JFrame {
                 this.setVisible(false);   
         //JOptionPane.showMessageDialog(null, "La presente acción se implemenatará en próximos incrementos.\n\nDebería redirigirte a la interfaz de los trabajadores.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btngestionartrabjadoresActionPerformed
+
+    private void btngestionartratamientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngestionartratamientosActionPerformed
+                formTratamiento ftra = new formTratamiento();
+                ftra.setVisible(true);
+                this.setVisible(false);   
+    }//GEN-LAST:event_btngestionartratamientosActionPerformed
+
+    private void btnregistrarventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregistrarventaActionPerformed
+                formVenta fvent = new formVenta();
+                fvent.setVisible(true);
+                this.setVisible(false);   
+    }//GEN-LAST:event_btnregistrarventaActionPerformed
+
+    private void btnadmingastosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnadmingastosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnadmingastosActionPerformed
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -178,8 +253,12 @@ public class fashionProject extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnadmingastos;
+    private javax.swing.JButton btngenerarinformes;
     private javax.swing.JButton btngestionarclientes;
     private javax.swing.JButton btngestionartrabjadores;
+    private javax.swing.JButton btngestionartratamientos;
+    private javax.swing.JButton btnregistrarventa;
     private javax.swing.JButton cerrarsesion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel txtfecha;
