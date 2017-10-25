@@ -4,6 +4,14 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
 <<<<<<< HEAD
+<<<<<<< Updated upstream
+=======
+            <file>file:/Users/alexndr/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Datos/tratamientos.java</file>
+            <file>file:/Users/alexndr/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Vista/formTratamiento.java</file>
+            <file>file:/Users/alexndr/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Controlador/conexion.java</file>
+=======
+<<<<<<< HEAD
+>>>>>>> Stashed changes
             <file>file:/C:/Users/maria/OneDrive/Documentos/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Controlador/conexion.java</file>
             <file>file:/C:/Users/maria/OneDrive/Documentos/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Vista/formTratamiento.java</file>
 =======
@@ -13,6 +21,10 @@
             <file>file:/Users/alexndr/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Vista/formTrabajador.java</file>
             <file>file:/Users/alexndr/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Controlador/Fecha.java</file>
 >>>>>>> 7e6007c780fe5cbb629efd3bf16dd9ce5f6a0124
+<<<<<<< Updated upstream
+=======
+>>>>>>> origin/master
+>>>>>>> Stashed changes
         </group>
     </open-files>
 </project-private>
