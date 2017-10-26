@@ -304,6 +304,8 @@ public class formTratamiento extends javax.swing.JFrame {
             }
         });
 
+        txtidtratamiento.setEnabled(false);
+
         jLabel7.setText("N° Registro Tratamiento");
 
         jLabel9.setText("$");

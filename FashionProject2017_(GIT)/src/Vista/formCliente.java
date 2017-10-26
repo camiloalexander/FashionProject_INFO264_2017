@@ -391,6 +391,7 @@ public class formCliente extends javax.swing.JFrame {
         jLabel8.setText("Nº Registro Cliente");
 
         txtidcliente.setEditable(false);
+        txtidcliente.setEnabled(false);
         txtidcliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtidclienteActionPerformed(evt);
