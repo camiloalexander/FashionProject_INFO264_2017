@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 14-10-2017 a las 22:19:21
+-- Tiempo de generación: 27-10-2017 a las 16:23:41
 -- Versión del servidor: 5.7.19
 -- Versión de PHP: 7.1.7
 
@@ -45,22 +45,12 @@ CREATE TABLE `cliente` (
 --
 
 INSERT INTO `cliente` (`id_cliente`, `run`, `nombre`, `edad`, `ciudad`, `telefono`, `correo`, `estado`, `fecha_ingreso`) VALUES
-(16, '17.717.167-9', 'Gabolitro', 42, 'Valdivia', '81728361', 'gabo@gmail.com', '1', NULL),
-(33, 'run1run', 'nombre1nombre', 15, 'ciudad1ciudad', 'telefono1telefono', 'correo@correo', '0', NULL),
-(44, '18273849-9', 'Jose luis Prieto', 23, 'Paillaco', '873837846', '', '1', '2017-09-27'),
-(45, '7.123.345-3', 'Carolina Urrutia', 60, 'Los Lagos', '78637467', '', '1', '2017-09-27'),
-(46, '16131767-1', 'Marcos Ide', 29, 'La Union', '76657678', 'marcos@gmail.com', '1', '2017-09-27'),
-(47, '23656765-2', 'Jorge Koch', 18, 'Valdivia', '+56989876567', 'jorge@alumnos.uach.cl', '1', '2017-09-27'),
-(48, '14.562.233-2', 'Maria Pardo', 35, 'Valdivia', '987478398', 'maria@gmail.com', '1', '2017-09-27'),
-(49, '17.672.234-k', 'Lucia Marquez', 23, 'Valdivia', '+569878737', 'lucia@gmail.com', '1', '2017-09-27'),
+(16, '177171679', 'Gabolitro', 42, 'Valdivia', '81728361', 'gabo@gmail.com', '1', NULL),
+(49, '17672234k', 'Lucia Marquez', 23, 'Valdivia', '+569878737', 'lucia@gmail.com', '1', '2017-09-27'),
 (50, '23456723-5', 'humberto campos', 24, 'Nacimiento', '82912812', 'humbertito@hotmal.com', '1', '2017-09-27'),
-(51, '456565671', 'Bartolo', 15, 'Valdivia', '', '', '0', '2017-09-27'),
-(60, '4565656711', '234123123', 12, '123123123', '', '', '0', '2017-09-27'),
 (61, '16160239-6', 'Valeria Henriquez', 32, 'Valdivia', '', '', '1', '2017-09-29'),
-(62, '2232', '123123', 12, '1231231', '', '', '1', '2017-10-01'),
-(63, '123233', '123123', 123, '1231213', '', '', '1', '2017-10-01'),
-(64, '22', '1234', 123, '123123', '123123123', '', '1', '2017-10-01'),
-(66, '18886384-1', 'camilo alarcón ', 23, 'valdivia', '', '', '1', '2017-10-05');
+(66, '18886384-1', 'camilo alarcón ', 23, 'valdivia', '', '', '1', '2017-10-05'),
+(67, '188878474', 'Jinjirouxs', 22, 'Niebla', '', '', '1', '2017-10-17');
 
 --
 -- Índices para tablas volcadas
@@ -80,7 +70,7 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `id_cliente` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;COMMIT;
+  MODIFY `id_cliente` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
