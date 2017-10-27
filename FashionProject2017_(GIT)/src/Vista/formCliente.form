@@ -438,7 +438,7 @@
         <Component class="javax.swing.JButton" name="btnguardar">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="/Users/alexndr/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/files/modificar.png"/>
+              <Image iconType="3" name="/Files/modificar.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Guardar"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -452,7 +452,7 @@
         <Component class="javax.swing.JButton" name="btncancelar">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="/Users/alexndr/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/files/cancel_77947.png"/>
+              <Image iconType="3" name="/Files/cancel_77947.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Cancelar"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -591,7 +591,7 @@
     <Component class="javax.swing.JButton" name="btnsalir">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="/Users/alexndr/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/files/atras.png"/>
+          <Image iconType="3" name="/Files/atras.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Volver al Men&#xfa;"/>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -605,7 +605,7 @@
     <Component class="javax.swing.JButton" name="btnnuevo">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="/Users/alexndr/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/files/add.png"/>
+          <Image iconType="3" name="/Files/add.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Nuevo Cliente"/>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -619,7 +619,7 @@
     <Component class="javax.swing.JButton" name="btneliminar">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="/Users/alexndr/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/files/eliminar.png"/>
+          <Image iconType="3" name="/Files/eliminar.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Eliminar Cliente"/>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
