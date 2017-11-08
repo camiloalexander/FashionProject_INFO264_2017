@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Vista;
 
 import Datos.tratamientos;
@@ -12,10 +8,6 @@ import java.awt.Component;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author maria
- */
 public class formTratamiento extends javax.swing.JFrame {
     fashionProject m = new fashionProject();
     menuEnVentanas mv = new menuEnVentanas();
@@ -303,6 +295,8 @@ public class formTratamiento extends javax.swing.JFrame {
                 btncancelarActionPerformed(evt);
             }
         });
+
+        txtidtratamiento.setEnabled(false);
 
         jLabel7.setText("N° Registro Tratamiento");
 

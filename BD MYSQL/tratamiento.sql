@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 21-10-2017 a las 17:25:25
+-- Tiempo de generación: 27-10-2017 a las 16:23:58
 -- Versión del servidor: 5.7.19
 -- Versión de PHP: 7.1.7
 
@@ -36,6 +36,14 @@ CREATE TABLE `tratamiento` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Volcado de datos para la tabla `tratamiento`
+--
+
+INSERT INTO `tratamiento` (`id_tratamiento`, `tipo`, `precio`, `estado`) VALUES
+(1, 'Corte mujer', 3000, 1),
+(3, 'corte cote', 5000, 1);
+
+--
 -- Índices para tablas volcadas
 --
 
@@ -53,7 +61,7 @@ ALTER TABLE `tratamiento`
 -- AUTO_INCREMENT de la tabla `tratamiento`
 --
 ALTER TABLE `tratamiento`
-  MODIFY `id_tratamiento` int(10) NOT NULL AUTO_INCREMENT;COMMIT;
+  MODIFY `id_tratamiento` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -3,18 +3,6 @@ package Vista;
 
 import Datos.clientes;
 
-import java.awt.event.ActionEvent; 
-import java.awt.event.MouseEvent; 
-import javax.swing.JButton; 
-import javax.swing.JCheckBoxMenuItem; 
-import javax.swing.JFrame; 
-import javax.swing.JLabel; 
-import javax.swing.JMenu; 
-import javax.swing.JMenuBar; 
-import javax.swing.JPanel; 
-import javax.swing.JScrollPane; 
-import javax.swing.JTable; 
-import javax.swing.JTextField;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
@@ -391,6 +379,7 @@ public class formCliente extends javax.swing.JFrame {
         jLabel8.setText("Nº Registro Cliente");
 
         txtidcliente.setEditable(false);
+        txtidcliente.setEnabled(false);
         txtidcliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtidclienteActionPerformed(evt);
@@ -405,7 +394,7 @@ public class formCliente extends javax.swing.JFrame {
 
         jLabel14.setText("*");
 
-        btnguardar.setIcon(new javax.swing.ImageIcon("/Users/alexndr/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/files/modificar.png")); // NOI18N
+        btnguardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/modificar.png"))); // NOI18N
         btnguardar.setText("Guardar");
         btnguardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnguardar.addActionListener(new java.awt.event.ActionListener() {
@@ -414,7 +403,7 @@ public class formCliente extends javax.swing.JFrame {
             }
         });
 
-        btncancelar.setIcon(new javax.swing.ImageIcon("/Users/alexndr/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/files/cancel_77947.png")); // NOI18N
+        btncancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/cancel_77947.png"))); // NOI18N
         btncancelar.setText("Cancelar");
         btncancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btncancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -608,7 +597,7 @@ public class formCliente extends javax.swing.JFrame {
                 .addComponent(lblregistrostotal))
         );
 
-        btnsalir.setIcon(new javax.swing.ImageIcon("/Users/alexndr/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/files/atras.png")); // NOI18N
+        btnsalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/atras.png"))); // NOI18N
         btnsalir.setText("Volver al Menú");
         btnsalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnsalir.addActionListener(new java.awt.event.ActionListener() {
@@ -617,7 +606,7 @@ public class formCliente extends javax.swing.JFrame {
             }
         });
 
-        btnnuevo.setIcon(new javax.swing.ImageIcon("/Users/alexndr/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/files/add.png")); // NOI18N
+        btnnuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/add.png"))); // NOI18N
         btnnuevo.setText("Nuevo Cliente");
         btnnuevo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnnuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -626,7 +615,7 @@ public class formCliente extends javax.swing.JFrame {
             }
         });
 
-        btneliminar.setIcon(new javax.swing.ImageIcon("/Users/alexndr/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/files/eliminar.png")); // NOI18N
+        btneliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/eliminar.png"))); // NOI18N
         btneliminar.setText("Eliminar Cliente");
         btneliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btneliminar.addActionListener(new java.awt.event.ActionListener() {

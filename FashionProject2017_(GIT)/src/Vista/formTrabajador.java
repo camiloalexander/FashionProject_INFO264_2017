@@ -3,18 +3,6 @@ package Vista;
 
 import Datos.trabajadores;
 
-import java.awt.event.ActionEvent; 
-import java.awt.event.MouseEvent; 
-import javax.swing.ButtonGroup; 
-import javax.swing.JButton; 
-import javax.swing.JFrame; 
-import javax.swing.JLabel; 
-import javax.swing.JPanel; 
-import javax.swing.JRadioButton; 
-import javax.swing.JScrollPane; 
-import javax.swing.JSeparator; 
-import javax.swing.JTable; 
-import javax.swing.JTextField;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -380,6 +368,7 @@ public class formTrabajador extends javax.swing.JFrame {
         jLabel8.setText("Nº Registro Trabajador");
 
         txtidtrabajador.setEditable(false);
+        txtidtrabajador.setEnabled(false);
         txtidtrabajador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtidtrabajadorActionPerformed(evt);
@@ -435,10 +424,15 @@ public class formTrabajador extends javax.swing.JFrame {
 
         privilegios.add(opnormal);
         opnormal.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
-        opnormal.setText("Normal");
+        opnormal.setText("Restringido");
         opnormal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 opnormalMouseClicked(evt);
+            }
+        });
+        opnormal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opnormalActionPerformed(evt);
             }
         });
 
@@ -748,6 +742,10 @@ public class formTrabajador extends javax.swing.JFrame {
         // radio normal
         privilegiosTr = 111;
     }//GEN-LAST:event_opnormalMouseClicked
+
+    private void opnormalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opnormalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_opnormalActionPerformed
 
 
 
