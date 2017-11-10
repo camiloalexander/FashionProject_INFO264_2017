@@ -2,17 +2,18 @@
 package Datos;
 
 import Controlador.Fecha;
-import Controlador.conexion;
+import Controlador.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
 
-public class trabajadores {
+public class Trabajadores {
     
     private int id_trabajador;
     private String run;
@@ -24,14 +25,14 @@ public class trabajadores {
     private String fecha_ingreso;
     
     Fecha fecha = new Fecha();
-    private conexion mysql = new conexion(); //instancia a la cadena de conexion
+    private Conexion mysql = new Conexion(); //instancia a la cadena de Conexion
     private Connection cn = mysql.conectar();
-    private String querySQL = "";//cadena de conexion
+    private String querySQL = "";//cadena de Conexion
     public Integer totalregistros;
     
-    public trabajadores() { }
+    public Trabajadores() { }
     
-    public trabajadores(int id_trabajador, String run, String nombre, String telefono, String pass, int privilegios, int estado, String fecha_ingreso) {
+    public Trabajadores(int id_trabajador, String run, String nombre, String telefono, String pass, int privilegios, int estado, String fecha_ingreso) {
         this.id_trabajador = id_trabajador;
         this.run = run;
         this.nombre = nombre;
@@ -135,25 +136,39 @@ public class trabajadores {
     public DefaultTableModel mostrar(String buscar){
         DefaultTableModel modelo; //
         String [] columnas = {"ID", "RUN", "Nombre", "Telefono", "Contraseña", "Privilegios", "Estado", "Fecha de ingreso"}; //titulos
-        String [] registro = new String [9]; //se almacenan los registros
+        //String [] registro = new String [9]; //se almacenan los registros
+        
+        ArrayList<Trabajadores> list = new ArrayList<Trabajadores>();
+        Trabajadores tr;
+        
         totalregistros=0;
         modelo = new DefaultTableModel(null,columnas);
         modelo.isCellEditable(totalregistros, 8);
-        querySQL="select * from trabajador where "
-                + "(trabajador.run like '%"+buscar+"%' )"
-                + "or (trabajador.nombre like '%"+buscar+"%' )"
-                + "or (trabajador.telefono like '%"+buscar+"%' )"
-                + "or (trabajador.privilegios like '%"+buscar+"%' )"
-                + "or (trabajador.estado like '%"+buscar+"%' )"
-                + "or (trabajador.fecha_ingreso like '%"+buscar+"%' )"
-                + "order by trabajador.id_trabajador";
         try{
-            Statement st = cn.createStatement(); //variable de conexion a la bd
+            Statement st = cn.createStatement(); //variable de Conexion a la bd
+            querySQL="select * from trabajador where trabajador.run like '%"+buscar+"%' "
+                    + "or trabajador.nombre like '%"+buscar+"%' "
+                    + "or trabajador.telefono like '%"+buscar+"%' "
+                    + "or trabajador.fecha_ingreso like '%"+buscar+"%' "
+                    + "order by trabajador.id_trabajador";
             ResultSet rs = st.executeQuery(querySQL);
+            /*System.out.println("2");
+            PreparedStatement st = cn.prepareStatement(querySQL);
+            System.out.println("3");
+            
+            st.setString(1, buscar);
+            System.out.println("4");
+            st.setString(2, buscar);
+            st.setString(3, buscar);
+            st.setString(4, buscar);
+            System.out.println("5");
+            ResultSet rs = st.executeQuery();
+            System.out.println("6");*/
             while(rs.next()){
                 //if(rs.getString("estado").equals("0")){  //si esta dado de baja no se muestra 
                   //  rs.next();
                 //}else{
+                /*
                     registro[0] = rs.getString("id_trabajador");
                     registro[1] = rs.getString("run");
                     registro[2] = rs.getString("nombre");
@@ -162,9 +177,37 @@ public class trabajadores {
                     registro[5] = rs.getString("privilegios");
                     registro[6] = rs.getString("estado");
                     registro[7] = rs.getString("fecha_ingreso");
+                    */
+                    tr = new Trabajadores();
+                    tr.setId_trabajador(rs.getInt("id_trabajador"));
+                    tr.setRun(rs.getString("run"));
+                    tr.setNombre(rs.getString("nombre"));
+                    tr.setTelefono(rs.getString("telefono"));
+                    tr.setPass(rs.getString("pass"));
+                    tr.setPrivilegios(rs.getInt("privilegios"));
+                    tr.setEstado(rs.getInt("estado"));
+                    tr.setFecha_ingreso(rs.getString("fecha_ingreso"));
+                    list.add(tr);
+                    
                     totalregistros=totalregistros+1;
-                    modelo.addRow(registro);
+                    //modelo.addRow(registro);
                 //}
+            }
+            if(list.size() > 0){
+                for(int i=0; i< list.size(); i++){
+                    Object fila[] = new Object[8];
+                    tr = list.get(i);
+                    fila[0] = tr.getId_trabajador();
+                    fila[1] = tr.getRun();
+                    fila[2] = tr.getNombre();
+                    fila[3] = tr.getTelefono();
+                    fila[4] = tr.getPass();
+                    fila[5] = tr.getPrivilegios();
+                    fila[6] = tr.getEstado();
+                    fila[7] = tr.getFecha_ingreso();
+
+                    modelo.addRow(fila);
+                }
             }
             rs.close();                    
             st.close(); 
@@ -176,7 +219,7 @@ public class trabajadores {
         }
    }
     
-    public boolean ingresar(trabajadores tr){
+    public boolean ingresar(Trabajadores tr){
         querySQL = "insert into trabajador(run,nombre,telefono,pass,privilegios,estado,fecha_ingreso) values(?,?,?,?,?,?,?)";
         try {
             PreparedStatement pst = cn.prepareStatement(querySQL);
@@ -201,7 +244,7 @@ public class trabajadores {
         }
     }
     
-    public boolean modificar(trabajadores tr){
+    public boolean modificar(Trabajadores tr){
         querySQL = "update trabajador set trabajador.run=?,trabajador.nombre=?,trabajador.telefono=?,trabajador.pass=?,trabajador.privilegios=? where trabajador.id_trabajador=?";
         try {
             PreparedStatement pst = cn.prepareStatement(querySQL);
@@ -227,7 +270,7 @@ public class trabajadores {
         }
     }
     
-    public boolean eliminar(trabajadores tr){
+    public boolean eliminar(Trabajadores tr){
         //querySQL = "delete from cliente where id_cliente = ?";
         querySQL = "update trabajador set trabajador.estado = 0 where trabajador.id_trabajador = ? ";
         try {
@@ -247,10 +290,11 @@ public class trabajadores {
     }
     public String nombreTrabajador(String id_trabajador){
         String nombre="";
-        querySQL = "select trabajador.nombre from trabajador where trabajador.id_trabajador = "+id_trabajador+"";
+        querySQL = "select trabajador.nombre from trabajador where trabajador.id_trabajador = ?";
         try {
-            Statement st = cn.createStatement(); //variable de conexion a la bd
-            ResultSet rs = st.executeQuery(querySQL);
+            PreparedStatement st = cn.prepareStatement(querySQL);
+            st.setInt(1, Integer.parseInt(id_trabajador));
+            ResultSet rs = st.executeQuery();
             while(rs.next()){
                 nombre = rs.getString("nombre");
                 break;
@@ -267,10 +311,11 @@ public class trabajadores {
         boolean esta = false;
         boolean sigue = true;
         String r = "";
-        querySQL = "select * from trabajador where trabajador.run="+run+"";
+        querySQL = "select * from trabajador where trabajador.run=?";
         try {
-            Statement st = cn.createStatement(); //variable de conexion a la bd
-            ResultSet rs = st.executeQuery(querySQL);
+            PreparedStatement st = cn.prepareStatement(querySQL);
+            st.setString(1, run);
+            ResultSet rs = st.executeQuery();
             if(rs.first()){//recorre el resultset al siguiente registro si es que existen
                 rs.beforeFirst();//regresa el puntero al primer registro
                 while(rs.next() && sigue){ //rs.next da falso algunas veces por eso el if de arriba
@@ -296,10 +341,11 @@ public class trabajadores {
     public int estadoTrabajador(String run){
         boolean sigue = true;
         int estado=2;
-        querySQL = "select * from trabajador where trabajador.run="+run+"";
+        querySQL = "select * from trabajador where trabajador.run=?";
         try {
-            Statement st = cn.createStatement(); //variable de conexion a la bd
-            ResultSet rs = st.executeQuery(querySQL);
+            PreparedStatement st = cn.prepareStatement(querySQL);
+            st.setString(1, run);
+            ResultSet rs = st.executeQuery();
             while(rs.next() && sigue){
                 estado=rs.getInt("estado");  
                 if(estado == 0 || estado == 1){
@@ -314,7 +360,7 @@ public class trabajadores {
             return estado;
         }
     }
-    public boolean modificarEstadodeEliminado(trabajadores tr){
+    public boolean modificarEstadodeEliminado(Trabajadores tr){
         querySQL = "update trabajador set trabajador.estado=1 where trabajador.id_trabajador=?";
         try {
             PreparedStatement pst = cn.prepareStatement(querySQL);
@@ -334,10 +380,11 @@ public class trabajadores {
     public int obtenerIDTrabajadorRun(String run){
         int id=0;
         boolean sigue = true;
-        querySQL = "select * from trabajador where trabajador.run="+run+"";
+        querySQL = "select * from trabajador where trabajador.run=?";
         try {
-            Statement st = cn.createStatement(); //variable de conexion a la bd
-            ResultSet rs = st.executeQuery(querySQL);
+            PreparedStatement st = cn.prepareStatement(querySQL);
+            st.setString(1, run);
+            ResultSet rs = st.executeQuery();
             if(rs.first()){//recorre el resultset al siguiente registro si es que existen
                 rs.beforeFirst();//regresa el puntero al primer registro
                 while(rs.next() && sigue){ //rs.next da falso algunas veces por eso el if de arriba
@@ -357,4 +404,34 @@ public class trabajadores {
             return id;
         }
     }
+    
+    
+    public ArrayList listaTrabajadores(){
+        ArrayList<Trabajadores> list = new ArrayList<Trabajadores>();
+        Trabajadores tr;
+        try{
+            Statement st = cn.createStatement(); //variable de Conexion a la bd
+            querySQL="select * from trabajador where estado=1";
+            ResultSet rs = st.executeQuery(querySQL);
+            while(rs.next()){
+                    tr = new Trabajadores();
+                    tr.setId_trabajador(rs.getInt("id_trabajador"));
+                    tr.setRun(rs.getString("run"));
+                    tr.setNombre(rs.getString("nombre"));
+                    tr.setTelefono(rs.getString("telefono"));
+                    tr.setPass(rs.getString("pass"));
+                    tr.setPrivilegios(rs.getInt("privilegios"));
+                    tr.setEstado(rs.getInt("estado"));
+                    tr.setFecha_ingreso(rs.getString("fecha_ingreso"));
+                    list.add(tr);
+            }
+            rs.close();                    
+            st.close(); 
+            return list;
+
+        }catch(Exception e){
+            JOptionPane.showConfirmDialog(null, e);
+            return null;
+        }
+   }
 }

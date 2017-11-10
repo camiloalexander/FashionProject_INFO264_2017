@@ -2,15 +2,17 @@
 package Datos;
 
 import Controlador.Fecha;
-import Controlador.conexion;
+import Controlador.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class clientes {
+public class Clientes {
     private int id_cliente;
     private String nombre;
     private String run;
@@ -22,15 +24,15 @@ public class clientes {
     private String fecha_ingreso;
     
     Fecha fecha = new Fecha();
-    private conexion mysql = new conexion(); //instancia a la cadena de conexion
+    private Conexion mysql = new Conexion(); //instancia a la cadena de Conexion
     private Connection cn = mysql.conectar();
-    private String querySQL = "";//cadena de conexion
+    private String querySQL = "";//cadena de Conexion
     public Integer totalregistros;
     
-    public clientes() {
+    public Clientes() {
     }
 
-    public clientes(int id_cliente, String nombre, String run, String telefono, String ciudad, String correo, int estado, int edad, String fecha_ingreso) {
+    public Clientes(int id_cliente, String nombre, String run, String telefono, String ciudad, String correo, int estado, int edad, String fecha_ingreso) {
         this.id_cliente = id_cliente;
         this.nombre = nombre;
         this.run = run;
@@ -163,10 +165,23 @@ public class clientes {
         //String [] columnas = {"ID", "RUN", "Nombre", "Telefono", "Ciudad", "Correo", "Estado", "Edad", "Fecha de ingreso"}; //titulos
         String [] columnas = {"ID", "RUN", "Nombre", "Telefono", "Ciudad", "Correo", "Estado", "Edad", "Fecha de ingreso"}; //titulos
         //String [] columnas = {"ID", "RUN", "Nombre", "Edad", "Ciudad", "Telefono", "Correo", "Fecha de ingreso"}; //titulos
-        String [] registro = new String [9]; //se almacenan los registros
+        
+        ////String [] registro = new String [9]; //se almacenan los registros
+        
         totalregistros=0;
         modelo = new DefaultTableModel(null,columnas);
         modelo.isCellEditable(totalregistros, 9);
+        ArrayList<Clientes> list = new ArrayList<Clientes>();
+        Clientes cl;
+        /*querySQL="select * from cliente where "
+                + "(cliente.nombre like '%?%' )"
+                + "or (cliente.run like '%?%' )"
+                + "or (cliente.edad like '%?%' )"
+                + "or (cliente.ciudad like '%?%' )"
+                + "or (cliente.telefono like '%?%' )"
+                + "or (cliente.correo like '%?%' )"
+                + "or (cliente.fecha_ingreso like '%?%' )"
+                + "order by cliente.id_cliente";*/
         querySQL="select * from cliente where "
                 + "(cliente.nombre like '%"+buscar+"%' )"
                 + "or (cliente.run like '%"+buscar+"%' )"
@@ -174,15 +189,27 @@ public class clientes {
                 + "or (cliente.ciudad like '%"+buscar+"%' )"
                 + "or (cliente.telefono like '%"+buscar+"%' )"
                 + "or (cliente.correo like '%"+buscar+"%' )"
+                + "or (cliente.estado like '%"+buscar+"%' )"
+                + "or (cliente.edad like '%"+buscar+"%' )"
                 + "or (cliente.fecha_ingreso like '%"+buscar+"%' )"
                 + "order by cliente.id_cliente";
         try{
-            Statement st = cn.createStatement(); //variable de conexion a la bd
+            /*PreparedStatement st = cn.prepareStatement(querySQL);
+            st.setString(1, buscar);
+            st.setString(2, buscar);
+            st.setString(3, buscar);
+            st.setString(4, buscar);
+            st.setString(5, buscar);
+            st.setString(6, buscar);
+            st.setString(7, buscar);
+            ResultSet rs = st.executeQuery();*/
+            Statement st = cn.createStatement(); //variable de Conexion a la bd
             ResultSet rs = st.executeQuery(querySQL);
             while(rs.next()){
                 //if(rs.getString("estado").equals("0")){  //si esta dado de baja no se muestra 
                   //  rs.next();
                 //}else{
+                /*
                     registro[0] = rs.getString("id_cliente");
                     registro[1] = rs.getString("run");
                     registro[2] = rs.getString("nombre");
@@ -192,12 +219,48 @@ public class clientes {
                     registro[6] = rs.getString("estado");
                     registro[7] = rs.getString("edad"); 
                     registro[8] = rs.getString("fecha_ingreso");
+                    */
+                    cl = new Clientes();
+                    cl.setId_cliente(rs.getInt("id_cliente"));
+                    cl.setRun(rs.getString("run"));
+                    cl.setNombre(rs.getString("nombre"));
+                    cl.setTelefono(rs.getString("telefono"));
+                    cl.setCiudad(rs.getString("ciudad"));
+                    cl.setCorreo(rs.getString("correo"));
+                    cl.setEstado(rs.getInt("estado"));
+                    cl.setEdad(rs.getInt("edad"));
+                    cl.setFecha_ingreso(rs.getString("fecha_ingreso"));
+                    list.add(cl);
+                   
                     totalregistros=totalregistros+1;
-                    modelo.addRow(registro);
+                    //modelo.addRow(registro);
                 //}
             }
             rs.close();                    
             st.close(); 
+            if(list.size() > 0){
+                for(int i=0; i< list.size(); i++){
+                    Object fila[] = new Object[9];
+                    cl = list.get(i);
+                    fila[0] = cl.getId_cliente();
+                    fila[1] = cl.getRun();
+                    fila[2] = cl.getNombre();
+                    fila[3] = cl.getTelefono();
+                    fila[4] = cl.getCiudad();
+                    fila[5] = cl.getCorreo();
+                    fila[6] = cl.getEstado();
+                    fila[7] = cl.getEdad();
+                    fila[8] = cl.getFecha_ingreso();
+
+                    modelo.addRow(fila);
+                }
+            }
+            //sirve para recorrer el arraylist de Clientes
+            /*Iterator<clientes> nombreIterator = list.iterator();
+            while(nombreIterator.hasNext()){
+                Clientes c = nombreIterator.next();
+                System.out.println(c.getId_cliente()+" "+c.getNombre());
+            }*/
             return modelo;
 
         }catch(Exception e){
@@ -206,7 +269,7 @@ public class clientes {
         }
    }
     
-    public boolean ingresar(clientes cl){
+    public boolean ingresar(Clientes cl){
         querySQL = "insert into cliente(run,nombre,telefono,ciudad,correo,estado,edad,fecha_ingreso) values(?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement pst = cn.prepareStatement(querySQL);
@@ -232,7 +295,7 @@ public class clientes {
         }
     }
     
-    public boolean modificar(clientes cl){
+    public boolean modificar(Clientes cl){
         //querySQL = "update cliente set run=?,nombre=?,telefono=?,ciudad=?,correo=?,estado=?,edad=?,fecha_ingreso=? where id_cliente=?";
         querySQL = "update cliente set cliente.run=?,cliente.nombre=?,cliente.telefono=?,cliente.ciudad=?,cliente.correo=?,cliente.edad=? where cliente.id_cliente=?";
         try {
@@ -259,7 +322,7 @@ public class clientes {
         }
     }
     
-    public boolean eliminar(clientes cl){
+    public boolean eliminar(Clientes cl){
         //querySQL = "delete from cliente where id_cliente = ?";
         querySQL = "update cliente set cliente.estado = 0 where cliente.id_cliente = ? ";
         try {
@@ -279,10 +342,11 @@ public class clientes {
     }
     public String nombreCliente(String id_cliente){
         String nombre="";
-        querySQL = "select cliente.nombre from cliente where cliente.id_cliente = "+id_cliente+"";
+        querySQL = "select cliente.nombre from cliente where cliente.id_cliente = ?";
         try {
-            Statement st = cn.createStatement(); //variable de conexion a la bd
-            ResultSet rs = st.executeQuery(querySQL);
+            PreparedStatement st = cn.prepareStatement(querySQL);
+            st.setString(1, id_cliente);
+            ResultSet rs = st.executeQuery();
             while(rs.next()){
                 nombre = rs.getString("nombre");
                 break;
@@ -299,10 +363,12 @@ public class clientes {
         boolean esta = false;
         boolean sigue = true;
         String r = "";
-        querySQL = "select * from cliente where cliente.run="+run+"";
+        querySQL = "select * from cliente where cliente.run=?";
         try {
-            Statement st = cn.createStatement(); //variable de conexion a la bd
-            ResultSet rs = st.executeQuery(querySQL);
+            PreparedStatement st = cn.prepareStatement(querySQL);
+            st.setString(1, run);
+            ResultSet rs = st.executeQuery();
+
             if(rs.first()){//recorre el resultset al siguiente registro si es que existen
                 rs.beforeFirst();//regresa el puntero al primer registro
                 while(rs.next() && sigue){ //rs.next da falso algunas veces por eso el if de arriba
@@ -328,10 +394,11 @@ public class clientes {
     public int estadoCliente(String run){
         boolean sigue = true;
         int estado=2;
-        querySQL = "select * from cliente where cliente.run="+run+"";
+        querySQL = "select * from cliente where cliente.run=?";
         try {
-            Statement st = cn.createStatement(); //variable de conexion a la bd
-            ResultSet rs = st.executeQuery(querySQL);
+            PreparedStatement st = cn.prepareStatement(querySQL);
+            st.setString(1, run);
+            ResultSet rs = st.executeQuery();
             while(rs.next() && sigue){
                 estado=rs.getInt("estado");  
                 if(estado == 0 || estado == 1){
@@ -346,7 +413,7 @@ public class clientes {
             return estado;
         }
     }
-    public boolean modificarEstadodeEliminado(clientes cl){
+    public boolean modificarEstadodeEliminado(Clientes cl){
         querySQL = "update cliente set cliente.estado=1 where cliente.id_cliente=?";
         try {
             PreparedStatement pst = cn.prepareStatement(querySQL);
@@ -366,10 +433,11 @@ public class clientes {
     public int obtenerIDClienteRun(String run){
         int id=0;
         boolean sigue = true;
-        querySQL = "select * from cliente where cliente.run="+run+"";
+        querySQL = "select * from cliente where cliente.run=?";
         try {
-            Statement st = cn.createStatement(); //variable de conexion a la bd
-            ResultSet rs = st.executeQuery(querySQL);
+            PreparedStatement st = cn.prepareStatement(querySQL);
+            st.setString(1, run);
+            ResultSet rs = st.executeQuery();
             if(rs.first()){//recorre el resultset al siguiente registro si es que existen
                 rs.beforeFirst();//regresa el puntero al primer registro
                 while(rs.next() && sigue){ //rs.next da falso algunas veces por eso el if de arriba

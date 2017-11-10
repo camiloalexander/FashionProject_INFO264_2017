@@ -1,26 +1,27 @@
 
 package Vista;
 
-import Datos.clientes;
+import Datos.Clientes;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import Vista.menuEnVentanas;
+import Vista.MenuEnVentanas;
 
 
-public class formCliente extends javax.swing.JFrame {
-    fashionProject m = new fashionProject();
-    menuEnVentanas mv = new menuEnVentanas();
+public class FormCliente extends javax.swing.JFrame {
+    FashionProject m = new FashionProject();
+    MenuEnVentanas mv = new MenuEnVentanas();
     int fila;
     String runinicial;
     private String accion="guardar"; //lo que se muestra en un comienzo en el boton de multiples opciones
     
     
-    public formCliente(){
+    public FormCliente(){
         initComponents();
+        this.setLocationRelativeTo(null);
         mostrarListaClientes("");
         inhabilitar();
     }
@@ -72,7 +73,7 @@ public class formCliente extends javax.swing.JFrame {
         try {
             DefaultTableModel modelo;
             //funcionesCliente func = new funcionesCliente();
-            clientes cl =new clientes();
+            Clientes cl =new Clientes();
             modelo = cl.mostrar(buscar); //instancia de las funciones, buscar es de buscar cliente
             tabla.setModel(modelo);
             ocultar_columnas();
@@ -122,7 +123,7 @@ public class formCliente extends javax.swing.JFrame {
 
         }
         
-        clientes cl =new clientes();
+        Clientes cl =new Clientes();
         
         String runformateado = cl.arreglaRUN(txtrun.getText());
         txtrun.setText(runformateado);
@@ -142,7 +143,7 @@ public class formCliente extends javax.swing.JFrame {
                     int resp = JOptionPane.showConfirmDialog(null, "¿Desea reincorporar el cliente?", "Dar de alta a cliente!", JOptionPane.YES_NO_OPTION);                    
                     if(resp == 0){
                         System.out.println("Si hay que cambiarle el estado");
-                        clientes c = new clientes();
+                        Clientes c = new Clientes();
                         int id = cl.obtenerIDClienteRun(txtrun.getText());
                         c.setId_cliente(id);
                         cl.modificarEstadodeEliminado(c);  //////modifica el estado, de eliminado(0) a no eliminado(1)
@@ -197,7 +198,7 @@ public class formCliente extends javax.swing.JFrame {
         accion="guardar"; //si es guardar o editar
     }
     void eliminarCliente(){
-        clientes cl = new clientes();
+        Clientes cl = new Clientes();
         //funcionesCliente func = new funcionesCliente();
         if (!txtidcliente.getText().equals("")) {
             //cl.setId_cliente(Integer.parseInt(txtidcliente.getText()));
@@ -219,8 +220,7 @@ public class formCliente extends javax.swing.JFrame {
         habilitar();
         btneliminar.setEnabled(true);
         accion="editar";
-        clientes cl = new clientes();
-
+        Clientes cl = new Clientes();
         txtidcliente.setText(tabla.getValueAt(fila, 0).toString());
         txtrun.setText(tabla.getValueAt(fila, 1).toString());
         txtnombre.setText(tabla.getValueAt(fila, 2).toString());
@@ -632,7 +632,7 @@ public class formCliente extends javax.swing.JFrame {
         );
         panelmenuLayout.setVerticalGroup(
             panelmenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 426, Short.MAX_VALUE)
+            .addGap(0, 440, Short.MAX_VALUE)
         );
 
         jMenu2.setText("Otros");
@@ -670,7 +670,7 @@ public class formCliente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(823, 823, 823)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 823, Short.MAX_VALUE)
                         .addComponent(btnsalir))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -702,7 +702,7 @@ public class formCliente extends javax.swing.JFrame {
                         .addComponent(btnnuevo)
                         .addGap(18, 18, 18)
                         .addComponent(panelmenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btneliminar))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -767,7 +767,7 @@ public class formCliente extends javax.swing.JFrame {
     private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
         fila = tabla.rowAtPoint(evt.getPoint());  //fila donde hago click
         modificarCliente(fila);
-        //txtrun.setEnabled(false); //deshabilitar modificacion de run
+//txtrun.setEnabled(false); //deshabilitar modificacion de run
         runinicial = txtrun.getText();
     }//GEN-LAST:event_tablaMouseClicked
 

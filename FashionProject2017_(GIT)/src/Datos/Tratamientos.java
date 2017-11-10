@@ -1,30 +1,31 @@
 package Datos;
 
 import Controlador.Fecha;
-import Controlador.conexion;
+import Controlador.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class tratamientos {
+public class Tratamientos {
     private int id_tratamiento;
     private String tipo;
     private int precio;
     private int estado;
     
     Fecha fecha = new Fecha();
-    private conexion mysql = new conexion(); //instancia a la cadena de conexion
+    private Conexion mysql = new Conexion(); //instancia a la cadena de Conexion
     private Connection cn = mysql.conectar();
-    private String querySQL = "";//cadena de conexion
+    private String querySQL = "";//cadena de Conexion
     public Integer totalregistros;
     
-    public tratamientos() {
+    public Tratamientos() {
     }
 
-    public tratamientos(int id_tratamiento, String tipo, int precio,int estado) {
+    public Tratamientos(int id_tratamiento, String tipo, int precio,int estado) {
         this.id_tratamiento = id_tratamiento;
         this.tipo = tipo;
         this.precio = precio;
@@ -66,7 +67,11 @@ public class tratamientos {
     public DefaultTableModel mostrar(String buscar){
         DefaultTableModel modelo; 
         String [] columnas = {"ID", "Tipo", "Precio", "Estado"}; 
-        String [] registro = new String [4]; 
+        //String [] registro = new String [4]; 
+        
+        ArrayList<Tratamientos> list = new ArrayList<Tratamientos>();
+        Tratamientos tra;
+        
         totalregistros=0;
         modelo = new DefaultTableModel(null,columnas);
         modelo.isCellEditable(totalregistros, 4);
@@ -75,19 +80,42 @@ public class tratamientos {
                 + "or (tratamiento.precio like '%"+buscar+"%' )"
                 + "order by tratamiento.id_tratamiento";
         try{
-            Statement st = cn.createStatement(); //variable de conexion a la bd
+            //PreparedStatement st = cn.prepareStatement(querySQL);
+            Statement st = cn.createStatement(); //variable de Conexion a la bd
+            //st.setString(1, buscar);
+            //st.setString(2, buscar);
             ResultSet rs = st.executeQuery(querySQL);
             while(rs.next()){
                 //if(rs.getString("estado").equals("0")){  //si esta dado de baja no se muestra 
                   //  rs.next();
                 //}else{
+                /*
                     registro[0] = rs.getString("id_tratamiento");
                     registro[1] = rs.getString("tipo");
                     registro[2] = rs.getString("precio");
                     registro[3] = rs.getString("estado");
+                */
+                    tra = new Tratamientos();
+                    tra.setId_tratamiento(rs.getInt("id_tratamiento"));
+                    tra.setTipo(rs.getString("tipo"));
+                    tra.setPrecio(rs.getInt("precio"));
+                    tra.setEstado(rs.getInt("estado"));
+                    list.add(tra);
                     totalregistros=totalregistros+1;
-                    modelo.addRow(registro);
+                    //modelo.addRow(registro);
                 //}
+            }
+            if(list.size() > 0){
+                for(int i=0; i< list.size(); i++){
+                    Object fila[] = new Object[8];
+                    tra = list.get(i);
+                    fila[0] = tra.getId_tratamiento();
+                    fila[1] = tra.getTipo();
+                    fila[2] = tra.getPrecio();
+                    fila[3] = tra.getEstado();
+
+                    modelo.addRow(fila);
+                }
             }
             rs.close();                    
             st.close(); 
@@ -99,7 +127,7 @@ public class tratamientos {
         }
    }
     
-    public boolean ingresar(tratamientos tra){
+    public boolean ingresar(Tratamientos tra){
         querySQL = "insert into tratamiento(tipo,precio,estado) values(?,?,?)";
         try {
             PreparedStatement pst = cn.prepareStatement(querySQL);
@@ -120,7 +148,7 @@ public class tratamientos {
     }
     
     
-    public boolean modificar(tratamientos tra){
+    public boolean modificar(Tratamientos tra){
         //querySQL = "update cliente set run=?,tipo=?,telefono=?,ciudad=?,correo=?,estado=?,edad=?,fecha_ingreso=? where id_cliente=?";
         querySQL = "update tratamiento set tratamiento.tipo=?,tratamiento.precio=? where tratamiento.id_tratamiento=?";
         try {
@@ -141,7 +169,7 @@ public class tratamientos {
         }
     }
     
-    public boolean eliminar(tratamientos tra){
+    public boolean eliminar(Tratamientos tra){
         querySQL = "update tratamiento set tratamiento.estado = 0 where tratamiento.id_tratamiento = ? ";
         try {
             PreparedStatement pst = cn.prepareStatement(querySQL);
@@ -160,10 +188,13 @@ public class tratamientos {
     }
     public String tipoTratamiento(String id_tratamiento){
         String tipo="";
-        querySQL = "select tratamiento.tipo from tratamiento where tratamiento.id_tratamiento = "+id_tratamiento+"";
+        querySQL = "select tratamiento.tipo from tratamiento where tratamiento.id_tratamiento = ?";
+        
         try {
-            Statement st = cn.createStatement(); //variable de conexion a la bd
-            ResultSet rs = st.executeQuery(querySQL);
+            PreparedStatement st = cn.prepareStatement(querySQL);
+            //Statement st = cn.createStatement(); //variable de Conexion a la bd
+            st.setInt(1, Integer.parseInt(id_tratamiento));
+            ResultSet rs = st.executeQuery();
             while(rs.next()){
                 tipo = rs.getString("tipo");
                 break;
@@ -181,14 +212,15 @@ public class tratamientos {
         boolean sigue = true;
         String r = "";
         System.out.println("01");
-        querySQL = "select * from tratamiento where tratamiento.tipo="+tipo+"";
+        querySQL = "select * from tratamiento where tratamiento.tipo=?";
         System.out.println("02");
         try {
             System.out.println("03");
-            Statement st = cn.createStatement(); //variable de conexion a la bd
-            System.out.println("04");
-            ResultSet rs = st.executeQuery(querySQL); ////////
-            System.out.println("11");
+            PreparedStatement st = cn.prepareStatement(querySQL);
+            //Statement st = cn.createStatement(); //variable de Conexion a la bd
+            st.setString(1, tipo);
+            ResultSet rs = st.executeQuery();
+
             if(rs.first()){//recorre el resultset al siguiente registro si es que existen
                 System.out.println("22");
                 rs.beforeFirst();//regresa el puntero al primer registro
@@ -215,10 +247,13 @@ public class tratamientos {
     public int estadoTratamiento(String tipo){
         boolean sigue = true;
         int estado=2;
-        querySQL = "select * from tratamiento where tratamiento.tipo="+tipo+"";
+        querySQL = "select * from tratamiento where tratamiento.tipo=?";
         try {
-            Statement st = cn.createStatement(); //variable de conexion a la bd
-            ResultSet rs = st.executeQuery(querySQL);
+            PreparedStatement st = cn.prepareStatement(querySQL);
+            //Statement st = cn.createStatement(); //variable de Conexion a la bd
+            st.setString(1, tipo);
+            ResultSet rs = st.executeQuery();
+
             while(rs.next() && sigue){
                 estado=rs.getInt("estado");  
                 if(estado == 0 || estado == 1){
@@ -234,7 +269,7 @@ public class tratamientos {
         }
     }
     
-    public boolean modificarEstadodeEliminado(tratamientos tra){
+    public boolean modificarEstadodeEliminado(Tratamientos tra){
         querySQL = "update tratamiento set tratamiento.estado=1 where tratamiento.id_tratamiento=?";
         try {
             PreparedStatement pst = cn.prepareStatement(querySQL);
@@ -254,10 +289,12 @@ public class tratamientos {
     public int obtenerIDTratamientoNombre(String tipo){
         int id=0;
         boolean sigue = true;
-        querySQL = "select * from tratamiento where tratamiento.tipo="+tipo+"";
+        querySQL = "select * from tratamiento where tratamiento.tipo=?";
         try {
-            Statement st = cn.createStatement(); //variable de conexion a la bd
-            ResultSet rs = st.executeQuery(querySQL);
+            PreparedStatement st = cn.prepareStatement(querySQL);
+            //Statement st = cn.createStatement(); //variable de Conexion a la bd
+            st.setString(1, tipo);
+            ResultSet rs = st.executeQuery();
             if(rs.first()){//recorre el resultset al siguiente registro si es que existen
                 rs.beforeFirst();//regresa el puntero al primer registro
                 while(rs.next() && sigue){ //rs.next da falso algunas veces por eso el if de arriba

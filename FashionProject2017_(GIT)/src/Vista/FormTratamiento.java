@@ -1,23 +1,24 @@
 
 package Vista;
 
-import Datos.tratamientos;
+import Datos.Tratamientos;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class formTratamiento extends javax.swing.JFrame {
-    fashionProject m = new fashionProject();
-    menuEnVentanas mv = new menuEnVentanas();
+public class FormTratamiento extends javax.swing.JFrame {
+    FashionProject m = new FashionProject();
+    MenuEnVentanas mv = new MenuEnVentanas();
     int fila;
     String nombreinicial;
     private String accion="guardar";
     private Component rootPane;
     
-    public formTratamiento() {
+    public FormTratamiento() {
         initComponents();
+        this.setLocationRelativeTo(null);
         mostrarListaTratamientos("");
         inhabilitar();
     }
@@ -38,6 +39,7 @@ public class formTratamiento extends javax.swing.JFrame {
         txtprecio.setEnabled(false); 
         btnguardar.setEnabled(false);
         btncancelar.setEnabled(false); 
+        btnasignar_trabajador.setEnabled(false); 
         txtnombre.setText("");
         txtprecio.setText("");
     }
@@ -47,12 +49,13 @@ public class formTratamiento extends javax.swing.JFrame {
         btnnuevo.setEnabled(true);
         btnguardar.setEnabled(true);
         btncancelar.setEnabled(true); 
+        btnasignar_trabajador.setEnabled(true); 
     }
     void mostrarListaTratamientos(String buscar){
         try {
             DefaultTableModel modelo;
             //funcionesCliente func = new funcionesCliente();
-            tratamientos tra =new tratamientos();
+            Tratamientos tra =new Tratamientos();
             modelo = tra.mostrar(buscar); //instancia de las funciones, buscar es de buscar cliente
             tabla.setModel(modelo);
             ocultar_columnas();
@@ -82,7 +85,7 @@ public class formTratamiento extends javax.swing.JFrame {
             txtprecio.requestFocus();
             return;
         }
-        tratamientos tra =new tratamientos();
+        Tratamientos tra =new Tratamientos();
         System.out.println("ingreso a modifcar o ingresar ");
         if(accion.equals("guardar")){
             if((tra.verificarTratamientoNombre(txtnombre.getText()))){
@@ -91,7 +94,7 @@ public class formTratamiento extends javax.swing.JFrame {
                     int resp = JOptionPane.showConfirmDialog(null, "¿Desea reincorporar el tratamiento?", "Dar de alta a tratamiento!", JOptionPane.YES_NO_OPTION);                    
                     if(resp == 0){
                         System.out.println("Si hay que cambiarle el estado");
-                        tratamientos t = new tratamientos();
+                        Tratamientos t = new Tratamientos();
                         int id = tra.obtenerIDTratamientoNombre(txtnombre.getText());
                         t.setId_tratamiento(id);
                         tra.modificarEstadodeEliminado(t);  //////modifica el estado, de eliminado(0) a no eliminado(1)
@@ -141,7 +144,7 @@ public class formTratamiento extends javax.swing.JFrame {
         accion="guardar"; //si es guardar o editar
     }
     void eliminarTratamiento(){
-        tratamientos tra = new tratamientos();
+        Tratamientos tra = new Tratamientos();
         if (!txtidtratamiento.getText().equals("")) {
             Component rootPane = null;
             int confirmacion = JOptionPane.showConfirmDialog(rootPane, "¿Estas seguro "
@@ -162,7 +165,7 @@ public class formTratamiento extends javax.swing.JFrame {
         habilitar();
         btneliminar.setEnabled(true);
         accion="editar";
-        tratamientos tra= new tratamientos();
+        Tratamientos tra= new Tratamientos();
 
         txtidtratamiento.setText(tabla.getValueAt(fila, 0).toString());
         txtnombre.setText(tabla.getValueAt(fila, 1).toString());
@@ -200,6 +203,8 @@ public class formTratamiento extends javax.swing.JFrame {
         txtidtratamiento = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        btnasignar_trabajador = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         txtbuscar = new javax.swing.JTextField();
@@ -302,6 +307,15 @@ public class formTratamiento extends javax.swing.JFrame {
 
         jLabel9.setText("$");
 
+        btnasignar_trabajador.setText("Asignar");
+        btnasignar_trabajador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnasignar_trabajadorActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setText("Asignar Trabajador");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -313,9 +327,12 @@ public class formTratamiento extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addGap(49, 49, 49))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel9)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel9))
+                            .addComponent(jLabel10))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -330,10 +347,12 @@ public class formTratamiento extends javax.swing.JFrame {
                         .addComponent(jLabel5)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtprecio, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtprecio)
+                            .addComponent(btnasignar_trabajador, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 398, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btncancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(3, 3, 3)
@@ -368,7 +387,11 @@ public class formTratamiento extends javax.swing.JFrame {
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtprecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9)
-                            .addComponent(jLabel6))))
+                            .addComponent(jLabel6))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnasignar_trabajador)
+                            .addComponent(jLabel10))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -426,7 +449,7 @@ public class formTratamiento extends javax.swing.JFrame {
                 .addComponent(jLabel8)
                 .addGap(57, 57, 57)
                 .addComponent(txtbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(399, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addContainerGap()
@@ -454,11 +477,11 @@ public class formTratamiento extends javax.swing.JFrame {
         panelmenu.setLayout(panelmenuLayout);
         panelmenuLayout.setHorizontalGroup(
             panelmenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 221, Short.MAX_VALUE)
+            .addGap(0, 225, Short.MAX_VALUE)
         );
         panelmenuLayout.setVerticalGroup(
             panelmenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 481, Short.MAX_VALUE)
+            .addGap(0, 496, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -471,19 +494,21 @@ public class formTratamiento extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bntsalir, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(bntsalir, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btneliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnnuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(panelmenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btneliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(btnnuevo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(10, 10, 10)
-                                    .addComponent(panelmenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -494,18 +519,18 @@ public class formTratamiento extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bntsalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnnuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(2, 2, 2)
                         .addComponent(panelmenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btneliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btneliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jPanel1.getAccessibleContext().setAccessibleName("Registro de Tratramiento");
@@ -563,14 +588,23 @@ public class formTratamiento extends javax.swing.JFrame {
         eliminarTratamiento();
     }//GEN-LAST:event_btneliminarActionPerformed
 
+    private void btnasignar_trabajadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnasignar_trabajadorActionPerformed
+        SeleccionarTrabajador st = new SeleccionarTrabajador();
+        st.setVisible(true);
+        st.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnasignar_trabajadorActionPerformed
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntsalir;
+    private javax.swing.JButton btnasignar_trabajador;
     private javax.swing.JButton btncancelar;
     private javax.swing.JButton btneliminar;
     private javax.swing.JButton btnguardar;
     private javax.swing.JButton btnnuevo;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

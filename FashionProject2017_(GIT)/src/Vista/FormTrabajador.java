@@ -1,22 +1,23 @@
 
 package Vista;
 
-import Datos.trabajadores;
+import Datos.Trabajadores;
 
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class formTrabajador extends javax.swing.JFrame {
-    fashionProject m = new fashionProject();
-    menuEnVentanas mv = new menuEnVentanas();
+public class FormTrabajador extends javax.swing.JFrame {
+    FashionProject m = new FashionProject();
+    MenuEnVentanas mv = new MenuEnVentanas();
     int fila;
     String runinicial;
     private String accion="guardar"; //lo que se muestra en un comienzo en el boton de multiples opciones
     int privilegiosTr;
     
-    public formTrabajador() {
+    public FormTrabajador() {
         initComponents();
+        this.setLocationRelativeTo(null);
         mostrarListaTrabajadores("");
         inhabilitar();
         //panelmenu.removeAll();
@@ -70,7 +71,7 @@ public class formTrabajador extends javax.swing.JFrame {
         try {
             DefaultTableModel modelo;
             //funcionesCliente func = new funcionesCliente();
-            trabajadores tr =new trabajadores();
+            Trabajadores tr =new Trabajadores();
             modelo = tr.mostrar(buscar); //instancia de las funciones, buscar es de buscar cliente
             tabla.setModel(modelo);
             ocultar_columnas();
@@ -107,7 +108,7 @@ public class formTrabajador extends javax.swing.JFrame {
                 opnormal.requestFocus();
                 return;
         }
-        trabajadores tr =new trabajadores();
+        Trabajadores tr =new Trabajadores();
         
         String runformateado = tr.arreglaRUN(txtrun.getText());
         txtrun.setText(runformateado);
@@ -127,7 +128,7 @@ public class formTrabajador extends javax.swing.JFrame {
                     int resp = JOptionPane.showConfirmDialog(null, "¿Desea reincorporar el trabajador?", "Dar de alta a trabajador!", JOptionPane.YES_NO_OPTION);                    
                     if(resp == 0){
                         System.out.println("Si hay que cambiarle el estado");
-                        trabajadores t = new trabajadores();
+                        Trabajadores t = new Trabajadores();
                         int id = tr.obtenerIDTrabajadorRun(txtrun.getText());
                         t.setId_trabajador(id);
                         tr.modificarEstadodeEliminado(t);  //////modifica el estado, de eliminado(0) a no eliminado(1)
@@ -188,7 +189,7 @@ public class formTrabajador extends javax.swing.JFrame {
         
     }
     void eliminarTrabajador(){
-        trabajadores tr = new trabajadores();
+        Trabajadores tr = new Trabajadores();
         //funcionesCliente func = new funcionesCliente();
         if (!txtidtrabajador.getText().equals("")) {
             //cl.setId_cliente(Integer.parseInt(txtidcliente.getText()));
@@ -210,18 +211,20 @@ public class formTrabajador extends javax.swing.JFrame {
         habilitar();
         btneliminartr.setEnabled(true);
         accion="editar";
-        trabajadores tr = new trabajadores();
+        Trabajadores tr = new Trabajadores();
 
         txtidtrabajador.setText(tabla.getValueAt(fila, 0).toString());
         txtrun.setText(tabla.getValueAt(fila, 1).toString());
         txtnombre.setText(tabla.getValueAt(fila, 2).toString());
         txttelefono.setText(tabla.getValueAt(fila, 3).toString());
         txtpass.setText(tabla.getValueAt(fila, 4).toString());
-        if(tabla.getValueAt(fila, 5).equals("111")){
+        
+        //.equals("111") si es que no trabajamos con lista de objetos
+        if(tabla.getValueAt(fila, 5).equals(111)){
             opnormal.setSelected(true);
             privilegiosTr = 111;
         }else{
-            if(tabla.getValueAt(fila, 5).equals("777")){
+            if(tabla.getValueAt(fila, 5).equals(777)){
                 opadmin.setSelected(true);
                 privilegiosTr = 777;
             }
@@ -283,7 +286,6 @@ public class formTrabajador extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestión Trabajadores FashionProject");
-        setPreferredSize(new java.awt.Dimension(1194, 692));
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
@@ -478,7 +480,7 @@ public class formTrabajador extends javax.swing.JFrame {
                                 .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 216, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 219, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnguardartr, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btncancelartr, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -534,7 +536,7 @@ public class formTrabajador extends javax.swing.JFrame {
                             .addComponent(opadmin))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(opnormal)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(248, 246, 221));
@@ -594,7 +596,7 @@ public class formTrabajador extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jScrollPane1))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap()
                         .addComponent(lblregistrostotal))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(30, 30, 30)
@@ -607,12 +609,12 @@ public class formTrabajador extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addContainerGap(22, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
                 .addGap(10, 10, 10)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblregistrostotal))
         );
@@ -622,17 +624,17 @@ public class formTrabajador extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnsalirtr))
+                        .addComponent(btnsalirtr, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnnuevotr, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
-                            .addComponent(btneliminartr, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnnuevotr, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btneliminartr, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -648,17 +650,16 @@ public class formTrabajador extends javax.swing.JFrame {
                     .addComponent(btnsalirtr, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnnuevotr))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnnuevotr)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(275, 275, 275)
+                        .addGap(229, 229, 229)
                         .addComponent(btneliminartr))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addContainerGap())))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();

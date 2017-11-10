@@ -12,12 +12,12 @@ import javax.swing.JPanel;
  *
  * @author alexndr
  */
-public class menuEnVentanas extends javax.swing.JPanel {
+public class MenuEnVentanas extends javax.swing.JPanel {
 
     /**
      * Creates new form menuEnVentanas
      */
-    public menuEnVentanas() {
+    public MenuEnVentanas() {
         initComponents();
     }
 

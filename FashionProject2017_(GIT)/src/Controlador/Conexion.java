@@ -3,10 +3,12 @@ package Controlador;
 import java.sql.Connection;
 //import com.mysql.jdbc.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
-public class conexion {
+public class Conexion {
     
     private static String db="bd_peluqueria";
     private static String user="fashion";
@@ -17,7 +19,7 @@ public class conexion {
     //private static String host="localhost";
     private static String server="jdbc:mysql://"+host+"/"+db;
     
-    public conexion(){
+    public Conexion(){
         
     }
     public Connection conectar(){
