@@ -8,7 +8,7 @@ import java.awt.Component;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class FormTratamiento extends javax.swing.JFrame {
+public class formTratamiento extends javax.swing.JFrame {
     FashionProject m = new FashionProject();
     MenuEnVentanas mv = new MenuEnVentanas();
     int fila;
