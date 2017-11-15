@@ -29,17 +29,17 @@ public class FormVenta extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         mostrarListaClientes("");
         mostrarListaTratamientos("");
-        mostrarListaVenta();
+        //mostrarListaVenta();
         inhabilitar();
         lbltrabajador.setText(l.trabajadorpublic.getNombre());  //TRABAJADOR
     }
     void inhabilitar(){
-        //tabla_venta.setEnabled(false);
+        tabla_venta.setEnabled(false);
         btnrealizarventa.setEnabled(false);
         btncancelarventa.setEnabled(false); 
     }
     void habilitar(){
-        //tabla_venta.setEnabled(true);
+        tabla_venta.setEnabled(true);
         btnrealizarventa.setEnabled(true);
         btncancelarventa.setEnabled(true); 
     }
@@ -86,9 +86,10 @@ public class FormVenta extends javax.swing.JFrame {
     void mostrarListaVenta(){
         try {
             DefaultTableModel modeloVenta;
-            modeloVenta = v.mostrar(clienteVenta, tratamientoVenta); 
-            modeloVenta = v.mostrar(clienteVenta, tratamientoVenta); 
-            tabla_venta.setModel(modeloVenta);
+            Venta vv = new Venta();
+            modeloVenta = vv.mostrar(clienteVenta, tratamientoVenta); 
+            modeloVenta = vv.mostrar(clienteVenta, tratamientoVenta); 
+            tabla_venta.setModel(modeloVenta); //////////NO FUNCIONA CON ESTA TABLA, PERO SI CON LAS OTRAS 
             System.out.println(clienteVenta.getNombre()+"   "+tratamientoVenta.getTipo());
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(rootPane, e);
