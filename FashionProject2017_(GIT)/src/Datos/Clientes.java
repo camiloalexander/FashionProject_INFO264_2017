@@ -22,17 +22,18 @@ public class Clientes {
     private int estado;
     private int edad;
     private String fecha_ingreso;
+    private int beneficio;
     
     Fecha fecha = new Fecha();
-    private Conexion mysql = new Conexion(); //instancia a la cadena de Conexion
-    private Connection cn = mysql.conectar();
+    private Conexion mysql; //instancia a la cadena de Conexion
+    private Connection cn;
     private String querySQL = "";//cadena de Conexion
     public Integer totalregistros;
     
     public Clientes() {
     }
 
-    public Clientes(int id_cliente, String nombre, String run, String telefono, String ciudad, String correo, int estado, int edad, String fecha_ingreso) {
+    public Clientes(int id_cliente, String nombre, String run, String telefono, String ciudad, String correo, int estado, int edad, String fecha_ingreso, int beneficio) {
         this.id_cliente = id_cliente;
         this.nombre = nombre;
         this.run = run;
@@ -42,6 +43,15 @@ public class Clientes {
         this.estado = estado;
         this.edad = edad;
         this.fecha_ingreso = fecha_ingreso;
+        this.beneficio =  beneficio;
+    }
+
+    public int getBeneficio() {
+        return beneficio;
+    }
+
+    public void setBeneficio(int beneficio) {
+        this.beneficio = beneficio;
     }
 
     public String getFecha_ingreso() {
@@ -123,9 +133,8 @@ public class Clientes {
         // Despejar Guión
         //runformateado = runformateado.replace("-","");
         if(runformateado.indexOf("-")==-1){
-            //hay que agregar un guion cuando no el que ingresa los datos no lo han puesto
+            //hay que agregar un guion cuando el que ingresa los datos no lo han puesto
             
-             
         }
         return runformateado;
     }
@@ -160,17 +169,51 @@ public class Clientes {
         return lDevuelve;
     }
     
+    public Clientes obtenerCliente(String run){
+        Clientes cl = new Clientes();
+        querySQL = "select * from cliente where cliente.run = ?";
+        mysql = new Conexion();
+        cn = mysql.conectar();
+        try {
+            PreparedStatement st = cn.prepareStatement(querySQL);
+            st.setString(1, run);
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                cl.setId_cliente(rs.getInt("id_cliente"));
+                cl.setRun(rs.getString("run"));
+                cl.setNombre(rs.getString("nombre"));
+                cl.setTelefono(rs.getString("telefono"));
+                cl.setCiudad(rs.getString("ciudad"));
+                cl.setCorreo(rs.getString("correo"));
+                cl.setEstado(rs.getInt("estado"));
+                cl.setEdad(rs.getInt("edad"));
+                cl.setFecha_ingreso(rs.getString("fecha_ingreso"));
+                cl.setBeneficio(rs.getInt("beneficio"));
+                break;
+            }
+            rs.close();                    
+            st.close(); 
+            cn.close();
+            return cl;
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null,e);
+            return cl;
+        }
+    }
+    
     public DefaultTableModel mostrar(String buscar){
+        mysql = new Conexion();
+        cn = mysql.conectar();
         DefaultTableModel modelo; //
         //String [] columnas = {"ID", "RUN", "Nombre", "Telefono", "Ciudad", "Correo", "Estado", "Edad", "Fecha de ingreso"}; //titulos
-        String [] columnas = {"ID", "RUN", "Nombre", "Telefono", "Ciudad", "Correo", "Estado", "Edad", "Fecha de ingreso"}; //titulos
+        String [] columnas = {"ID", "RUN", "Nombre", "Telefono", "Ciudad", "Correo", "Estado", "Edad", "Fecha de ingreso", "Beneficio"}; //titulos
         //String [] columnas = {"ID", "RUN", "Nombre", "Edad", "Ciudad", "Telefono", "Correo", "Fecha de ingreso"}; //titulos
         
         ////String [] registro = new String [9]; //se almacenan los registros
         
         totalregistros=0;
         modelo = new DefaultTableModel(null,columnas);
-        modelo.isCellEditable(totalregistros, 9);
+        modelo.isCellEditable(totalregistros, 10);
         ArrayList<Clientes> list = new ArrayList<Clientes>();
         Clientes cl;
         /*querySQL="select * from cliente where "
@@ -192,6 +235,7 @@ public class Clientes {
                 + "or (cliente.estado like '%"+buscar+"%' )"
                 + "or (cliente.edad like '%"+buscar+"%' )"
                 + "or (cliente.fecha_ingreso like '%"+buscar+"%' )"
+                + "or (cliente.beneficio like '%"+buscar+"%' )"
                 + "order by cliente.id_cliente";
         try{
             /*PreparedStatement st = cn.prepareStatement(querySQL);
@@ -230,6 +274,7 @@ public class Clientes {
                     cl.setEstado(rs.getInt("estado"));
                     cl.setEdad(rs.getInt("edad"));
                     cl.setFecha_ingreso(rs.getString("fecha_ingreso"));
+                    cl.setBeneficio(rs.getInt("beneficio"));
                     list.add(cl);
                    
                     totalregistros=totalregistros+1;
@@ -238,9 +283,10 @@ public class Clientes {
             }
             rs.close();                    
             st.close(); 
+            cn.close();
             if(list.size() > 0){
                 for(int i=0; i< list.size(); i++){
-                    Object fila[] = new Object[9];
+                    Object fila[] = new Object[10];
                     cl = list.get(i);
                     fila[0] = cl.getId_cliente();
                     fila[1] = cl.getRun();
@@ -251,6 +297,7 @@ public class Clientes {
                     fila[6] = cl.getEstado();
                     fila[7] = cl.getEdad();
                     fila[8] = cl.getFecha_ingreso();
+                    fila[9] = cl.getBeneficio();
 
                     modelo.addRow(fila);
                 }
@@ -262,15 +309,17 @@ public class Clientes {
                 System.out.println(c.getId_cliente()+" "+c.getNombre());
             }*/
             return modelo;
-
         }catch(Exception e){
             JOptionPane.showConfirmDialog(null, e);
             return null;
         }
+        
    }
     
     public boolean ingresar(Clientes cl){
-        querySQL = "insert into cliente(run,nombre,telefono,ciudad,correo,estado,edad,fecha_ingreso) values(?,?,?,?,?,?,?,?)";
+        querySQL = "insert into cliente(run,nombre,telefono,ciudad,correo,estado,edad,fecha_ingreso,beneficio) values(?,?,?,?,?,?,?,?,?)";
+        mysql = new Conexion();
+        cn = mysql.conectar();
         try {
             PreparedStatement pst = cn.prepareStatement(querySQL);
             pst.setString(1, cl.getRun());   //ver mas tarde el tema del rut
@@ -282,8 +331,10 @@ public class Clientes {
             pst.setInt(7, cl.getEdad());
             pst.setString(8, fecha.obtenerFecha());
             cl.setFecha_ingreso(fecha.obtenerFecha());
+            pst.setInt(9, 1);
             int n = pst.executeUpdate();
-            pst.close();                    
+            pst.close(); 
+            cn.close();
             if(n!=0){
                 return true;
             }else{
@@ -298,6 +349,8 @@ public class Clientes {
     public boolean modificar(Clientes cl){
         //querySQL = "update cliente set run=?,nombre=?,telefono=?,ciudad=?,correo=?,estado=?,edad=?,fecha_ingreso=? where id_cliente=?";
         querySQL = "update cliente set cliente.run=?,cliente.nombre=?,cliente.telefono=?,cliente.ciudad=?,cliente.correo=?,cliente.edad=? where cliente.id_cliente=?";
+        mysql = new Conexion();
+        cn = mysql.conectar();
         try {
             PreparedStatement pst = cn.prepareStatement(querySQL);
             pst.setString(1, cl.getRun());
@@ -309,8 +362,9 @@ public class Clientes {
             pst.setInt(6, cl.getEdad());
             //pst.setString(8, cl.getFecha_ingreso());
             pst.setInt(7, cl.getId_cliente());
-            int n = pst.executeUpdate();                   
-            pst.close(); 
+            int n = pst.executeUpdate();             
+            pst.close();
+            cn.close();
             if(n!=0){
                 return true;
             }else{
@@ -325,11 +379,14 @@ public class Clientes {
     public boolean eliminar(Clientes cl){
         //querySQL = "delete from cliente where id_cliente = ?";
         querySQL = "update cliente set cliente.estado = 0 where cliente.id_cliente = ? ";
+        mysql = new Conexion();
+        cn = mysql.conectar();
         try {
             PreparedStatement pst = cn.prepareStatement(querySQL);
             pst.setInt(1, cl.getId_cliente());
             int n = pst.executeUpdate();                   
             pst.close(); 
+            cn.close();
             if(n!=0){
                 return true;
             }else{
@@ -343,6 +400,8 @@ public class Clientes {
     public String nombreCliente(String id_cliente){
         String nombre="";
         querySQL = "select cliente.nombre from cliente where cliente.id_cliente = ?";
+        mysql = new Conexion();
+        cn = mysql.conectar();
         try {
             PreparedStatement st = cn.prepareStatement(querySQL);
             st.setString(1, id_cliente);
@@ -353,6 +412,7 @@ public class Clientes {
             }
             rs.close();                    
             st.close(); 
+            cn.close();
             return nombre;
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(null,e);
@@ -364,6 +424,8 @@ public class Clientes {
         boolean sigue = true;
         String r = "";
         querySQL = "select * from cliente where cliente.run=?";
+        mysql = new Conexion();
+        cn = mysql.conectar();
         try {
             PreparedStatement st = cn.prepareStatement(querySQL);
             st.setString(1, run);
@@ -385,6 +447,7 @@ public class Clientes {
             }
             rs.close();                    
             st.close(); 
+            cn.close();
             return esta;
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(null,e);
@@ -395,6 +458,8 @@ public class Clientes {
         boolean sigue = true;
         int estado=2;
         querySQL = "select * from cliente where cliente.run=?";
+        mysql = new Conexion();
+        cn = mysql.conectar();
         try {
             PreparedStatement st = cn.prepareStatement(querySQL);
             st.setString(1, run);
@@ -407,6 +472,7 @@ public class Clientes {
             }
             rs.close();                    
             st.close(); 
+            cn.close();
             return estado;
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(null,e);
@@ -415,11 +481,14 @@ public class Clientes {
     }
     public boolean modificarEstadodeEliminado(Clientes cl){
         querySQL = "update cliente set cliente.estado=1 where cliente.id_cliente=?";
+        mysql = new Conexion();
+        cn = mysql.conectar();
         try {
             PreparedStatement pst = cn.prepareStatement(querySQL);
             pst.setInt(1, cl.getId_cliente());
             int n = pst.executeUpdate();                   
             pst.close(); 
+            cn.close();
             if(n!=0){
                 return true;
             }else{
@@ -434,6 +503,8 @@ public class Clientes {
         int id=0;
         boolean sigue = true;
         querySQL = "select * from cliente where cliente.run=?";
+        mysql = new Conexion();
+        cn = mysql.conectar();
         try {
             PreparedStatement st = cn.prepareStatement(querySQL);
             st.setString(1, run);
@@ -451,6 +522,7 @@ public class Clientes {
             }
             rs.close();                    
             st.close(); 
+            cn.close();
             return id;
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(null,e);

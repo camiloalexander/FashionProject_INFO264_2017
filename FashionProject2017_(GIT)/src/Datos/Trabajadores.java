@@ -25,8 +25,8 @@ public class Trabajadores {
     private String fecha_ingreso;
     
     Fecha fecha = new Fecha();
-    private Conexion mysql = new Conexion(); //instancia a la cadena de Conexion
-    private Connection cn = mysql.conectar();
+    private Conexion mysql; //instancia a la cadena de Conexion
+    private Connection cn;
     private String querySQL = "";//cadena de Conexion
     public Integer totalregistros;
     
@@ -135,6 +135,8 @@ public class Trabajadores {
     
     public DefaultTableModel mostrar(String buscar){
         DefaultTableModel modelo; //
+        mysql = new Conexion();
+        cn = mysql.conectar();
         String [] columnas = {"ID", "RUN", "Nombre", "Telefono", "Contraseña", "Privilegios", "Estado", "Fecha de ingreso"}; //titulos
         //String [] registro = new String [9]; //se almacenan los registros
         
@@ -211,6 +213,7 @@ public class Trabajadores {
             }
             rs.close();                    
             st.close(); 
+            cn.close();
             return modelo;
 
         }catch(Exception e){
@@ -221,6 +224,8 @@ public class Trabajadores {
     
     public boolean ingresar(Trabajadores tr){
         querySQL = "insert into trabajador(run,nombre,telefono,pass,privilegios,estado,fecha_ingreso) values(?,?,?,?,?,?,?)";
+        mysql = new Conexion();
+        cn = mysql.conectar();
         try {
             PreparedStatement pst = cn.prepareStatement(querySQL);
             pst.setString(1, tr.getRun());   //ver mas tarde el tema del rut
@@ -232,7 +237,8 @@ public class Trabajadores {
             pst.setString(7, fecha.obtenerFecha());
             tr.setFecha_ingreso(fecha.obtenerFecha());
             int n = pst.executeUpdate();
-            pst.close();                    
+            pst.close();    
+            cn.close();
             if(n!=0){
                 return true;
             }else{
@@ -246,6 +252,8 @@ public class Trabajadores {
     
     public boolean modificar(Trabajadores tr){
         querySQL = "update trabajador set trabajador.run=?,trabajador.nombre=?,trabajador.telefono=?,trabajador.pass=?,trabajador.privilegios=? where trabajador.id_trabajador=?";
+        mysql = new Conexion();
+        cn = mysql.conectar();
         try {
             PreparedStatement pst = cn.prepareStatement(querySQL);
             pst.setString(1, tr.getRun());
@@ -259,6 +267,7 @@ public class Trabajadores {
             pst.setInt(6, tr.getId_trabajador());
             int n = pst.executeUpdate();                   
             pst.close(); 
+            cn.close();
             if(n!=0){
                 return true;
             }else{
@@ -273,11 +282,14 @@ public class Trabajadores {
     public boolean eliminar(Trabajadores tr){
         //querySQL = "delete from cliente where id_cliente = ?";
         querySQL = "update trabajador set trabajador.estado = 0 where trabajador.id_trabajador = ? ";
+        mysql = new Conexion();
+        cn = mysql.conectar();
         try {
             PreparedStatement pst = cn.prepareStatement(querySQL);
             pst.setInt(1, tr.getId_trabajador());
             int n = pst.executeUpdate();                   
             pst.close(); 
+            cn.close();
             if(n!=0){
                 return true;
             }else{
@@ -291,6 +303,8 @@ public class Trabajadores {
     public String nombreTrabajador(String id_trabajador){
         String nombre="";
         querySQL = "select trabajador.nombre from trabajador where trabajador.id_trabajador = ?";
+        mysql = new Conexion();
+        cn = mysql.conectar();
         try {
             PreparedStatement st = cn.prepareStatement(querySQL);
             st.setInt(1, Integer.parseInt(id_trabajador));
@@ -301,6 +315,7 @@ public class Trabajadores {
             }
             rs.close();                    
             st.close(); 
+            cn.close();
             return nombre;
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(null,e);
@@ -312,6 +327,8 @@ public class Trabajadores {
         boolean sigue = true;
         String r = "";
         querySQL = "select * from trabajador where trabajador.run=?";
+        mysql = new Conexion();
+        cn = mysql.conectar();
         try {
             PreparedStatement st = cn.prepareStatement(querySQL);
             st.setString(1, run);
@@ -332,6 +349,7 @@ public class Trabajadores {
             }
             rs.close();                    
             st.close(); 
+            cn.close();
             return esta;
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(null,e);
@@ -342,6 +360,8 @@ public class Trabajadores {
         boolean sigue = true;
         int estado=2;
         querySQL = "select * from trabajador where trabajador.run=?";
+        mysql = new Conexion();
+        cn = mysql.conectar();
         try {
             PreparedStatement st = cn.prepareStatement(querySQL);
             st.setString(1, run);
@@ -353,7 +373,8 @@ public class Trabajadores {
                 }
             }
             rs.close();                    
-            st.close(); 
+            st.close();
+            cn.close();
             return estado;
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(null,e);
@@ -362,11 +383,14 @@ public class Trabajadores {
     }
     public boolean modificarEstadodeEliminado(Trabajadores tr){
         querySQL = "update trabajador set trabajador.estado=1 where trabajador.id_trabajador=?";
+        mysql = new Conexion();
+        cn = mysql.conectar();
         try {
             PreparedStatement pst = cn.prepareStatement(querySQL);
             pst.setInt(1, tr.getId_trabajador());
             int n = pst.executeUpdate();                   
             pst.close(); 
+            cn.close();
             if(n!=0){
                 return true;
             }else{
@@ -381,6 +405,8 @@ public class Trabajadores {
         int id=0;
         boolean sigue = true;
         querySQL = "select * from trabajador where trabajador.run=?";
+        mysql = new Conexion();
+        cn = mysql.conectar();
         try {
             PreparedStatement st = cn.prepareStatement(querySQL);
             st.setString(1, run);
@@ -398,6 +424,7 @@ public class Trabajadores {
             }
             rs.close();                    
             st.close(); 
+            cn.close();
             return id;
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(null,e);
@@ -409,6 +436,8 @@ public class Trabajadores {
     public ArrayList listaTrabajadores(){
         ArrayList<Trabajadores> list = new ArrayList<Trabajadores>();
         Trabajadores tr;
+        mysql = new Conexion();
+        cn = mysql.conectar();
         try{
             Statement st = cn.createStatement(); //variable de Conexion a la bd
             querySQL="select * from trabajador where estado=1";
@@ -427,6 +456,7 @@ public class Trabajadores {
             }
             rs.close();                    
             st.close(); 
+            cn.close();
             return list;
 
         }catch(Exception e){
