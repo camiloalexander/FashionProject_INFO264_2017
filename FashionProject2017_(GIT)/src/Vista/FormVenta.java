@@ -3,18 +3,33 @@ package Vista;
 
 import Datos.Clientes;
 import Datos.Tratamientos;
+import Datos.Venta;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class FormVenta extends javax.swing.JFrame {
     FashionProject m = new FashionProject();
     Login l = new Login();
+    public int fila_cliente;
+    public int fila_tratamiento;
+    
+    Clientes clienteVenta;
+    Tratamientos tratamientoVenta;
+    
+    public int totalregistrosventa=0;
+    Venta v =new Venta();
     
     public FormVenta() {
         initComponents();
+        /*clienteVenta.setRun("188863841");
+        clienteVenta.setNombre("Camilo");
+        clienteVenta.setBeneficio(0);
+        tratamientoVenta.setPrecio(2000);
+        tratamientoVenta.setTipo("hola");*/
         this.setLocationRelativeTo(null);
         mostrarListaClientes("");
         mostrarListaTratamientos("");
+        //mostrarListaVenta();
         inhabilitar();
         lbltrabajador.setText(l.trabajadorpublic.getNombre());  //TRABAJADOR
     }
@@ -28,15 +43,68 @@ public class FormVenta extends javax.swing.JFrame {
         btnrealizarventa.setEnabled(true);
         btncancelarventa.setEnabled(true); 
     }
+    
+    public Tratamientos retornarTratamiento(String nombre){
+            Tratamientos tra = new Tratamientos();
+            tratamientoVenta = tra.obtenerTratamiento(nombre);
+            return tratamientoVenta;
+    }
+    public Clientes retornarCliente(String run){
+            Clientes cl = new Clientes();
+            clienteVenta = cl.obtenerCliente(run);
+            return clienteVenta;
+    }
+    
+    /*void mostrarListaVenta(){
+        String [] columnas = {"Run", "Nombre", "¿Beneficio?", "Tratamiento", "Precio $"}; 
+        modeloVenta = new DefaultTableModel(null,columnas);
+        tabla_venta.setModel(modeloVenta);
+    }*//*
+    public void mostrarVenta(Clientes c, Tratamientos t){
+            //modeloVenta.isCellEditable(totalregistrosventa, 5);
+            modeloVenta.insertRow(totalregistrosventa, new Object[]{});
+            modeloVenta.setValueAt(c.getRun(),totalregistrosventa,0);
+            modeloVenta.setValueAt(c.getNombre(),totalregistrosventa,1);
+            modeloVenta.setValueAt(c.getBeneficio(),totalregistrosventa,2);
+            modeloVenta.setValueAt(t.getTipo(),totalregistrosventa,3);
+            modeloVenta.setValueAt(t.getPrecio(),totalregistrosventa,4);
+            totalregistrosventa=totalregistrosventa+1;*/
+            /*Object fila[] = new Object[5];
+            fila[0] = clienteVenta.getRun();
+            fila[1] = clienteVenta.getNombre();
+            fila[2] = clienteVenta.getBeneficio();
+            fila[3] = tratamientoVenta.getTipo();
+            fila[4] = tratamientoVenta.getPrecio();
+
+            modeloVenta.addRow(fila);
+            tabla_venta.setModel(modeloVenta);
+            totalregistrosventa=totalregistrosventa+1;
+            System.out.println("asfasdada");*/
+
+    //}
+    
+    void mostrarListaVenta(){
+        try {
+            DefaultTableModel modeloVenta;
+            Venta vv = new Venta();
+            modeloVenta = vv.mostrar(clienteVenta, tratamientoVenta); 
+            modeloVenta = vv.mostrar(clienteVenta, tratamientoVenta); 
+            tabla_venta.setModel(modeloVenta); //////////NO FUNCIONA CON ESTA TABLA, PERO SI CON LAS OTRAS 
+            System.out.println(clienteVenta.getNombre()+"   "+tratamientoVenta.getTipo());
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(rootPane, e);
+        }
+    }
+ 
     void mostrarListaClientes(String buscar){
         try {
             DefaultTableModel modelo;
-            //funcionesCliente func = new funcionesCliente();
+
             Clientes cl =new Clientes();
-            modelo = cl.mostrar(buscar); //instancia de las funciones, buscar es de buscar cliente
+            modelo = cl.mostrar(buscar);
             tabla_cliente.setModel(modelo);
-            int[ ] edad = {0,3,4,5,6,7,8};
-            for(int i: edad){
+            int[ ] ocultar_columna_cli = {0,3,4,5,6,7,8};
+            for(int i: ocultar_columna_cli){
                 tabla_cliente.getColumnModel().getColumn(i).setMaxWidth(0);
                 tabla_cliente.getColumnModel().getColumn(i).setMinWidth(0);
                 tabla_cliente.getColumnModel().getColumn(i).setPreferredWidth(0);
@@ -49,12 +117,12 @@ public class FormVenta extends javax.swing.JFrame {
     void mostrarListaTratamientos(String buscar){
         try {
             DefaultTableModel modelo;
-            //funcionesCliente func = new funcionesCliente();
+
             Tratamientos trat =new Tratamientos();
-            modelo = trat.mostrar(buscar); //instancia de las funciones, buscar es de buscar cliente
+            modelo = trat.mostrar(buscar); 
             tabla_tratamiento.setModel(modelo);
-            int[ ] edad = {0,3};
-            for(int i: edad){
+            int[ ] ocultar_columna_tra = {0,3};
+            for(int i: ocultar_columna_tra){
                 tabla_tratamiento.getColumnModel().getColumn(i).setMaxWidth(0);
                 tabla_tratamiento.getColumnModel().getColumn(i).setMinWidth(0);
                 tabla_tratamiento.getColumnModel().getColumn(i).setPreferredWidth(0);
@@ -76,10 +144,10 @@ public class FormVenta extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         lbltrabajador = new javax.swing.JLabel();
         btncancelarventa = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tabla_venta = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tabla_venta = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -94,7 +162,7 @@ public class FormVenta extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txt_tratamiento = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btn_agregar_a_venta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -154,6 +222,11 @@ public class FormVenta extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setText("$ ...");
+
+        jLabel8.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        jLabel8.setText("TOTAL:");
+
         tabla_venta = new javax.swing.JTable(){
             public boolean isCellEditable(int rowIndex, int colIndex){
                 return false;
@@ -179,12 +252,7 @@ public class FormVenta extends javax.swing.JFrame {
                 tabla_ventaMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tabla_venta);
-
-        jLabel2.setText("$ ...");
-
-        jLabel8.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
-        jLabel8.setText("TOTAL:");
+        jScrollPane4.setViewportView(tabla_venta);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -193,24 +261,20 @@ public class FormVenta extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 701, Short.MAX_VALUE)
+                        .addComponent(jLabel8)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(64, 64, 64)
+                        .addComponent(btnrealizarventa)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btncancelarventa))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLabel8)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(64, 64, 64)
-                                .addComponent(btnrealizarventa)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btncancelarventa))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 11, Short.MAX_VALUE))))
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,7 +282,7 @@ public class FormVenta extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnrealizarventa)
@@ -376,10 +440,10 @@ public class FormVenta extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton1.setText("CONTINUAR");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_agregar_a_venta.setText("CONTINUAR");
+        btn_agregar_a_venta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_agregar_a_ventaActionPerformed(evt);
             }
         });
 
@@ -393,7 +457,7 @@ public class FormVenta extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_agregar_a_venta, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
@@ -406,7 +470,7 @@ public class FormVenta extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btn_agregar_a_venta, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -462,18 +526,26 @@ public class FormVenta extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btncancelarventaActionPerformed
 
-    private void tabla_ventaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_ventaMouseClicked
-        //fila = tabla.rowAtPoint(evt.getPoint());  //fila donde hago click
-    }//GEN-LAST:event_tabla_ventaMouseClicked
-
     private void tabla_tratamientoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_tratamientoMouseClicked
-        // TODO add your handling code here:
+        fila_tratamiento = tabla_tratamiento.rowAtPoint(evt.getPoint());  //fila donde hago click
+        String nombre = tabla_tratamiento.getValueAt(fila_tratamiento, 1).toString();
+        retornarTratamiento(nombre);
     }//GEN-LAST:event_tabla_tratamientoMouseClicked
 
     private void tabla_clienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_clienteMouseClicked
-        // TODO add your handling code here:
+        fila_cliente = tabla_cliente.rowAtPoint(evt.getPoint());  //fila donde hago click
+        String run = tabla_cliente.getValueAt(fila_cliente, 1).toString();
+        retornarCliente(run);
     }//GEN-LAST:event_tabla_clienteMouseClicked
-
+ 
+    /*public Object[] cliente_tratamiento(Object[] cli, Object[] trat){
+        
+        Venta v = new Venta();
+        v.cli_trat(cli, trat);
+        Object[] cli_tra = new Object[5];
+        
+        return cli_tra;
+    }*/
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         Object [] botones = { "Registrar Cliente", "Continuar Anónimo"};
         int resp = JOptionPane.showOptionDialog (null, "Agregar Cliente ...", "Nuevo Cliente", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null/*icono*/, botones, botones[0]);            
@@ -485,7 +557,6 @@ public class FormVenta extends javax.swing.JFrame {
         if (resp != 0){
             System.out.println("Cliente Anónimo!!");
         }
-        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void txt_clienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_clienteKeyReleased
@@ -496,16 +567,29 @@ public class FormVenta extends javax.swing.JFrame {
         mostrarListaTratamientos(txt_tratamiento.getText());
     }//GEN-LAST:event_txt_tratamientoKeyReleased
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_agregar_a_ventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregar_a_ventaActionPerformed
         habilitar();
-    }//GEN-LAST:event_jButton1ActionPerformed
+        mostrarListaVenta();
+        //mostrarVenta(clienteVenta,tratamientoVenta);
+        /*System.out.println(clienteVenta.getRun());
+        System.out.println(clienteVenta.getNombre());
+        System.out.println(clienteVenta.getBeneficio());
+        System.out.println(tratamientoVenta.getTipo());
+        System.out.println(tratamientoVenta.getPrecio());*/
+
+        
+    }//GEN-LAST:event_btn_agregar_a_ventaActionPerformed
+
+    private void tabla_ventaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_ventaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabla_ventaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_agregar_a_venta;
     private javax.swing.JButton btncancelarventa;
     private javax.swing.JButton btnrealizarventa;
     private javax.swing.JButton btnsalirtr;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -520,9 +604,9 @@ public class FormVenta extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel lbltrabajador;
     private javax.swing.JTable tabla_cliente;
     private javax.swing.JTable tabla_tratamiento;

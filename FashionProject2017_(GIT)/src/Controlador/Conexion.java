@@ -11,12 +11,12 @@ import javax.swing.JOptionPane;
 public class Conexion {
     
     private static String db="bd_peluqueria";
-    private static String user="fashion";
-    private static String pass="fashion";
-    private static String host="172.17.0.8";
-    //private static String user="root";
-    //private static String pass="root";
-    //private static String host="localhost";
+    //private static String user="fashion";
+    //private static String pass="fashion";
+    //private static String host="172.17.0.8";
+    private static String user="root";
+    private static String pass="root";
+    private static String host="localhost";
     private static String server="jdbc:mysql://"+host+"/"+db;
     
     public Conexion(){
