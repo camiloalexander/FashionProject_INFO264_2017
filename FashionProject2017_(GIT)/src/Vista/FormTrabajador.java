@@ -560,7 +560,7 @@ public class FormTrabajador extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tabla.setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));
+        tabla.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tabla.setFocusable(false);
         tabla.setShowGrid(true);
         tabla.getTableHeader().setReorderingAllowed(false);
