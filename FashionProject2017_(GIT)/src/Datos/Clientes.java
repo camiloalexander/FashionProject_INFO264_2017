@@ -14,7 +14,6 @@ import javax.swing.table.DefaultTableModel;
 
 public class Clientes {
     private int id_cliente;
-    private String nombre;
     private String run;
     private String telefono;
     private String ciudad;
@@ -29,6 +28,7 @@ public class Clientes {
     private Connection cn;
     private String querySQL = "";//cadena de Conexion
     public Integer totalregistros;
+    private String nombre;
     
     public Clientes() {
     }
