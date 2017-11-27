@@ -3,6 +3,7 @@ package Datos;
 
 import Controlador.Conexion;
 import java.sql.Connection;
+import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 public class Venta {
@@ -13,6 +14,8 @@ public class Venta {
     private Connection cn;
     private String querySQL = "";//cadena de Conexion
     private int totalregistros=0;
+    ArrayList<Clientes> listC = new ArrayList<Clientes>();
+    ArrayList<Tratamientos> listT = new ArrayList<Tratamientos>();
     public Venta() {
 
     }
@@ -72,19 +75,30 @@ public class Venta {
     }*/
     
     public DefaultTableModel mostrar(Clientes c, Tratamientos t){
+        listC.add(c);
+        listT.add(t);
         DefaultTableModel modelo; //
-        String [] columnas = {"Run", "Nombre", "¿Beneficio?", "Tratamiento", "Precio $"};
+        String [] columnas = {"RUN", "Nombre", "¿Beneficio?", "Tratamiento", "Precio $"};
         modelo = new DefaultTableModel(null,columnas);
         modelo.isCellEditable(totalregistros, 5);
-        Object fila[] = new Object[5];
+        /*Object fila[] = new Object[5];
         fila[0] = c.getRun();
         fila[1] = c.getNombre();
         fila[2] = c.getBeneficio();
         fila[3] = t.getTipo();
-        fila[4] = t.getPrecio();
-
-        modelo.addRow(fila);
-        totalregistros=totalregistros+1;
+        fila[4] = t.getPrecio();*/
+            if(listT.size() > 0){
+                for(int i=0; i< listT.size(); i++){
+                    Object fila[] = new Object[5];
+                    fila[0] = listC.get(i).getRun();
+                    fila[1] = listC.get(i).getNombre();
+                    fila[2] = listC.get(i).getBeneficio();
+                    fila[3] = listT.get(i).getTipo();
+                    fila[4] = listT.get(i).getPrecio();
+                    modelo.addRow(fila);
+                    totalregistros=totalregistros+1;
+                }
+            }
         return modelo;
    }
     

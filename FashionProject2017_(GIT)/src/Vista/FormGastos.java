@@ -1,6 +1,7 @@
 
 package Vista;
 
+<<<<<<< HEAD
 import Datos.Gastos;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -16,11 +17,16 @@ public class FormGastos extends javax.swing.JFrame {
     int año;
     private String accion="guardar";
     
+=======
+public class FormGastos extends javax.swing.JFrame {
+
+>>>>>>> 4b3ae31056206352df3c2728bcb5a7444f0928e7
     public FormGastos() {
         initComponents();
         this.setLocationRelativeTo(null);
         mostrarListaGastos(mes, año);
     }
+<<<<<<< HEAD
      void ocultar_columnas(){
         tabla.getColumnModel().getColumn(0).setMaxWidth(0);
         tabla.getColumnModel().getColumn(0).setMinWidth(0);
@@ -98,6 +104,9 @@ public class FormGastos extends javax.swing.JFrame {
     }
     
     
+=======
+
+>>>>>>> 4b3ae31056206352df3c2728bcb5a7444f0928e7
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -300,7 +309,15 @@ public class FormGastos extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+<<<<<<< HEAD
         jScrollPane1.setViewportView(tabla);
+=======
+        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jScrollPane1.setViewportView(jTable1);
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel12.setText("Buscar ");
+>>>>>>> 4b3ae31056206352df3c2728bcb5a7444f0928e7
 
         txtmes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -399,6 +416,7 @@ public class FormGastos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+<<<<<<< HEAD
     private void txtluzActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtluzActionPerformed
         txtluz.transferFocus();
     }//GEN-LAST:event_txtluzActionPerformed
@@ -444,6 +462,35 @@ public class FormGastos extends javax.swing.JFrame {
     private void txtañoKeyReleased(java.awt.event.KeyEvent evt) {                                      
         mostrarListaGastos(Integer.parseInt(txtmes.getText()),Integer.parseInt(txtaño.getText()));
     }
+=======
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField6ActionPerformed
+>>>>>>> 4b3ae31056206352df3c2728bcb5a7444f0928e7
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

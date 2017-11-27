@@ -5,8 +5,27 @@
         <group>
             <file>file:/C:/Users/maria/OneDrive/Documentos/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Vista/FormGastos.java</file>
             <file>file:/C:/Users/maria/OneDrive/Documentos/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Vista/FormCliente.java</file>
+<<<<<<< HEAD
             <file>file:/C:/Users/maria/OneDrive/Documentos/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Datos/Clientes.java</file>
             <file>file:/C:/Users/maria/OneDrive/Documentos/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Datos/Gastos.java</file>
+=======
+            <file>file:/C:/Users/maria/OneDrive/Documentos/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Vista/FormTratamiento.java</file>
+            <file>file:/C:/Users/maria/OneDrive/Documentos/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Datos/Trabajadores.java</file>
+            <file>file:/C:/Users/maria/OneDrive/Documentos/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Vista/FormTrabajador.java</file>
+            <file>file:/C:/Users/maria/OneDrive/Documentos/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Vista/FormVenta.java</file>
+=======
+            <file>file:/Users/alexndr/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Datos/Venta.java</file>
+            <file>file:/Users/alexndr/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Vista/FormVenta.java</file>
+<<<<<<< HEAD
+=======
+            <file>file:/Users/alexndr/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Controlador/Conexion.java</file>
+            <file>file:/Users/alexndr/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Vista/FormTratamiento.java</file>
+            <file>file:/Users/alexndr/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Datos/Clientes.java</file>
+            <file>file:/Users/alexndr/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Datos/Trabajadores.java</file>
+            <file>file:/Users/alexndr/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Datos/Tratamientos.java</file>
+>>>>>>> 6f05b2288746c5075f6e0c69c588622f530fd1cd
+>>>>>>> origin/master
+>>>>>>> 4b3ae31056206352df3c2728bcb5a7444f0928e7
         </group>
     </open-files>
 </project-private>
