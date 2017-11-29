@@ -172,29 +172,51 @@ public class FormGastos extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Otros");
 
+<<<<<<< Updated upstream
         txtluz.addActionListener(new java.awt.event.ActionListener() {
+=======
+        jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+>>>>>>> Stashed changes
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtluzActionPerformed(evt);
             }
         });
 
+<<<<<<< Updated upstream
         txtagua.addActionListener(new java.awt.event.ActionListener() {
+=======
+        jTextField2.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+>>>>>>> Stashed changes
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtaguaActionPerformed(evt);
             }
         });
 
+<<<<<<< Updated upstream
         txtarriendo.addActionListener(new java.awt.event.ActionListener() {
+=======
+        jTextField3.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+>>>>>>> Stashed changes
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtarriendoActionPerformed(evt);
             }
         });
 
+<<<<<<< Updated upstream
         txtinternet.addActionListener(new java.awt.event.ActionListener() {
+=======
+        jTextField4.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+>>>>>>> Stashed changes
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtinternetActionPerformed(evt);
             }
         });
+
+        jTextField5.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("$");
@@ -211,8 +233,14 @@ public class FormGastos extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel11.setText("$");
 
+<<<<<<< Updated upstream
         btnguardar.setText("Guardar");
         btnguardar.addActionListener(new java.awt.event.ActionListener() {
+=======
+        jButton1.setText("Guardar");
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+>>>>>>> Stashed changes
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnguardarActionPerformed(evt);
             }
@@ -296,7 +324,12 @@ public class FormGastos extends javax.swing.JFrame {
                 .addContainerGap(23, Short.MAX_VALUE))
         );
 
+<<<<<<< Updated upstream
         btnsalir.setText("Volver");
+=======
+        jButton2.setText("Volver");
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+>>>>>>> Stashed changes
 
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -319,13 +352,26 @@ public class FormGastos extends javax.swing.JFrame {
         jLabel12.setText("Buscar ");
 >>>>>>> 4b3ae31056206352df3c2728bcb5a7444f0928e7
 
+<<<<<<< Updated upstream
         txtmes.addActionListener(new java.awt.event.ActionListener() {
+=======
+        jTextField6.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+>>>>>>> Stashed changes
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtmesActionPerformed(evt);
             }
         });
 
+<<<<<<< Updated upstream
         txtaño.addActionListener(new java.awt.event.ActionListener() {
+=======
+        jTextField7.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+
+        jButton3.setText("Modificar");
+        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+>>>>>>> Stashed changes
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtañoActionPerformed(evt);
             }

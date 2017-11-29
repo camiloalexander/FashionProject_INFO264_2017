@@ -124,9 +124,8 @@ public class FashionProject extends javax.swing.JFrame {
                         .addGap(27, 27, 27)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblfecha, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(lbltipo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblusuario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)))
+                    .addComponent(lbltipo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblusuario, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE))
                 .addGap(95, 95, 95))
         );
         jPanel2Layout.setVerticalGroup(
@@ -149,9 +148,9 @@ public class FashionProject extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(243, 254, 255));
 
-        btnregistrarventa.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
+        btnregistrarventa.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         btnregistrarventa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/venta.png"))); // NOI18N
-        btnregistrarventa.setText("   Venta");
+        btnregistrarventa.setText("Registrar Venta");
         btnregistrarventa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnregistrarventa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -2,20 +2,25 @@
 package Datos;
 
 import Controlador.Conexion;
+import Controlador.Fecha;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class Venta {
     int id_venta;
     String fecha;
-    float monto_total;
+    int monto_total;
     private Conexion mysql; //instancia a la cadena de Conexion
     private Connection cn;
     private String querySQL = "";//cadena de Conexion
     private int totalregistros=0;
-    ArrayList<Clientes> listC = new ArrayList<Clientes>();
-    ArrayList<Tratamientos> listT = new ArrayList<Tratamientos>();
+    Fecha f = new Fecha();
+    public ArrayList<Clientes> listC = new ArrayList<Clientes>(); //Lista de clientes seleccionados para la venta
+    public ArrayList<Tratamientos> listT = new ArrayList<Tratamientos>(); //lista de tratamientos para cada cliente
+    
     public Venta() {
 
     }
@@ -36,15 +41,15 @@ public class Venta {
         this.fecha = fecha;
     }
 
-    public float getMonto_total() {
+    public int getMonto_total() {
         return monto_total;
     }
 
-    public void setMonto_total(float monto_total) {
+    public void setMonto_total(int monto_total) {
         this.monto_total = monto_total;
     }
 
-    public Venta(int id_venta, String fecha, float monto_total) {
+    public Venta(int id_venta, String fecha, int monto_total) {
         this.id_venta = id_venta;
         this.fecha = fecha;
         this.monto_total = monto_total;
@@ -74,6 +79,35 @@ public class Venta {
         
     }*/
     
+    public boolean ingresarVenta(Trabajadores tr, int monto){
+        querySQL = "insert into venta(fecha, monto_total, id_cliente, id_tratamiento, id_trabajador) values(?,?,?,?,?)";
+        mysql = new Conexion();
+        cn = mysql.conectar();
+        try {
+            int n=0;
+            PreparedStatement pst = cn.prepareStatement(querySQL);
+            for(int i=0; i< listT.size(); i++){
+                pst = cn.prepareStatement(querySQL);
+                pst.setString(1, f.obtenerFecha());
+                pst.setInt(2, monto);   
+                pst.setInt(3, listC.get(i).getId_cliente());
+                pst.setInt(4, listT.get(i).getId_tratamiento());
+                pst.setInt(5, tr.getId_trabajador());
+                n = pst.executeUpdate();
+            }
+            pst.close();    
+            cn.close();
+            if(n!=0){
+                return true;
+            }else{
+                return false;
+            }
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null,e);
+            return false;
+        }
+    }
+    
     public DefaultTableModel mostrar(Clientes c, Tratamientos t){
         listC.add(c);
         listT.add(t);
@@ -100,6 +134,53 @@ public class Venta {
                 }
             }
         return modelo;
-   }
+    }
     
+    public boolean existeVenta(Clientes c, Tratamientos t){
+        boolean existe = false;
+        for(int i=0; i< listT.size(); i++){
+            if((c.getId_cliente()==listC.get(i).getId_cliente()) && t.getId_tratamiento()==listT.get(i).getId_tratamiento()){
+                existe = true;
+                break;
+            } 
+        }
+        return existe;   
+    }
+    
+    public boolean actualizaBeneficios(){
+        querySQL = "update cliente set beneficio=beneficio+1 where id_cliente=?";
+        mysql = new Conexion();
+        cn = mysql.conectar();
+        ArrayList<Clientes> copialistC= new ArrayList<Clientes>();
+        copialistC = listC;
+        try {
+            int n=0;
+            PreparedStatement pst = cn.prepareStatement(querySQL);
+            for(int i=0; i< copialistC.size(); i++){
+                System.out.println("sjew123e");
+                pst = cn.prepareStatement(querySQL);
+                //pst.setInt(1, copialistC.get(i).getBeneficio()+1);
+                pst.setInt(1, copialistC.get(i).getId_cliente());
+                n = pst.executeUpdate();
+                int idCliente = copialistC.get(i).getId_cliente();
+                for(int j=0; j< copialistC.size(); j++){
+                    if(idCliente == copialistC.get(j).getId_cliente()){
+                        copialistC.remove(j);
+                    }
+                }
+                System.out.println(i);
+            }
+            copialistC.clear();
+            pst.close();    
+            cn.close();
+            if(n!=0){
+                return true;
+            }else{
+                return false;
+            }
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null,e);
+            return false;
+        }
+    }
 }
