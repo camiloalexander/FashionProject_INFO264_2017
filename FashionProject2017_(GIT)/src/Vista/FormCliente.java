@@ -8,8 +8,6 @@ import java.awt.Color;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import Vista.MenuEnVentanas;
-
 
 public class FormCliente extends javax.swing.JFrame {
     FashionProject m = new FashionProject();
