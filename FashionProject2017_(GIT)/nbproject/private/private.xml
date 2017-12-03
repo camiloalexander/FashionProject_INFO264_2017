@@ -2,19 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/maria/OneDrive/Documentos/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Vista/FormGastos.java</file>
-            <file>file:/C:/Users/maria/OneDrive/Documentos/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Vista/FormCliente.java</file>
-            <file>file:/C:/Users/maria/OneDrive/Documentos/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Datos/Clientes.java</file>
-            <file>file:/C:/Users/maria/OneDrive/Documentos/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/GenerarInformes/java.java</file>
-            <file>file:/C:/Users/maria/OneDrive/Documentos/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Datos/Gastos.java</file>
-=======
-            <file>file:/Users/alexndr/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Datos/Venta.java</file>
-            <file>file:/Users/alexndr/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Vista/FormVenta.java</file>
-            <file>file:/Users/alexndr/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Vista/FormGastos.java</file>
-            <file>file:/Users/alexndr/GitHub/FashionProject_INFO264_2017/FashionProject2017_(GIT)/src/Datos/Clientes.java</file>
->>>>>>> e5dc25d6cd9d09911f9f1c0f2f6fdecd506f7695
-        </group>
+        <group/>
     </open-files>
 </project-private>
