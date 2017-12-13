@@ -109,7 +109,7 @@ public class Gastos {
         mysql = new Conexion();
         cn = mysql.conectar();
         DefaultTableModel modelo; 
-        String [] columnas = {"ID", "LUZ", "AGUA", "ARRIENDO", "INTERNET", "OTROS", "Fecha de ingreso", "Total Gasto"}; //titulos
+        String [] columnas = {"ID", "Luz", "Agua", "Arriendo", "Internet", "Otros", "Fecha Ingreso", "Total Gasto"}; //titulos
         
         total=0;
         modelo = new DefaultTableModel(null,columnas);

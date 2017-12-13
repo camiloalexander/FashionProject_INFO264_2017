@@ -4,6 +4,7 @@ package Vista;
 import Datos.Trabajadores;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -138,6 +139,14 @@ public class Login extends javax.swing.JFrame implements ActionListener{
         });
 
         contraseña.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        contraseña.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                contraseñaKeyTyped(evt);
+            }
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                contraseñaKeyPressed(evt);
+            }
+        });
 
         panel.setBackground(new java.awt.Color(255, 255, 255));
         panel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -228,12 +237,21 @@ public class Login extends javax.swing.JFrame implements ActionListener{
                 }
             }
         }
-
     }//GEN-LAST:event_btnaceptarActionPerformed
 
     private void btncancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncancelarActionPerformed
         dispose();
     }//GEN-LAST:event_btncancelarActionPerformed
+
+    private void contraseñaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_contraseñaKeyTyped
+
+    }//GEN-LAST:event_contraseñaKeyTyped
+
+    private void contraseñaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_contraseñaKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btnaceptarActionPerformed(null);
+        }
+    }//GEN-LAST:event_contraseñaKeyPressed
 
     public boolean verificaClave(char[] clave) {
         boolean esCorrecta = true;
