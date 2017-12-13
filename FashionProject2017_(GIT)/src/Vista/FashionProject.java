@@ -69,7 +69,7 @@ public class FashionProject extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        cerrarsesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/Logout.png"))); // NOI18N
+        cerrarsesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/csesion_btn2.png"))); // NOI18N
         cerrarsesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cerrarsesion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -182,7 +182,6 @@ public class FashionProject extends javax.swing.JFrame {
         btnadmingastos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/gastos.png"))); // NOI18N
         btnadmingastos.setText("   Gastos");
         btnadmingastos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnadmingastos.setEnabled(false);
         btnadmingastos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnadmingastosActionPerformed(evt);
@@ -193,7 +192,11 @@ public class FashionProject extends javax.swing.JFrame {
         btngenerarinformes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/documento.png"))); // NOI18N
         btngenerarinformes.setText("   Informes");
         btngenerarinformes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btngenerarinformes.setEnabled(false);
+        btngenerarinformes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btngenerarinformesActionPerformed(evt);
+            }
+        });
 
         btngestionartratamientos.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         btngestionartratamientos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Files/tratamientos.png"))); // NOI18N
@@ -251,13 +254,14 @@ public class FashionProject extends javax.swing.JFrame {
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 9, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(cerrarsesion, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(156, 156, 156)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(487, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(110, 110, 110)
+                        .addComponent(cerrarsesion, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(25, 25, 25))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -329,8 +333,16 @@ public class FashionProject extends javax.swing.JFrame {
     }//GEN-LAST:event_btnregistrarventaActionPerformed
 
     private void btnadmingastosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnadmingastosActionPerformed
-        // TODO add your handling code here:
+                FormGasto fgast = new FormGasto();
+                fgast.setVisible(true);
+                this.setVisible(false);  
     }//GEN-LAST:event_btnadmingastosActionPerformed
+
+    private void btngenerarinformesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngenerarinformesActionPerformed
+                FormInforme gi = new FormInforme();
+                gi.setVisible(true);
+                this.setVisible(false);  
+    }//GEN-LAST:event_btngenerarinformesActionPerformed
     
     //public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

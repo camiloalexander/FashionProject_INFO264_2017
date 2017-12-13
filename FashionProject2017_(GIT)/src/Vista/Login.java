@@ -212,6 +212,7 @@ public class Login extends javax.swing.JFrame implements ActionListener{
         }else{
             if(verificaClave(claveEntrada)){
                 System.out.println("Contraseña Correcta.  Inicio de sesión para: "+t.getNombre()+"  -  Privilegios: "+t.getPrivilegios());
+                System.out.println("");
                 //USUARIO INGRESA AL SISTEMA...
                 FashionProject fp = new FashionProject();
                 fp.setVisible(true);

@@ -9,7 +9,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class FormTrabajador extends javax.swing.JFrame {
     FashionProject m = new FashionProject();
-    MenuEnVentanas mv = new MenuEnVentanas();
+    //MenuEnVentanas mv = new MenuEnVentanas();
     int fila;
     String runinicial;
     private String accion="guardar"; //lo que se muestra en un comienzo en el boton de multiples opciones

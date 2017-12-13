@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class FormCliente extends javax.swing.JFrame {
     FashionProject m = new FashionProject();
-    MenuEnVentanas mv = new MenuEnVentanas();
+    //MenuEnVentanas mv = new MenuEnVentanas();
     int fila;
     String runinicial;
     private String accion="guardar"; //lo que se muestra en un comienzo en el boton de multiples opciones
@@ -77,15 +77,15 @@ public class FormCliente extends javax.swing.JFrame {
             ocultar_columnas();
             lblregistrostotal.setText("Total de registros: "+Integer.toString(cl.totalregistros));
                         /////////////para poner un nuevo jpanel en la ventana
-            panelmenu.removeAll();
+            /*panelmenu.removeAll();
             panelmenu.setBackground(Color.white);
-            panelmenu.add(mv,BorderLayout.CENTER);
+            //panelmenu.add(mv,BorderLayout.CENTER);
             panelmenu.show();
             
             panelmenu.updateUI();
             panelmenu.revalidate();
             panelmenu.repaint();
-            System.out.println("paso por el panel");
+            System.out.println("paso por el panel");*/
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(rootPane, e);
         }
@@ -278,7 +278,6 @@ public class FormCliente extends javax.swing.JFrame {
         btnsalir = new javax.swing.JButton();
         btnnuevo = new javax.swing.JButton();
         btneliminar = new javax.swing.JButton();
-        panelmenu = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
@@ -622,17 +621,6 @@ public class FormCliente extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout panelmenuLayout = new javax.swing.GroupLayout(panelmenu);
-        panelmenu.setLayout(panelmenuLayout);
-        panelmenuLayout.setHorizontalGroup(
-            panelmenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 204, Short.MAX_VALUE)
-        );
-        panelmenuLayout.setVerticalGroup(
-            panelmenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 440, Short.MAX_VALUE)
-        );
-
         jMenu2.setText("Otros");
         jMenu2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -671,15 +659,10 @@ public class FormCliente extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 823, Short.MAX_VALUE)
                         .addComponent(btnsalir))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(5, 5, 5)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btneliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnnuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(13, 13, 13)
-                                .addComponent(panelmenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btneliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnnuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -698,9 +681,7 @@ public class FormCliente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnnuevo)
-                        .addGap(18, 18, 18)
-                        .addComponent(panelmenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 464, Short.MAX_VALUE)
                         .addComponent(btneliminar))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -836,7 +817,6 @@ public class FormCliente extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblregistrostotal;
-    public static javax.swing.JPanel panelmenu;
     private javax.swing.JTable tabla;
     private javax.swing.JTextField txtbuscar;
     private javax.swing.JTextField txtciudad;

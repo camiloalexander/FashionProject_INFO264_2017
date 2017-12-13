@@ -19,6 +19,7 @@ public class Gastos {
     private int internet;
     private int otros;
     private String fechaGasto;
+    private int total_gasto;
     
     Fecha fecha = new Fecha();
     private Conexion mysql; //instancia a la cadena de Conexion
@@ -29,7 +30,7 @@ public class Gastos {
     public Gastos() {
     }
 
-    public Gastos(int id_gastosmes, int luz, int agua, int arriendo, int internet, int otros, String fechaGasto) {
+    public Gastos(int id_gastosmes, int luz, int agua, int arriendo, int internet, int otros, String fechaGasto, int total_gasto) {
         this.id_gastosmes = id_gastosmes;
         this.luz = luz;
         this.agua = agua;
@@ -37,6 +38,15 @@ public class Gastos {
         this.internet = internet;
         this.otros = otros;
         this.fechaGasto = fechaGasto;
+        this.total_gasto = total_gasto;
+    }
+
+    public int getTotal_gasto() {
+        return total_gasto;
+    }
+
+    public void setTotal_gasto(int total_gasto) {
+        this.total_gasto = total_gasto;
     }
 
     public String getFecha_Gasto() {
@@ -99,21 +109,32 @@ public class Gastos {
         mysql = new Conexion();
         cn = mysql.conectar();
         DefaultTableModel modelo; 
-        String [] columnas = {"ID", "LUZ", "AGUA", "ARRIENDO", "INTERNET", "OTROS", "Fecha de ingreso"}; //titulos
+        String [] columnas = {"ID", "LUZ", "AGUA", "ARRIENDO", "INTERNET", "OTROS", "Fecha de ingreso", "Total Gasto"}; //titulos
         
         total=0;
         modelo = new DefaultTableModel(null,columnas);
-        modelo.isCellEditable(total, 10);
+        modelo.isCellEditable(total, 8);
         ArrayList<Gastos> list = new ArrayList<Gastos>();
         Gastos gto;
-        querySQL="select * from gastos where "
-                + "(gastos.luz like '%"+mes+ +año+"%' )"
-                + "or (gastos.agua like '%"+mes+ +año+"%' )"
-                + "or (gastos.arriendo like '%"+mes+ +año+"%' )"
-                + "or (gastos.internet like '%"+mes+ +año+"%' )"
-                + "or (gastos.otros like '%"+mes+ +año+"%' )"
-                + "or (gastos.fecha_gasto like '%"+mes+ +año+"%' )"
+        if(mes!=0 && año!=0){
+            querySQL="select * from gastos where "
+                + "(gastos.fecha_Gasto like '%-"+mes+"-%' )"
+                + "and (gastos.fecha_Gasto like '%"+año+"%' )"
                 + "order by gastos.id_gastosmes";
+        }else if (año!=0){
+            querySQL="select * from gastos where "
+                +"(gastos.fecha_Gasto like '%"+año+"%' )"
+                + "order by gastos.id_gastosmes";
+        }else if (mes!=0){
+            querySQL="select * from gastos where "
+                + "(gastos.fecha_Gasto like '%-"+mes+"-%' )"
+                + "order by gastos.id_gastosmes";
+        }else{
+            querySQL="select * from gastos where "
+                + "(gastos.id_gastosmes = 0 )"
+                + "order by gastos.id_gastosmes";
+        }
+
         try{
             Statement st = cn.createStatement(); //variable de Conexion a la bd
             ResultSet rs = st.executeQuery(querySQL);
@@ -126,17 +147,17 @@ public class Gastos {
                     gto.setInternet(rs.getInt("internet"));
                     gto.setOtros(rs.getInt("otros"));
                     gto.setFecha_Gasto(rs.getString("fecha_Gasto"));
+                    total = total + gto.getLuz() + gto.getAgua() + gto.getArriendo() + gto.getInternet() + gto.getOtros(); 
+                    gto.setTotal_gasto(gto.getLuz() + gto.getAgua() + gto.getArriendo() + gto.getInternet() + gto.getOtros());
                     list.add(gto);
-                   
-                    total=luz + agua + arriendo + internet + otros;
-                    
+                          
             }
             rs.close();                    
             st.close(); 
             cn.close();
             if(list.size() > 0){
                 for(int i=0; i< list.size(); i++){
-                    Object fila[] = new Object[7];
+                    Object fila[] = new Object[8];
                     gto = list.get(i);
                     fila[0] = gto.getId_Gastosmes();
                     fila[1] = gto.getLuz();
@@ -145,8 +166,8 @@ public class Gastos {
                     fila[4] = gto.getInternet();
                     fila[5] = gto.getOtros();
                     fila[6] = gto.getFecha_Gasto();
+                    fila[7] = gto.getTotal_gasto();
                     
-
                     modelo.addRow(fila);
                 }
             }
@@ -156,11 +177,10 @@ public class Gastos {
             JOptionPane.showConfirmDialog(null, e);
             return null;
         }
-  
     }
        
-    public boolean ingresar(Gastos gto){
-        querySQL = "insert into gastos(luz,agua,arriendo,internet,otros,fecha_gasto) values(?,?,?,?,?,?)";
+        public boolean modificar(Gastos gto){
+        querySQL = "update gastos set luz=?, agua=?, arriendo=?, internet=?, otros=?, total_gasto=? where id_gastosmes=?";
         mysql = new Conexion();
         cn = mysql.conectar();
         try {
@@ -170,10 +190,38 @@ public class Gastos {
             pst.setInt(3, gto.getArriendo());
             pst.setInt(4, gto.getInternet());
             pst.setInt(5, gto.getOtros());
-            pst.setString(6, "1");
-            pst.setString(8, fecha.obtenerFecha());
+            pst.setInt(6, gto.getLuz()+gto.getAgua()+gto.getArriendo()+gto.getInternet()+gto.getOtros());
+            pst.setInt(7, gto.getId_Gastosmes());
+            System.out.println(gto.getLuz()+" "+gto.getAgua()+" "+gto.getArriendo()+" "+gto.getInternet()+" "+gto.getOtros()+" "+gto.getTotal_gasto()+" "+gto.getId_Gastosmes());
+            int n = pst.executeUpdate();             
+            pst.close();
+            cn.close();
+            if(n!=0){
+                return true;
+            }else{
+                return false;
+            }
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null,e);
+            return false;
+        }
+    }
+    
+    public boolean ingresar(Gastos gto){
+        querySQL = "insert into gastos(luz,agua,arriendo,internet,otros,fecha_gasto,total_gasto) values(?,?,?,?,?,?,?)";
+        mysql = new Conexion();
+        cn = mysql.conectar();
+        try {
+            PreparedStatement pst = cn.prepareStatement(querySQL);
+            pst.setInt(1, gto.getLuz());
+            pst.setInt(2, gto.getAgua());
+            pst.setInt(3, gto.getArriendo());
+            pst.setInt(4, gto.getInternet());
+            pst.setInt(5, gto.getOtros());
+            pst.setString(6, fecha.obtenerFecha());
             gto.setFecha_Gasto(fecha.obtenerFecha());
-            pst.setInt(9, 1);
+            gto.setTotal_gasto(gto.getLuz() + gto.getAgua() + gto.getArriendo() + gto.getInternet() + gto.getOtros());
+            pst.setInt(7, gto.getTotal_gasto());
             int n = pst.executeUpdate();
             pst.close(); 
             cn.close();

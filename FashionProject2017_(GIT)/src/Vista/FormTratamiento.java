@@ -10,7 +10,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class FormTratamiento extends javax.swing.JFrame {
     FashionProject m = new FashionProject();
-    MenuEnVentanas mv = new MenuEnVentanas();
+    //MenuEnVentanas mv = new MenuEnVentanas();
     int fila;
     String nombreinicial;
     private String accion="guardar";
@@ -61,15 +61,16 @@ public class FormTratamiento extends javax.swing.JFrame {
             ocultar_columnas();
             lblregistrototal.setText("Total de registros: "+Integer.toString(tra.totalregistros));
                         /////////////para poner un nuevo jpanel en la ventana
-            panelmenu.removeAll();
+            /*panelmenu.removeAll();
             panelmenu.setBackground(Color.white);
-            panelmenu.add(mv,BorderLayout.CENTER);
+            //panelmenu.add(mv,BorderLayout.CENTER);
             panelmenu.show();
             
             panelmenu.updateUI();  
             panelmenu.revalidate();
             panelmenu.repaint();
-            System.out.println("paso por el panel");
+            System.out.println("paso por el panel");*/
+            
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(rootPane, e);
         }
@@ -211,7 +212,6 @@ public class FormTratamiento extends javax.swing.JFrame {
         lblregistrototal = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
-        panelmenu = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -473,17 +473,6 @@ public class FormTratamiento extends javax.swing.JFrame {
                     .addContainerGap(29, Short.MAX_VALUE)))
         );
 
-        javax.swing.GroupLayout panelmenuLayout = new javax.swing.GroupLayout(panelmenu);
-        panelmenu.setLayout(panelmenuLayout);
-        panelmenuLayout.setHorizontalGroup(
-            panelmenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 225, Short.MAX_VALUE)
-        );
-        panelmenuLayout.setVerticalGroup(
-            panelmenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 496, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -497,11 +486,8 @@ public class FormTratamiento extends javax.swing.JFrame {
                         .addComponent(bntsalir, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(btneliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnnuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(panelmenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btneliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
+                            .addComponent(btnnuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -519,9 +505,7 @@ public class FormTratamiento extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnnuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(2, 2, 2)
-                        .addComponent(panelmenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 504, Short.MAX_VALUE)
                         .addComponent(btneliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -614,7 +598,6 @@ public class FormTratamiento extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblregistrototal;
-    private javax.swing.JPanel panelmenu;
     private javax.swing.JTable tabla;
     private javax.swing.JTextField txtbuscar;
     private javax.swing.JTextField txtidtratamiento;
