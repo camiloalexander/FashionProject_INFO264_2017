@@ -13,7 +13,7 @@ public class Informes {
         private String querySQL = "";//cadena de Conexion
     
     
-    public int obtenerCliente(int id_t){
+    public int dineroTrabajador(int id_t){
         int gan_tot = 0;
         querySQL = "select * from venta where id_trabajador = ?";
         mysql = new Conexion();
@@ -77,9 +77,9 @@ public class Informes {
         }
     }
     
-    public int gastoAnual(int m, int a){
+    public int gastoAnual(int a){
         int gas_tot = 0;
-        querySQL = "select * from gastos where fecha_Gasto like '%-"+m+"-%' and fecha_Gasto like '"+a+"-%'";
+        querySQL = "select * from gastos where fecha_Gasto like '"+a+"-%'";
         mysql = new Conexion();
         cn = mysql.conectar();
         try{
