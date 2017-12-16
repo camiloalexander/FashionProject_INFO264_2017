@@ -157,14 +157,17 @@
                               <Component id="txtcorreo" min="-2" pref="318" max="-2" attributes="0"/>
                               <Component id="txttelefono" min="-2" pref="175" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace pref="253" max="32767" attributes="0"/>
                                   <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="txtidcliente" min="-2" pref="50" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="btncancelar" alignment="1" min="-2" pref="200" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="-2" pref="211" max="-2" attributes="0"/>
+                                  <Component id="btncancelar" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                       <Group type="102" attributes="0">
@@ -194,7 +197,7 @@
                               <Component id="jLabel12" min="-2" pref="17" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="btnguardar" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Component id="btnguardar" min="-2" pref="218" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
