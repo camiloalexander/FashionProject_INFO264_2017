@@ -12,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 public class Venta {
     int id_venta;
     String fecha;
+    boolean firstbene = true;
     int monto_total;
     private Conexion mysql; //instancia a la cadena de Conexion
     private Connection cn;
@@ -127,6 +128,13 @@ public class Venta {
                     fila[0] = listC.get(i).getRun();
                     fila[1] = listC.get(i).getNombre();
                     fila[2] = listC.get(i).getBeneficio();
+                    /*System.out.println(listC.get(i).getBeneficio());
+                    if(listC.get(i).getBeneficio()>=5 && firstbene){
+                        fila[2] = "Si";
+                        firstbene = false;
+                    }else if (listC.get(i).getBeneficio()<5){
+                        fila[2] = "No";
+                    }*/
                     fila[3] = listT.get(i).getTipo();
                     fila[4] = listT.get(i).getPrecio();
                     modelo.addRow(fila);
@@ -156,19 +164,22 @@ public class Venta {
         try {
             int n=0;
             PreparedStatement pst = cn.prepareStatement(querySQL);
-            for(int i=0; i< copialistC.size(); i++){
-                System.out.println("sjew123e");
+            System.out.println(copialistC.size());
+            int tamaño = copialistC.size();
+            for(int i=0; i <= tamaño; i++){
+                System.out.println(copialistC.get(i).getNombre());
                 pst = cn.prepareStatement(querySQL);
                 //pst.setInt(1, copialistC.get(i).getBeneficio()+1);
                 pst.setInt(1, copialistC.get(i).getId_cliente());
                 n = pst.executeUpdate();
                 int idCliente = copialistC.get(i).getId_cliente();
-                for(int j=0; j< copialistC.size(); j++){
-                    if(idCliente == copialistC.get(j).getId_cliente()){
-                        copialistC.remove(j);
-                    }
-                }
-                System.out.println(i);
+                //for(int j=0; j<=tamaño; j++){
+                //    if(idCliente == copialistC.get(j).getId_cliente()){
+                //        copialistC.remove(j);
+                //        tamaño--;
+                //    }
+                //}
+                //System.out.println(i);
             }
             copialistC.clear();
             pst.close();    

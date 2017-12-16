@@ -15,6 +15,7 @@ public class Tratamientos {
     private String tipo;
     private int precio;
     private int estado;
+    private int porcentaje;
     
     Fecha fecha = new Fecha();
     private Conexion mysql; //instancia a la cadena de Conexion
@@ -25,11 +26,20 @@ public class Tratamientos {
     public Tratamientos() {
     }
 
-    public Tratamientos(int id_tratamiento, String tipo, int precio,int estado) {
+    public Tratamientos(int id_tratamiento, String tipo, int precio,int estado, int porcentaje) {
         this.id_tratamiento = id_tratamiento;
         this.tipo = tipo;
         this.precio = precio;
         this.estado = estado;
+        this.porcentaje = porcentaje;
+    }
+
+    public int getPorcentaje() {
+        return porcentaje;
+    }
+
+    public void setPorcentaje(int porcentaje) {
+        this.porcentaje = porcentaje;
     }
 
     public int getId_tratamiento() {
@@ -78,6 +88,7 @@ public class Tratamientos {
                 tra.setTipo(rs.getString("tipo"));
                 tra.setPrecio(rs.getInt("precio"));
                 tra.setEstado(rs.getInt("estado"));
+                tra.setEstado(rs.getInt("porcentaje"));
                 break;
             }
             rs.close();                    
@@ -92,7 +103,7 @@ public class Tratamientos {
        
     public DefaultTableModel mostrar(String buscar){
         DefaultTableModel modelo; 
-        String [] columnas = {"ID", "Tipo", "Precio", "Estado"}; 
+        String [] columnas = {"ID", "Tipo", "Precio", "Estado", "Porcentaje"}; 
         mysql = new Conexion();
         cn = mysql.conectar();
         //String [] registro = new String [4]; 
@@ -102,10 +113,11 @@ public class Tratamientos {
         
         totalregistros=0;
         modelo = new DefaultTableModel(null,columnas);
-        modelo.isCellEditable(totalregistros, 4);
+        modelo.isCellEditable(totalregistros, 5);
         querySQL="select * from tratamiento where "
                 + "(tratamiento.tipo like '%"+buscar+"%' )"
                 + "or (tratamiento.precio like '%"+buscar+"%' )"
+                + "or (tratamiento.porcentaje like '%"+buscar+"%' )"
                 + "order by tratamiento.id_tratamiento";
         try{
             //PreparedStatement st = cn.prepareStatement(querySQL);
@@ -128,6 +140,7 @@ public class Tratamientos {
                     tra.setTipo(rs.getString("tipo"));
                     tra.setPrecio(rs.getInt("precio"));
                     tra.setEstado(rs.getInt("estado"));
+                    tra.setPorcentaje(rs.getInt("porcentaje"));
                     list.add(tra);
                     totalregistros=totalregistros+1;
                     //modelo.addRow(registro);
@@ -135,12 +148,13 @@ public class Tratamientos {
             }
             if(list.size() > 0){
                 for(int i=0; i< list.size(); i++){
-                    Object fila[] = new Object[8];
+                    Object fila[] = new Object[5];
                     tra = list.get(i);
                     fila[0] = tra.getId_tratamiento();
                     fila[1] = tra.getTipo();
                     fila[2] = tra.getPrecio();
                     fila[3] = tra.getEstado();
+                    fila[4] = tra.getPorcentaje();
 
                     modelo.addRow(fila);
                 }
@@ -157,7 +171,7 @@ public class Tratamientos {
    }
     
     public boolean ingresar(Tratamientos tra){
-        querySQL = "insert into tratamiento(tipo,precio,estado) values(?,?,?)";
+        querySQL = "insert into tratamiento(tipo,precio,estado,porcentaje) values(?,?,?,?)";
         mysql = new Conexion();
         cn = mysql.conectar();
         try {
@@ -165,6 +179,7 @@ public class Tratamientos {
             pst.setString(1, tra.getTipo());   
             pst.setInt(2, tra.getPrecio());
             pst.setInt(3, 1);
+            pst.setInt(4, tra.getPorcentaje());
             int n = pst.executeUpdate();
             pst.close();
             cn.close();
@@ -182,14 +197,16 @@ public class Tratamientos {
     
     public boolean modificar(Tratamientos tra){
         //querySQL = "update cliente set run=?,tipo=?,telefono=?,ciudad=?,correo=?,estado=?,edad=?,fecha_ingreso=? where id_cliente=?";
-        querySQL = "update tratamiento set tratamiento.tipo=?,tratamiento.precio=? where tratamiento.id_tratamiento=?";
+        querySQL = "update tratamiento set tratamiento.tipo=?,tratamiento.precio=?,tratamiento.porcentaje=? where tratamiento.id_tratamiento=?";
         mysql = new Conexion();
         cn = mysql.conectar();
         try {
             PreparedStatement pst = cn.prepareStatement(querySQL);
             pst.setString(1, tra.getTipo());
             pst.setInt(2, tra.getPrecio());
-            pst.setInt(3, tra.getId_tratamiento());
+            pst.setInt(3, tra.getPorcentaje());
+            pst.setInt(4, tra.getId_tratamiento());
+
             int n = pst.executeUpdate();                   
             pst.close();
             cn.close();
@@ -253,21 +270,15 @@ public class Tratamientos {
         mysql = new Conexion();
         cn = mysql.conectar();
         String r = "";
-        System.out.println("01");
         querySQL = "select * from tratamiento where tratamiento.tipo=?";
-        System.out.println("02");
         try {
-            System.out.println("03");
             PreparedStatement st = cn.prepareStatement(querySQL);
             //Statement st = cn.createStatement(); //variable de Conexion a la bd
             st.setString(1, tipo);
             ResultSet rs = st.executeQuery();
-
             if(rs.first()){//recorre el resultset al siguiente registro si es que existen
-                System.out.println("22");
                 rs.beforeFirst();//regresa el puntero al primer registro
                 while(rs.next() && sigue){ //rs.next da falso algunas veces por eso el if de arriba
-                    System.out.println("hay coincidencias de tipo");
                     r=rs.getString("tipo");
                     if(r.equals(tipo)){    
                         esta = true;
@@ -275,7 +286,6 @@ public class Tratamientos {
                     }    
                 }
             }else{
-                System.out.println("sin coincidencias de tratamiento con ese tipo");
                 esta = false;
             }
             rs.close();                    
@@ -355,7 +365,7 @@ public class Tratamientos {
                     }    
                 }
             }else{
-                System.out.println("sin coincidencias de tratamiento con ese tipo");
+                System.out.println("Sin coincidencias de tratamiento con ese tipo");
             }
             rs.close();                    
             st.close();

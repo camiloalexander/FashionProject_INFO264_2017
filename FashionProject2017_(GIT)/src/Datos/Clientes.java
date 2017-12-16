@@ -6,9 +6,12 @@ import Controlador.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -132,10 +135,6 @@ public class Clientes {
         String runformateado=run.replace(".","");
         // Despejar Guión
         //runformateado = runformateado.replace("-","");
-        if(runformateado.indexOf("-")==-1){
-            //hay que agregar un guion cuando el que ingresa los datos no lo han puesto
-            
-        }
         return runformateado;
     }
     
@@ -250,9 +249,9 @@ public class Clientes {
             Statement st = cn.createStatement(); //variable de Conexion a la bd
             ResultSet rs = st.executeQuery(querySQL);
             while(rs.next()){
-                //if(rs.getString("estado").equals("0")){  //si esta dado de baja no se muestra 
-                  //  rs.next();
-                //}else{
+                if(rs.getString("estado").equals("0")){  //si esta dado de baja no se muestra 
+                    rs.next();
+                }else{
                 /*
                     registro[0] = rs.getString("id_cliente");
                     registro[1] = rs.getString("run");
@@ -279,7 +278,7 @@ public class Clientes {
                    
                     totalregistros=totalregistros+1;
                     //modelo.addRow(registro);
-                //}
+                }
             }
             rs.close();                    
             st.close(); 
@@ -313,9 +312,8 @@ public class Clientes {
             JOptionPane.showConfirmDialog(null, e);
             return null;
         }
+    }
         
-   }
-    
     public boolean ingresar(Clientes cl){
         querySQL = "insert into cliente(run,nombre,telefono,ciudad,correo,estado,edad,fecha_ingreso,beneficio) values(?,?,?,?,?,?,?,?,?)";
         mysql = new Conexion();

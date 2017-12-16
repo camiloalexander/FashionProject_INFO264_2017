@@ -28,6 +28,7 @@ public class FormVenta extends javax.swing.JFrame {
     DefaultTableModel modeloTratamiento;
     boolean tablaClSeleccionada = false;
     boolean tablaTraSeleccionada = false;
+    boolean firstbene = true;
     
     DecimalFormat formateador = new DecimalFormat("###,###.###");
     
@@ -107,14 +108,24 @@ public class FormVenta extends javax.swing.JFrame {
                     //Venta vv = new Venta();
                     //modeloVenta = vv.mostrar(clienteVenta, tratamientoVenta); 
                     modeloVenta = v.mostrar(clienteVenta, tratamientoVenta); 
-                    tabla_venta.setModel(modeloVenta); //////////NO FUNCIONA CON ESTA TABLA, PERO SI CON LAS OTRAS 
+                    tabla_venta.setModel(modeloVenta); 
                     //System.out.println(clienteVenta.getNombre()+"   "+tratamientoVenta.getTipo());
-
-                    descuento_total=descuento_total+clienteVenta.getBeneficio();
-                    lbldescuento.setText(String.valueOf(descuento_total));
-
-                    precio_total=precio_total+tratamientoVenta.getPrecio()-(clienteVenta.getBeneficio());
+                    
+                    if(clienteVenta.getBeneficio()>=5 && firstbene){
+                        if(clienteVenta.getId_cliente() != 1){
+                            descuento_total=descuento_total+tratamientoVenta.getPrecio();
+                            System.out.println(clienteVenta.getNombre()+" tiene beneficio.");
+                            lbldescuento.setText(String.valueOf(formateador.format(descuento_total)));
+                            name_beneficio.setText(clienteVenta.getNombre()+" tiene beneficio.");
+                            precio_total=precio_total; //no se cobra la quinta vez que va a la peluqueria
+                            //precio_total=precio_total+tratamientoVenta.getPrecio()-(tratamientoVenta.getPrecio()*(tratamientoVenta.getPorcentaje()/100));
+                            firstbene = false;
+                        }
+                    }else{
+                        precio_total=precio_total+tratamientoVenta.getPrecio();
+                    }
                     lblpreciototal.setText(String.valueOf(formateador.format(precio_total)));
+
                     System.out.println("SE AGREGA A VENTA:");
                     System.out.println("** Trabajador: "+l.trabajadorpublic.getNombre()+"  - id: "+l.trabajadorpublic.getId_trabajador());
                     System.out.println("** Cliente: "+clienteVenta.getNombre()+"  - id: "+clienteVenta.getId_cliente());
@@ -194,6 +205,7 @@ public class FormVenta extends javax.swing.JFrame {
         tabla_venta = new javax.swing.JTable();
         jLabel9 = new javax.swing.JLabel();
         lbldescuento = new javax.swing.JLabel();
+        name_beneficio = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -516,6 +528,8 @@ public class FormVenta extends javax.swing.JFrame {
 
         lbldescuento.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
 
+        name_beneficio.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -531,19 +545,20 @@ public class FormVenta extends javax.swing.JFrame {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(736, 736, 736)
                                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jScrollPane5)
                                 .addGap(44, 44, 44)))
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(18, 18, 18)
                                 .addComponent(lbldescuento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addGap(18, 18, 18)
-                                .addComponent(lblpreciototal, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(lblpreciototal, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(name_beneficio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(34, 34, 34)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnrealizarventa, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
@@ -562,10 +577,12 @@ public class FormVenta extends javax.swing.JFrame {
                             .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lbldescuento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(name_beneficio, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lbldescuento, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(39, 39, 39)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(lblpreciototal, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -721,11 +738,13 @@ public class FormVenta extends javax.swing.JFrame {
                 lblpreciototal.setText(String.valueOf(formateador.format(precio_total)));
                 descuento_total=0;
                 lbldescuento.setText(String.valueOf(descuento_total));
-                v.listC.clear();
-                v.listT.clear();
-                modeloVenta.setRowCount(0);
+                //v.listC.clear();
+                //v.listT.clear();
                 v.actualizaBeneficios();
                 v.mostrar(clienteVenta, tratamientoVenta);
+                modeloVenta.setRowCount(0);
+                v.listC.clear();
+                v.listT.clear();
         }  
     }//GEN-LAST:event_btnrealizarventaActionPerformed
 
@@ -765,6 +784,7 @@ public class FormVenta extends javax.swing.JFrame {
     private javax.swing.JLabel lbldescuento;
     private javax.swing.JLabel lblpreciototal;
     private javax.swing.JLabel lbltrabajador;
+    private javax.swing.JLabel name_beneficio;
     private javax.swing.JTable tabla_cliente;
     private javax.swing.JTable tabla_tratamiento;
     private javax.swing.JTable tabla_venta;

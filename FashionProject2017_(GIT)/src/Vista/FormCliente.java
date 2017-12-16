@@ -37,6 +37,9 @@ public class FormCliente extends javax.swing.JFrame {
         tabla.getColumnModel().getColumn(0).setMaxWidth(0);
         tabla.getColumnModel().getColumn(0).setMinWidth(0);
         tabla.getColumnModel().getColumn(0).setPreferredWidth(0);
+        tabla.getColumnModel().getColumn(6).setMaxWidth(0);
+        tabla.getColumnModel().getColumn(6).setMinWidth(0);
+        tabla.getColumnModel().getColumn(6).setPreferredWidth(0);
     }
     void inhabilitar(){
         txtcorreo.setEnabled(false);

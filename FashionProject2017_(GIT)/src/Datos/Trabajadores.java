@@ -1,4 +1,3 @@
-
 package Datos;
 
 import Controlador.Fecha;
@@ -11,10 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-
-
 public class Trabajadores {
-    
     private int id_trabajador;
     private String run;
     private String nombre;
@@ -96,10 +92,6 @@ public class Trabajadores {
         String runformateado=run.replace(".","");
         // Despejar Guión
         //runformateado = runformateado.replace("-","");
-        if(runformateado.indexOf("-")==-1){
-            //hay que agregar un guion
-            
-        }
         return runformateado;
     }
     
@@ -167,9 +159,9 @@ public class Trabajadores {
             ResultSet rs = st.executeQuery();
             System.out.println("6");*/
             while(rs.next()){
-                //if(rs.getString("estado").equals("0")){  //si esta dado de baja no se muestra 
-                  //  rs.next();
-                //}else{
+                if(rs.getString("estado").equals("0")){  //si esta dado de baja no se muestra 
+                    rs.next();
+                }else{
                 /*
                     registro[0] = rs.getString("id_trabajador");
                     registro[1] = rs.getString("run");
@@ -193,7 +185,7 @@ public class Trabajadores {
                     
                     totalregistros=totalregistros+1;
                     //modelo.addRow(registro);
-                //}
+                }
             }
             if(list.size() > 0){
                 for(int i=0; i< list.size(); i++){

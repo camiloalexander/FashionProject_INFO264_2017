@@ -2,8 +2,6 @@
 package Vista;
 
 import Datos.Tratamientos;
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -26,6 +24,7 @@ public class FormTratamiento extends javax.swing.JFrame {
         txtnombre.setText("");
         txtprecio.setText("");
         txtidtratamiento.setText("");
+        txtporcentaje.setText("");
         
     }
     void ocultar_columnas(){
@@ -37,15 +36,18 @@ public class FormTratamiento extends javax.swing.JFrame {
     void inhabilitar(){
         txtnombre.setEnabled(false);
         txtprecio.setEnabled(false); 
+        txtporcentaje.setEnabled(false); 
         btnguardar.setEnabled(false);
         btncancelar.setEnabled(false); 
         btnasignar_trabajador.setEnabled(false); 
         txtnombre.setText("");
         txtprecio.setText("");
+        txtporcentaje.setText("");
     }
     void habilitar(){
         txtnombre.setEnabled(true);
         txtprecio.setEnabled(true);
+        txtporcentaje.setEnabled(true);
         btnnuevo.setEnabled(true);
         btnguardar.setEnabled(true);
         btncancelar.setEnabled(true); 
@@ -60,17 +62,6 @@ public class FormTratamiento extends javax.swing.JFrame {
             tabla.setModel(modelo);
             ocultar_columnas();
             lblregistrototal.setText("Total de registros: "+Integer.toString(tra.totalregistros));
-                        /////////////para poner un nuevo jpanel en la ventana
-            /*panelmenu.removeAll();
-            panelmenu.setBackground(Color.white);
-            //panelmenu.add(mv,BorderLayout.CENTER);
-            panelmenu.show();
-            
-            panelmenu.updateUI();  
-            panelmenu.revalidate();
-            panelmenu.repaint();
-            System.out.println("paso por el panel");*/
-            
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(rootPane, e);
         }
@@ -86,15 +77,24 @@ public class FormTratamiento extends javax.swing.JFrame {
             txtprecio.requestFocus();
             return;
         }
+        if(txtporcentaje.getText().length()==0){
+            JOptionPane.showConfirmDialog(rootPane, "Debe ingresar porcentaje de ganancia del Tratamiento.","",JOptionPane.WARNING_MESSAGE);
+            txtporcentaje.requestFocus();
+            return;
+        }
+        if(txtporcentaje.getText().length()==3 && (Integer.valueOf(txtporcentaje.getText())>100)){
+            JOptionPane.showConfirmDialog(rootPane, "Debe ingresar porcentaje entre 0 y 100.","",JOptionPane.WARNING_MESSAGE);
+            txtporcentaje.requestFocus();
+            return;
+        }
         Tratamientos tra =new Tratamientos();
-        System.out.println("ingreso a modifcar o ingresar ");
         if(accion.equals("guardar")){
             if((tra.verificarTratamientoNombre(txtnombre.getText()))){
                 JOptionPane.showMessageDialog(rootPane, "NOMBRE '"+txtnombre.getText()+"' ya existente en los registros.", "NOMBRE ya existente!", JOptionPane.OK_OPTION);
                 if(tra.estadoTratamiento(txtnombre.getText()) == 0){ 
                     int resp = JOptionPane.showConfirmDialog(null, "¿Desea reincorporar el tratamiento?", "Dar de alta a tratamiento!", JOptionPane.YES_NO_OPTION);                    
                     if(resp == 0){
-                        System.out.println("Si hay que cambiarle el estado");
+                        //System.out.println("Si hay que cambiarle el estado");
                         Tratamientos t = new Tratamientos();
                         int id = tra.obtenerIDTratamientoNombre(txtnombre.getText());
                         t.setId_tratamiento(id);
@@ -119,6 +119,7 @@ public class FormTratamiento extends javax.swing.JFrame {
 
         tra.setTipo(txtnombre.getText());
         tra.setPrecio(Integer.parseInt(txtprecio.getText()));
+        tra.setPorcentaje(Integer.parseInt(txtporcentaje.getText()));
         
         if (accion.equals("guardar")) {
             if (tra.ingresar(tra)) {
@@ -149,7 +150,7 @@ public class FormTratamiento extends javax.swing.JFrame {
         if (!txtidtratamiento.getText().equals("")) {
             Component rootPane = null;
             int confirmacion = JOptionPane.showConfirmDialog(rootPane, "¿Estas seguro "
-                    + "de dar de baja a tratamiento: Nombre = '"+tra.tipoTratamiento(txtidtratamiento.getText())+"' ?","Confirmar",2);
+                    + "de dar de baja a tratamiento '"+tra.tipoTratamiento(txtidtratamiento.getText())+"' ?","Confirmar",2);
             if (confirmacion==0) {
                 tra.setId_tratamiento(Integer.parseInt(txtidtratamiento.getText()));
                 tra.eliminar(tra);
@@ -171,13 +172,14 @@ public class FormTratamiento extends javax.swing.JFrame {
         txtidtratamiento.setText(tabla.getValueAt(fila, 0).toString());
         txtnombre.setText(tabla.getValueAt(fila, 1).toString());
         txtprecio.setText(tabla.getValueAt(fila, 2).toString());
+        txtporcentaje.setText(tabla.getValueAt(fila, 4).toString());
         
         tra.setId_tratamiento(Integer.parseInt(txtidtratamiento.getText()));
         tra.setTipo(txtnombre.getText());
         tra.setPrecio(Integer.parseInt(txtprecio.getText()));
         tra.setEstado(Integer.parseInt(tabla.getValueAt(fila, 3).toString()));
+        tra.setPorcentaje(Integer.parseInt(txtporcentaje.getText()));
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -205,7 +207,9 @@ public class FormTratamiento extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         btnasignar_trabajador = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        txtporcentaje = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         txtbuscar = new javax.swing.JTextField();
@@ -314,7 +318,21 @@ public class FormTratamiento extends javax.swing.JFrame {
             }
         });
 
-        jLabel10.setText("Asignar Trabajador");
+        jLabel11.setText("Porcentaje");
+
+        txtporcentaje.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtporcentaje.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtporcentajeActionPerformed(evt);
+            }
+        });
+        txtporcentaje.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtporcentajeKeyTyped(evt);
+            }
+        });
+
+        jLabel12.setText("%");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -328,11 +346,12 @@ public class FormTratamiento extends javax.swing.JFrame {
                         .addGap(49, 49, 49))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel9))
-                            .addComponent(jLabel10))
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -345,20 +364,21 @@ public class FormTratamiento extends javax.swing.JFrame {
                         .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 370, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtprecio)
-                            .addComponent(btnasignar_trabajador, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btncancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtprecio, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(3, 3, 3)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnguardar, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtporcentaje, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(107, 107, 107)
+                                .addComponent(btnasignar_trabajador, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btncancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnguardar, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -388,10 +408,12 @@ public class FormTratamiento extends javax.swing.JFrame {
                             .addComponent(txtprecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9)
                             .addComponent(jLabel6))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(txtporcentaje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnasignar_trabajador)
-                            .addComponent(jLabel10))))
+                            .addComponent(jLabel12))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -546,7 +568,7 @@ public class FormTratamiento extends javax.swing.JFrame {
     private void txtprecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtprecioKeyTyped
         char c = evt.getKeyChar();
         if(!(Character.isDigit(c))) evt.consume();     
-        if(txtprecio.getText().length()>=8) evt.consume();  // valido que no sea mayor que 3 digitos
+        if(txtprecio.getText().length()>=7) evt.consume();  // valido que no sea mayor que 3 digitos
     }//GEN-LAST:event_txtprecioKeyTyped
 
     private void txtnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnombreActionPerformed
@@ -575,6 +597,16 @@ public class FormTratamiento extends javax.swing.JFrame {
         st.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnasignar_trabajadorActionPerformed
 
+    private void txtporcentajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtporcentajeActionPerformed
+        txtporcentaje.transferFocus();
+    }//GEN-LAST:event_txtporcentajeActionPerformed
+
+    private void txtporcentajeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtporcentajeKeyTyped
+        char c = evt.getKeyChar();
+        if(!(Character.isDigit(c))) evt.consume();     
+        if(txtporcentaje.getText().length()>=3) evt.consume();  // valido que no sea mayor que 3 digitos
+    }//GEN-LAST:event_txtporcentajeKeyTyped
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -585,7 +617,8 @@ public class FormTratamiento extends javax.swing.JFrame {
     private javax.swing.JButton btnguardar;
     private javax.swing.JButton btnnuevo;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -602,6 +635,7 @@ public class FormTratamiento extends javax.swing.JFrame {
     private javax.swing.JTextField txtbuscar;
     private javax.swing.JTextField txtidtratamiento;
     private javax.swing.JTextField txtnombre;
+    private javax.swing.JTextField txtporcentaje;
     private javax.swing.JTextField txtprecio;
     // End of variables declaration//GEN-END:variables
 }
