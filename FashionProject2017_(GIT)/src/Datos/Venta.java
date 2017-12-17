@@ -3,6 +3,7 @@ package Datos;
 
 import Controlador.Conexion;
 import Controlador.Fecha;
+import Vista.FormVenta;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
@@ -21,6 +22,9 @@ public class Venta {
     Fecha f = new Fecha();
     public ArrayList<Clientes> listC = new ArrayList<Clientes>(); //Lista de clientes seleccionados para la venta
     public ArrayList<Tratamientos> listT = new ArrayList<Tratamientos>(); //lista de tratamientos para cada cliente
+    
+    //public ArrayList<Clientes> copialistC= new ArrayList<Clientes>();
+    //public ArrayList<Tratamientos> copialistT= new ArrayList<Tratamientos>();
     
     public Venta() {
 
@@ -90,7 +94,7 @@ public class Venta {
             for(int i=0; i< listT.size(); i++){
                 pst = cn.prepareStatement(querySQL);
                 pst.setString(1, f.obtenerFecha());
-                pst.setInt(2, monto);   
+                pst.setInt(2, listT.get(i).getPrecio());   
                 pst.setInt(3, listC.get(i).getId_cliente());
                 pst.setInt(4, listT.get(i).getId_tratamiento());
                 pst.setInt(5, tr.getId_trabajador());
@@ -113,7 +117,7 @@ public class Venta {
         listC.add(c);
         listT.add(t);
         DefaultTableModel modelo; //
-        String [] columnas = {"RUN", "Nombre", "¿Beneficio?", "Tratamiento", "Precio $"};
+        String [] columnas = {"RUN", "Nombre", "¿Beneficio? (5)", "Tratamiento", "Precio $"};
         modelo = new DefaultTableModel(null,columnas);
         modelo.isCellEditable(totalregistros, 5);
         /*Object fila[] = new Object[5];
@@ -155,33 +159,47 @@ public class Venta {
         return existe;   
     }
     
-    public boolean actualizaBeneficios(){
+    /*public void quita(){
+        copialistC = listC;
+        copialistT = listT;
+        int t;
+        for(int i=0; i <= listT.size()-1; i++){
+            t = listT.get(i).getId_tratamiento();
+            if(t == 2){  //si encontramos corte varon (id = 2 en la bd)
+            }else{
+                //System.out.println(copialistT.get(i).getId_tratamiento());
+                //System.out.println(copialistC.get(i).getNombre());
+                copialistT.remove(i);
+                copialistC.remove(i);
+            }
+        }
+    }*/
+    
+    public boolean actualizaBeneficios(ArrayList<Clientes> c){
+        //quita();
         querySQL = "update cliente set beneficio=beneficio+1 where id_cliente=?";
         mysql = new Conexion();
         cn = mysql.conectar();
-        ArrayList<Clientes> copialistC= new ArrayList<Clientes>();
-        copialistC = listC;
+        //FormVenta fv = new FormVenta();
         try {
             int n=0;
             PreparedStatement pst = cn.prepareStatement(querySQL);
-            System.out.println(copialistC.size());
-            int tamaño = copialistC.size();
-            for(int i=0; i <= tamaño; i++){
-                System.out.println(copialistC.get(i).getNombre());
+            //int tamaño = copialistC.size();
+            for(int i=0; i <= c.size()-1; i++){
                 pst = cn.prepareStatement(querySQL);
-                //pst.setInt(1, copialistC.get(i).getBeneficio()+1);
-                pst.setInt(1, copialistC.get(i).getId_cliente());
+                pst.setInt(1, c.get(i).getId_cliente());
+                //pst.setInt(1, copialistC.get(i).getId_cliente());
                 n = pst.executeUpdate();
-                int idCliente = copialistC.get(i).getId_cliente();
-                //for(int j=0; j<=tamaño; j++){
-                //    if(idCliente == copialistC.get(j).getId_cliente()){
-                //        copialistC.remove(j);
-                //        tamaño--;
-                //    }
-                //}
-                //System.out.println(i);
+                /*int idCliente = copialistC.get(i).getId_cliente();
+                for(int j=0; j<=tamaño-1; j++){
+                    if(idCliente == copialistC.get(j).getId_cliente()){
+                        copialistC.remove(j);
+                        tamaño--;
+                    }
+                }*/
+                pst.close();    
             }
-            copialistC.clear();
+            //copialistC.clear();
             pst.close();    
             cn.close();
             if(n!=0){
@@ -194,4 +212,29 @@ public class Venta {
             return false;
         }
     }
+    
+    public boolean resetearBeneficio(int idCliente){
+        querySQL = "update cliente set beneficio=0 where id_cliente=?";
+        mysql = new Conexion();
+        cn = mysql.conectar();
+        try {
+            int n=0;
+            PreparedStatement pst = cn.prepareStatement(querySQL);
+            pst = cn.prepareStatement(querySQL);
+            pst.setInt(1, idCliente);
+            n = pst.executeUpdate();
+
+            pst.close();    
+            cn.close();
+            if(n!=0){
+                return true;
+            }else{
+                return false;
+            }
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null,e);
+            return false;
+        }
+    }
+    
 }

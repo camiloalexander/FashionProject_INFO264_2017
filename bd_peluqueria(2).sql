@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 16-12-2017 a las 22:37:50
+-- Tiempo de generación: 17-12-2017 a las 09:22:54
 -- Versión del servidor: 5.7.20
 -- Versión de PHP: 7.0.24
 
@@ -47,11 +47,11 @@ CREATE TABLE `cliente` (
 
 INSERT INTO `cliente` (`id_cliente`, `run`, `nombre`, `edad`, `ciudad`, `telefono`, `correo`, `estado`, `fecha_ingreso`, `beneficio`) VALUES
 (1, '000000000', 'Anónimo(a)', 0, 'Valdivia', '', NULL, '1', '2017-11-29', 0),
-(2, '178552015', 'Gabriel Galilea', 25, 'Valdivia', '', '', '1', '2017-11-02', 3),
-(3, '17672234k', 'Lucia Marquez', 23, 'Valdivia', '+569878737', 'lucia@gmail.com', '1', '2017-09-27', 5),
-(4, '236111415', 'Humberto Campos', 24, 'Valdivia', '', '', '1', '2017-12-16', 1),
-(5, '182885746', 'Maria Jose Nuñez', 24, 'Valdivia', '', '', '1', '2017-12-16', 1),
-(6, '188863841', 'Camilo Alarcón', 23, 'Valdivia', '', '', '1', '2017-12-16', 1);
+(2, '178552015', 'Gabriel Galilea', 25, 'Valdivia', '', '', '1', '2017-11-02', 0),
+(3, '17672234k', 'Lucia Marquez', 23, 'Valdivia', '', '', '1', '2017-09-27', 0),
+(4, '236111415', 'Humberto Campos', 24, 'Valdivia', '', '', '1', '2017-12-16', 0),
+(5, '182885746', 'Maria Jose Nuñez', 24, 'Valdivia', '', '', '1', '2017-12-16', 0),
+(6, '188863841', 'Camilo Alarcón', 23, 'Valdivia', '', '', '1', '2017-12-16', 0);
 
 -- --------------------------------------------------------
 
@@ -102,7 +102,7 @@ CREATE TABLE `trabajador` (
 INSERT INTO `trabajador` (`id_trabajador`, `run`, `nombre`, `telefono`, `pass`, `privilegios`, `estado`, `fecha_ingreso`) VALUES
 (1, '145100720', 'Ximena Alejandra Nuñez Ruiz', '941418361', 'xnuñez', 777, 1, '2017-12-15'),
 (2, '101499235', 'Maria Jesus Norambuena Parra', '993005357', 'mnorambuena', 111, 1, '2017-12-15'),
-(3, '188863841', 'camilo alarcón', '123123', '123', 777, 1, '2017-10-06');
+(3, '188863841', 'otro', '123123', '123', 777, 1, '2017-10-06');
 
 -- --------------------------------------------------------
 
@@ -136,7 +136,8 @@ INSERT INTO `tratamiento` (`id_tratamiento`, `tipo`, `precio`, `estado`, `porcen
 (11, 'Visos', 16000, 1, 50),
 (12, 'Mechas Pelo Corto', 25000, 1, 50),
 (13, 'Mechas Pelo Largo', 30000, 1, 50),
-(17, '123', 123, 1, 20);
+(17, '123', 123, 0, 20),
+(18, '1233', 123, 0, 2);
 
 -- --------------------------------------------------------
 
@@ -152,41 +153,6 @@ CREATE TABLE `venta` (
   `id_tratamiento` int(50) NOT NULL,
   `id_trabajador` int(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `venta`
---
-
-INSERT INTO `venta` (`id_venta`, `fecha`, `monto_total`, `id_cliente`, `id_tratamiento`, `id_trabajador`) VALUES
-(52, '2017-12-16', 18000, 2, 1, 3),
-(53, '2017-12-16', 18000, 2, 4, 3),
-(54, '2017-12-16', 28000, 2, 1, 3),
-(55, '2017-12-16', 28000, 3, 3, 3),
-(56, '2017-12-16', 28000, 3, 10, 3),
-(57, '2017-12-16', 40000, 1, 3, 3),
-(58, '2017-12-16', 40000, 2, 6, 3),
-(59, '2017-12-16', 40000, 2, 4, 3),
-(60, '2017-12-16', 26000, 3, 3, 3),
-(61, '2017-12-16', 26000, 2, 1, 3),
-(62, '2017-12-16', 26000, 1, 5, 3),
-(63, '2017-12-16', 39000, 2, 2, 3),
-(64, '2017-12-16', 39000, 3, 4, 3),
-(65, '2017-12-16', 39000, 1, 6, 3),
-(66, '2017-12-16', 26998, 3, 3, 3),
-(67, '2017-12-16', 26998, 2, 5, 3),
-(68, '2017-12-16', 26998, 1, 2, 3),
-(69, '2017-12-16', 21996, 2, 2, 3),
-(70, '2017-12-16', 21996, 3, 1, 3),
-(71, '2017-12-16', 21996, 1, 4, 3),
-(72, '2017-12-16', 28995, 3, 2, 3),
-(73, '2017-12-16', 28995, 2, 3, 3),
-(74, '2017-12-16', 28995, 1, 6, 3),
-(75, '2017-12-16', 7995, 1, 2, 3),
-(76, '2017-12-16', 7995, 2, 2, 3),
-(77, '2017-12-16', 18993, 1, 2, 3),
-(78, '2017-12-16', 18993, 3, 4, 3),
-(79, '2017-12-16', 14995, 1, 4, 3),
-(80, '2017-12-16', 4000, 3, 2, 3);
 
 --
 -- Índices para tablas volcadas
@@ -248,13 +214,13 @@ ALTER TABLE `trabajador`
 -- AUTO_INCREMENT de la tabla `tratamiento`
 --
 ALTER TABLE `tratamiento`
-  MODIFY `id_tratamiento` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_tratamiento` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `venta`
 --
 ALTER TABLE `venta`
-  MODIFY `id_venta` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id_venta` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=174;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

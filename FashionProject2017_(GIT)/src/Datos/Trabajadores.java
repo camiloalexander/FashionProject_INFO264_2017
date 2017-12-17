@@ -187,7 +187,7 @@ public class Trabajadores {
                     //modelo.addRow(registro);
                 }
             }
-            if(list.size() > 0){
+            if(list.size()-1 > 0){
                 for(int i=0; i< list.size(); i++){
                     Object fila[] = new Object[8];
                     tr = list.get(i);
