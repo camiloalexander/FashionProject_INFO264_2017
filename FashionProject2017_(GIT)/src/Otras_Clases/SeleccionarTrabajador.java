@@ -1,4 +1,4 @@
-package Vista;
+package Otras_Clases;
 
 
 import Controlador.Conexion;

@@ -283,7 +283,7 @@ public class Clientes {
             rs.close();                    
             st.close(); 
             cn.close();
-            if(list.size() > 0){
+            if(list.size()-1 > 0){
                 for(int i=0; i< list.size(); i++){
                     Object fila[] = new Object[10];
                     cl = list.get(i);

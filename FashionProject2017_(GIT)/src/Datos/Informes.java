@@ -23,7 +23,28 @@ public class Informes {
             st.setInt(1, id_t);
             ResultSet rs = st.executeQuery();
             while(rs.next()){
-                gan_tot = gan_tot + rs.getInt("monto_total");
+                gan_tot = gan_tot + (rs.getInt("monto_total"));
+            }
+            rs.close();                    
+            st.close(); 
+            cn.close();
+            return gan_tot;
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null,e);
+            return gan_tot;
+        }
+    }
+        public int dineroDescuentoTrabajador(int id_t){
+        int gan_tot = 0;
+        querySQL = "select * from venta where id_trabajador = ?";
+        mysql = new Conexion();
+        cn = mysql.conectar();
+        try{
+            PreparedStatement st = cn.prepareStatement(querySQL);
+            st.setInt(1, id_t);
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                if(id_t != 1) gan_tot = (int) (gan_tot + (rs.getInt("monto_total")-(rs.getInt("monto_total")*(float)0.5)));
             }
             rs.close();                    
             st.close(); 
@@ -77,7 +98,7 @@ public class Informes {
         }
     }
     
-    public int gastoAnual(int a){
+    public int gastosAnual(int a){
         int gas_tot = 0;
         querySQL = "select * from gastos where fecha_Gasto like '"+a+"-%'";
         mysql = new Conexion();
@@ -97,7 +118,7 @@ public class Informes {
             return gas_tot;
         }
     }
-    public int gananciaAnual(int a){
+    public int ingresoAnual(int a){
         int gan_tot = 0;
         querySQL = "select * from venta where fecha like '"+a+"-%'";
         mysql = new Conexion();

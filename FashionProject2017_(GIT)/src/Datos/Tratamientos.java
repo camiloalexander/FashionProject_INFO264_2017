@@ -126,9 +126,9 @@ public class Tratamientos {
             //st.setString(2, buscar);
             ResultSet rs = st.executeQuery(querySQL);
             while(rs.next()){
-                //if(rs.getString("estado").equals("0")){  //si esta dado de baja no se muestra 
-                  //  rs.next();
-                //}else{
+                if(rs.getString("estado").equals("0")){  //si esta dado de baja no se muestra 
+                    rs.next();
+                }else{
                 /*
                     registro[0] = rs.getString("id_tratamiento");
                     registro[1] = rs.getString("tipo");
@@ -144,7 +144,7 @@ public class Tratamientos {
                     list.add(tra);
                     totalregistros=totalregistros+1;
                     //modelo.addRow(registro);
-                //}
+                }
             }
             if(list.size() > 0){
                 for(int i=0; i< list.size(); i++){
