@@ -15,7 +15,7 @@ public class Conexion {
     private static String pass="fashion";
     private static String host="172.17.0.8";*/
     private static String user="root";
-    private static String pass="root";
+    private static String pass="";
     private static String host="localhost";
     private static String server="jdbc:mysql://"+host+"/"+db;
     
